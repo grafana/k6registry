@@ -64,20 +64,6 @@ $defs:
         examples:
           - ["dashboard"]
           - ["plugin"]
-      official:
-        type: boolean
-        default: "false"
-        description: |
-          Officially supported extension flag.
-
-          A value of true indicates that the extension is officially supported by Grafana. Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.
-      cloud:
-        type: boolean
-        default: "false"
-        description: |
-          Cloud-enabled extension flag.
-
-          A value of true indicates that the extension is also available in the Grafana k6 cloud.
       description:
         type: string
         description: |

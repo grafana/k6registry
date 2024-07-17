@@ -48,20 +48,17 @@ The `true` value of the `official` flag indicates that the extension is official
     {
       "module": "github.com/grafana/xk6-dashboard",
       "description": "Web-based metrics dashboard for k6",
-      "outputs": ["dashboard"],
-      "official": true
+      "outputs": ["dashboard"]
     },
     {
       "module": "github.com/grafana/xk6-sql",
       "description": "Load test SQL Servers",
-      "imports": ["k6/x/sql"],
-      "official": true
+      "imports": ["k6/x/sql"]
     },
     {
       "module": "github.com/grafana/xk6-distruptor",
       "description": "Inject faults to test",
-      "imports": ["k6/x/distruptor"],
-      "official": true
+      "imports": ["k6/x/distruptor"]
     },
     {
       "module": "github.com/szkiba/xk6-faker",
