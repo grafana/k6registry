@@ -16,13 +16,6 @@ package k6registry
 // documentation site without approval. Therefore, these properties are registered
 // (eg `description`)
 type Extension struct {
-	// Cloud-enabled extension flag.
-	//
-	// A value of true indicates that the extension is also available in the Grafana
-	// k6 cloud.
-	//
-	Cloud bool `json:"cloud,omitempty" yaml:"cloud,omitempty" mapstructure:"cloud,omitempty"`
-
 	// Brief description of the extension.
 	//
 	Description string `json:"description" yaml:"description" mapstructure:"description"`
@@ -51,14 +44,6 @@ type Extension struct {
 	// that refers to the extension within the repository manager.
 	//
 	Module string `json:"module" yaml:"module" mapstructure:"module"`
-
-	// Officially supported extension flag.
-	//
-	// A value of true indicates that the extension is officially supported by
-	// Grafana. Extensions owned by the `grafana` GitHub organization are not
-	// officially supported by Grafana by default.
-	//
-	Official bool `json:"official,omitempty" yaml:"official,omitempty" mapstructure:"official,omitempty"`
 
 	// List of output names registered by the extension.
 	//

@@ -60,16 +60,6 @@
             ]
           ]
         },
-        "official": {
-          "type": "boolean",
-          "default": "false",
-          "description": "Officially supported extension flag.\n\nA value of true indicates that the extension is officially supported by Grafana. Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.\n"
-        },
-        "cloud": {
-          "type": "boolean",
-          "default": "false",
-          "description": "Cloud-enabled extension flag.\n\nA value of true indicates that the extension is also available in the Grafana k6 cloud.\n"
-        },
         "description": {
           "type": "string",
           "description": "Brief description of the extension.\n"
