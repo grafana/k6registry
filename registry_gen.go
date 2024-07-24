@@ -109,19 +109,26 @@ type Repository struct {
 	//
 	Homepage string `json:"homepage,omitempty" yaml:"homepage,omitempty" mapstructure:"homepage,omitempty"`
 
+	// The SPDX ID of the extension's license.
+	//
+	// For more information about SPDX, visit https://spdx.org/licenses/
+	//
+	License string `json:"license,omitempty" yaml:"license,omitempty" mapstructure:"license,omitempty"`
+
+	// The name of the repository.
+	//
+	Name string `json:"name" yaml:"name" mapstructure:"name"`
+
+	// The owner of the repository.
+	//
+	Owner string `json:"owner" yaml:"owner" mapstructure:"owner"`
+
 	// The number of stars in the extension's repository.
 	//
 	// The extension's popularity is indicated by how many users have starred the
 	// extension's repository.
 	//
 	Stars int `json:"stars,omitempty" yaml:"stars,omitempty" mapstructure:"stars,omitempty"`
-
-	// The repository's git tags.
-	//
-	// States of the git repository marked with tags can be reproduced. Versions are
-	// also tags, they must meet certain format requirements.
-	//
-	Tags []string `json:"tags,omitempty" yaml:"tags,omitempty" mapstructure:"tags,omitempty"`
 
 	// Repository topics.
 	//
@@ -135,7 +142,7 @@ type Repository struct {
 	// The URL is provided by the repository manager and can be displayed in a
 	// browser.
 	//
-	Url string `json:"url,omitempty" yaml:"url,omitempty" mapstructure:"url,omitempty"`
+	Url string `json:"url" yaml:"url" mapstructure:"url"`
 
 	// List of supported versions.
 	//

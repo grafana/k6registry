@@ -82,10 +82,22 @@
     "repository": {
       "type": "object",
       "description": "Repository metadata.\n\nMetadata provided by the extension's git repository manager. Repository metadata are not registered, they are queried at runtime using the repository manager API.\n",
+      "required": [
+        "name",
+        "owner",
+        "url"
+      ],
       "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the repository.\n"
+        },
+        "owner": {
+          "type": "string",
+          "description": "The owner of the repository.\n"
+        },
         "url": {
           "type": "string",
-          "default": "",
           "description": "URL of the repository.\n\nThe URL is provided by the repository manager and can be displayed in a browser.\n"
         },
         "homepage": {
@@ -110,19 +122,17 @@
           },
           "description": "Repository topics.\n\nTopics make it easier to find the repository. It is recommended to set the xk6 topic to the extensions repository.\n"
         },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "The repository's git tags.\n\nStates of the git repository marked with tags can be reproduced. Versions are also tags, they must meet certain format requirements.\n"
-        },
         "versions": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "List of supported versions.\n\nVersions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.\n"
+        },
+        "license": {
+          "type": "string",
+          "default": "",
+          "description": "The SPDX ID of the extension's license.\n\nFor more information about SPDX, visit https://spdx.org/licenses/\n"
         }
       }
     }

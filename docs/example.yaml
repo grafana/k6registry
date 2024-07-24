@@ -11,10 +11,10 @@
   cloud: true
   official: true
 
-- module: github.com/grafana/xk6-distruptor
+- module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
-    - k6/x/distruptor
+    - k6/x/disruptor
   official: true
 
 - module: github.com/szkiba/xk6-faker

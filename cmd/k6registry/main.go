@@ -12,11 +12,18 @@ import (
 var version = "dev"
 
 func main() {
+	log.SetFlags(0)
+	log.Writer()
+
 	runCmd(newCmd(os.Args[1:])) //nolint:forbidigo
 }
 
 func newCmd(args []string) *cobra.Command {
-	cmd := cmd.New()
+	cmd, err := cmd.New()
+	if err != nil {
+		log.Fatal(formatError(err))
+	}
+
 	cmd.Version = version
 	cmd.SetArgs(args)
 
@@ -24,9 +31,6 @@ func newCmd(args []string) *cobra.Command {
 }
 
 func runCmd(cmd *cobra.Command) {
-	log.SetFlags(0)
-	log.Writer()
-
 	if err := cmd.Execute(); err != nil {
 		log.Fatal(formatError(err))
 	}

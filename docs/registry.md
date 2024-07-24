@@ -77,13 +77,25 @@ The `true` value of the `official` flag indicates that the extension is official
 
 Repository metadata provided by the extension's git repository manager. Repository metadata are not registered, they are queried at processing time using the repository manager API.
 
+#### Owner
+
+The `owner` property contains the owner of the extension's git repository.
+
+#### Name
+
+The `name` property contains the name of the extension's git repository.
+
+#### License
+
+The `license` property contains the SPDX ID of the extension's license. For more information about SPDX, visit https://spdx.org/licenses/
+
 #### URL
 
 The `url` property contains the URL of the repository. The `url` is provided by the repository manager and can be displayed in a browser.
 
 #### Homepage
 
-The `homepage` property contains the the project homepage URL. If no homepage is set, the value is the same as the `url` property.
+The `homepage` property contains the project homepage URL. If no homepage is set, the value is the same as the `url` property.
 
 #### Stars
 
@@ -92,10 +104,6 @@ The `stars` property contains the number of stars in the extension's repository.
 #### Topics
 
 The `topics` property contains the repository topics. Topics make it easier to find the repository. It is recommended to set the `xk6` topic to the extensions repository.
-
-#### Tags
-
-The `tags` property contains the repository's git tags. States of the git repository marked with tags can be reproduced. Versions are also tags, they must meet certain format requirements.
 
 #### Versions
 
@@ -127,8 +135,8 @@ The registry is validated using [JSON schema](https://grafana.github.io/k6regist
 
 Custom validation logic checks the following for each extension:
 
-  - is the go module path valid?
-  - is there at least one versioned release?
+  - Is the go module path valid?
+  - Is there at least one versioned release?
 
 Validation is always done before processing. The noop filter ('.') can be used for validation only by ignoring the output.
 

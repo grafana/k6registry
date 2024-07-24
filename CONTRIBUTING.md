@@ -132,3 +132,9 @@ The most robust thing is to update everything (both the schema and the example) 
 
 Requires
 : schema, example, readme
+
+## legacy - Convert legacy registry
+
+```bash
+ go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","official","cloud","imports","outputs","repo"])|sort_by(.module)' > ./docs/legacy.yaml
+```
