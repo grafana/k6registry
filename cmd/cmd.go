@@ -6,9 +6,11 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
 )
 
 //go:embed help.md
@@ -18,6 +20,8 @@ type options struct {
 	out     string
 	compact bool
 	raw     bool
+	yaml    bool
+	mute    bool
 }
 
 // New creates new cobra command for exec command.
@@ -53,10 +57,16 @@ func New() (*cobra.Command, error) {
 
 	flags := root.Flags()
 
-	flags.BoolP("version", "V", false, "print version")
+	flags.SortFlags = false
+
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
+	flags.BoolVarP(&opts.mute, "mute", "m", false, "no output, only validation")
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
 	flags.BoolVarP(&opts.raw, "raw", "r", false, "output raw strings, not JSON texts")
+	flags.BoolVarP(&opts.yaml, "yaml", "y", false, "output YAML instead of JSON")
+	root.MarkFlagsMutuallyExclusive("raw", "compact", "yaml", "mute")
+
+	flags.BoolP("version", "V", false, "print version")
 
 	flags.BoolVar(&legacy, "legacy", false, "convert legacy registry")
 
@@ -104,27 +114,39 @@ func run(ctx context.Context, args []string, opts *options) error {
 		return err
 	}
 
-	var fn func(interface{}) error
-
-	if opts.raw {
-		fn = func(v interface{}) error {
-			_, err := fmt.Fprintln(output, v)
-
-			return err
-		}
-	} else {
-		encoder := json.NewEncoder(output)
-
-		if !opts.compact {
-			encoder.SetIndent("", "  ")
-		}
-
-		fn = encoder.Encode
-	}
-
-	if err := jq(registry, args[0], fn); err != nil {
+	if err := jq(registry, args[0], printer(output, opts)); err != nil {
 		return err
 	}
 
 	return result
+}
+
+func printer(output io.Writer, opts *options) func(interface{}) error {
+	if opts.raw {
+		return func(v interface{}) error {
+			_, err := fmt.Fprintln(output, v)
+
+			return err
+		}
+	}
+
+	if opts.yaml {
+		encoder := yaml.NewEncoder(output)
+
+		return encoder.Encode
+	}
+
+	if opts.mute {
+		return func(_ interface{}) error {
+			return nil
+		}
+	}
+
+	encoder := json.NewEncoder(output)
+
+	if !opts.compact {
+		encoder.SetIndent("", "  ")
+	}
+
+	return encoder.Encode
 }
