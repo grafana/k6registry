@@ -15,7 +15,7 @@ func main() {
 	log.SetFlags(0)
 	log.Writer()
 
-	runCmd(newCmd(os.Args[1:])) //nolint:forbidigo
+	runCmd(newCmd(getArgs()))
 }
 
 func newCmd(args []string) *cobra.Command {
@@ -34,4 +34,50 @@ func runCmd(cmd *cobra.Command) {
 	if err := cmd.Execute(); err != nil {
 		log.Fatal(formatError(err))
 	}
+}
+
+//nolint:forbidigo
+func isGitHubAction() bool {
+	return os.Getenv("GITHUB_ACTIONS") == "true"
+}
+
+//nolint:forbidigo
+func getArgs() []string {
+	if !isGitHubAction() {
+		return os.Args[1:]
+	}
+
+	var args []string
+
+	if getenv("INPUT_COMPACT", "false") == "true" {
+		args = append(args, "--compact")
+	}
+
+	if getenv("INPUT_RAW", "false") == "true" {
+		args = append(args, "--raw")
+	}
+
+	if getenv("INPUT_YAML", "false") == "true" {
+		args = append(args, "--yaml")
+	}
+
+	if out := getenv("INPUT_OUT", ""); len(out) != 0 {
+		args = append(args, "--out", out)
+	}
+
+	args = append(args, getenv("INPUT_FILTER", "."))
+
+	args = append(args, getenv("INPUT_IN", ""))
+
+	return args
+}
+
+//nolint:forbidigo
+func getenv(name string, defval string) string {
+	value, found := os.LookupEnv(name)
+	if found {
+		return value
+	}
+
+	return defval
 }

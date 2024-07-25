@@ -125,7 +125,7 @@ erDiagram
     "custom JSON" }|--|{ "application" : uses
 ```
 
-The registry is processed based on the popular `jq` expressions. Predefined `jq` filters should be included for common uses (for example, extension catalog generation).
+The registry is processed based on the popular `jq` expressions.
 
 The input of the processing is the extension registry supplemented with repository metadata (for example, available versions, number of stars, etc). The output of the processing is defined by the `jq` filter.
 

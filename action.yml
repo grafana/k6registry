@@ -1,0 +1,37 @@
+name: k6registry
+description: k6 extension registry processor
+author: Grafana Labs
+
+branding:
+  icon: settings
+  color: purple
+
+inputs:
+  filter:
+    description: jq compatible filter
+    required: false
+    default: .
+
+  in:
+    description: input file name
+    required: true
+
+  out:
+    description: output file name
+    required: false
+
+  compact:
+    description: compact instead of pretty-printed output
+    required: false
+
+  raw:
+    description: output raw strings, not JSON texts
+    required: false
+
+  yaml:
+    description: output YAML instead of JSON
+    required: false
+
+runs:
+  using: docker
+  image: ghcr.io/grafana/k6registry:v0

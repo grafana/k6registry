@@ -1,2 +1,4 @@
 /build
 /coverage.txt
+/k6registry
+/k6registry.exe
