@@ -99,6 +99,15 @@ type Registry []Extension
 // are not registered, they are queried at runtime using the repository manager
 // API.
 type Repository struct {
+	// Archived repository flag.
+	//
+	// A `true` value indicates that the repository is archived, read only.
+	//
+	// If a repository is archived, it usually means that the owner has no intention
+	// of maintaining it. Such extensions should be removed from the registry.
+	//
+	Archived bool `json:"archived,omitempty" yaml:"archived,omitempty" mapstructure:"archived,omitempty"`
+
 	// Repository description.
 	//
 	Description string `json:"description,omitempty" yaml:"description,omitempty" mapstructure:"description,omitempty"`
@@ -122,6 +131,12 @@ type Repository struct {
 	// The owner of the repository.
 	//
 	Owner string `json:"owner" yaml:"owner" mapstructure:"owner"`
+
+	// Public repository flag.
+	//
+	// A `true` value indicates that the repository is public, available to anyone.
+	//
+	Public bool `json:"public,omitempty" yaml:"public,omitempty" mapstructure:"public,omitempty"`
 
 	// The number of stars in the extension's repository.
 	//

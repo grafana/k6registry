@@ -20,6 +20,18 @@ inputs:
     description: output file name
     required: false
 
+  mute:
+    description: no output, only validation
+    required: false
+
+  loose:
+    description: skip JSON schema validation
+    required: false
+
+  lint:
+    description: enable built-in linter
+    required: false
+
   compact:
     description: compact instead of pretty-printed output
     required: false

@@ -22,6 +22,8 @@ type options struct {
 	raw     bool
 	yaml    bool
 	mute    bool
+	loose   bool
+	lint    bool
 }
 
 // New creates new cobra command for exec command.
@@ -61,6 +63,8 @@ func New() (*cobra.Command, error) {
 
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
 	flags.BoolVarP(&opts.mute, "mute", "m", false, "no output, only validation")
+	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
+	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
 	flags.BoolVarP(&opts.raw, "raw", "r", false, "output raw strings, not JSON texts")
 	flags.BoolVarP(&opts.yaml, "yaml", "y", false, "output YAML instead of JSON")
@@ -109,7 +113,7 @@ func run(ctx context.Context, args []string, opts *options) error {
 		output = file
 	}
 
-	registry, err := load(ctx, input)
+	registry, err := load(ctx, input, opts.loose, opts.lint)
 	if err != nil {
 		return err
 	}

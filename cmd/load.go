@@ -12,18 +12,35 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func load(ctx context.Context, in io.Reader) (interface{}, error) {
-	decoder := yaml.NewDecoder(in)
+func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}, error) {
+	var (
+		raw []byte
+		err error
+	)
+
+	if loose {
+		raw, err = io.ReadAll(in)
+	} else {
+		raw, err = validateWithSchema(in)
+	}
+
+	if err != nil {
+		return nil, err
+	}
 
 	var registry k6registry.Registry
 
-	if err := decoder.Decode(&registry); err != nil {
+	if err := yaml.Unmarshal(raw, &registry); err != nil {
 		return nil, err
 	}
 
 	registry = append(registry, k6registry.Extension{Module: k6Module, Description: k6Description})
 
 	for idx, ext := range registry {
+		if ext.Repo != nil {
+			continue
+		}
+
 		if strings.HasPrefix(ext.Module, k6Module) || strings.HasPrefix(ext.Module, ghModulePrefix) {
 			repo, err := loadGitHub(ctx, ext.Module)
 			if err != nil {
@@ -31,6 +48,12 @@ func load(ctx context.Context, in io.Reader) (interface{}, error) {
 			}
 
 			registry[idx].Repo = repo
+		}
+	}
+
+	if lint {
+		if err := validateWithLinter(registry); err != nil {
+			return nil, err
 		}
 	}
 
@@ -84,12 +107,16 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 		repo.Homepage = repo.Url
 	}
 
+	repo.Archived = rep.GetArchived()
+
 	repo.Description = rep.GetDescription()
 	repo.Stars = rep.GetStargazersCount()
 
 	if lic := rep.GetLicense(); lic != nil {
 		repo.License = lic.GetSPDXID()
 	}
+
+	repo.Public = rep.GetVisibility() == "public"
 
 	tags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: 100})
 	if err != nil {
@@ -99,12 +126,7 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 	for _, tag := range tags {
 		name := tag.GetName()
 
-		if name[0] != 'v' {
-			continue
-		}
-
-		_, err := semver.NewVersion(name)
-		if err != nil {
+		if _, err := semver.NewVersion(name); err != nil {
 			continue
 		}
 

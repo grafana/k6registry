@@ -75,11 +75,15 @@ k6registry [flags] <jq filter> [file]
 ### Flags
 
 ```
-  -c, --compact      compact instead of pretty-printed output
-  -h, --help         help for k6registry
   -o, --out string   write output to file instead of stdout
+  -m, --mute         no output, only validation
+      --loose        skip JSON schema validation
+      --lint         enable built-in linter
+  -c, --compact      compact instead of pretty-printed output
   -r, --raw          output raw strings, not JSON texts
+  -y, --yaml         output YAML instead of JSON
   -V, --version      print version
+  -h, --help         help for k6registry
 ```
 
 <!-- #endregion cli -->
