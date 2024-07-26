@@ -2,7 +2,7 @@
 
 **Data model and tooling for the k6 extension registry**
 
-This repository contains the [JSON schema](docs/registry.schema.json) of the k6 extension registry and the [`k6registry`](#k6registry) command line tool for registry processing.
+This repository contains the [JSON schema](docs/registry.schema.json) of the k6 extension registry and the [`k6registry`](#k6registry) command line tool for registry processing. The command line tool can also be used as a [GitHub Action](#github-action).
 
 Check [k6 Extension Registry Concept](docs/registry.md) for information on design considerations.
 
@@ -46,7 +46,44 @@ If you have a go development environment, the installation can also be done with
 go install github.com/grafana/k6registry/cmd/k6registry@latest
 ```
 
-## Usage
+## GitHub Action
+
+`grafana/k6registry` is a GitHub Action that enables k6 extension registry processing and the generation of customized JSON output for different applications. Processing is based on popular `jq` expressions using an embedded `jq` implementation.
+
+The jq filter expression can be specified in the `filter` parameter.
+
+The extension registry is read from the YAML format file specified in the `in` parameter.
+
+Repository metadata is collected using the repository manager APIs. Currently only the GitHub API is supported.
+
+The output of the processing will be written to the standard output by default. The output can be saved to a file using the `out` parameter.
+
+**Parameters**
+
+name   | reqired | default | description
+-------|---------|---------|-------------
+filter |    no   |    `.`  | jq compatible filter
+in     |   yes   |         | input file name
+out    |    no   |  stdout | output file name
+mute   |    no   | `false` | no output, only validation
+loose  |    no   | `false` | skip JSON schema validation
+lint   |    no   | `false` | enable built-in linter
+compact|    no   | `false` | compact instead of pretty-printed output
+raw    |    no   | `false` | output raw strings, not JSON texts
+yaml   |    no   | `false` | output YAML instead of JSON
+
+**Example usage**
+
+```yaml
+- name: Generate registry in JSON format
+  uses: grafana/k6registry@v0.1.4
+  with:
+    in: "registry.yaml"
+    out: "registry.json"
+    filter: "."
+```
+
+## CLI
 
 <!-- #region cli -->
 ## k6registry
