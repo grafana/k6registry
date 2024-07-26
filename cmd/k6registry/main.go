@@ -49,16 +49,16 @@ func getArgs() []string {
 
 	var args []string
 
-	if out := getenv("INPUT_MUTE", "false"); len(out) != 0 {
-		args = append(args, "--mute", out)
+	if getenv("INPUT_MUTE", "false") == "true" {
+		args = append(args, "--mute")
 	}
 
-	if out := getenv("INPUT_LOOSE", "false"); len(out) != 0 {
-		args = append(args, "--loose", out)
+	if getenv("INPUT_LOOSE", "false") == "true" {
+		args = append(args, "--loose")
 	}
 
-	if out := getenv("INPUT_LINT", "false"); len(out) != 0 {
-		args = append(args, "--lint", out)
+	if getenv("INPUT_LINT", "false") == "true" {
+		args = append(args, "--lint")
 	}
 
 	if getenv("INPUT_COMPACT", "false") == "true" {
