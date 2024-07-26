@@ -129,10 +129,20 @@
           },
           "description": "List of supported versions.\n\nVersions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.\n"
         },
+        "public": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Public repository flag.\n\nA `true` value indicates that the repository is public, available to anyone.\n"
+        },
         "license": {
           "type": "string",
           "default": "",
           "description": "The SPDX ID of the extension's license.\n\nFor more information about SPDX, visit https://spdx.org/licenses/\n"
+        },
+        "archived": {
+          "type": "boolean",
+          "default": "false",
+          "description": "Archived repository flag.\n\nA `true` value indicates that the repository is archived, read only.\n\nIf a repository is archived, it usually means that the owner has no intention of maintaining it. Such extensions should be removed from the registry.\n"
         }
       }
     }

@@ -152,6 +152,13 @@ $defs:
           List of supported versions.
 
           Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
+      public:
+        type: boolean
+        default: "false"
+        description: |
+          Public repository flag.
+
+          A `true` value indicates that the repository is public, available to anyone.
       license:
         type: string
         default: ""
@@ -159,3 +166,12 @@ $defs:
           The SPDX ID of the extension's license.
 
           For more information about SPDX, visit https://spdx.org/licenses/
+      archived:
+        type: boolean
+        default: "false"
+        description: |
+          Archived repository flag.
+
+          A `true` value indicates that the repository is archived, read only.
+
+          If a repository is archived, it usually means that the owner has no intention of maintaining it. Such extensions should be removed from the registry.
