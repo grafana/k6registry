@@ -1,0 +1,8 @@
+FROM debian:12.6-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
+RUN update-ca-certificates
+
+COPY k6registry /usr/bin/
+
+ENTRYPOINT ["k6registry"]

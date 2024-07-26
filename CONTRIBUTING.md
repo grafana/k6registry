@@ -104,7 +104,7 @@ go tool cover -html=coverage.txt
 This is the easiest way to create an executable binary (although the release process uses the `goreleaser` tool to create release versions).
 
 ```bash
-go build -ldflags="-w -s" -o build/k6registry ./cmd/k6registry
+go build -ldflags="-w -s" -o k6registry ./cmd/k6registry
 ```
 
 [build]: <#build---build-the-executable-binary>
@@ -114,11 +114,22 @@ go build -ldflags="-w -s" -o build/k6registry ./cmd/k6registry
 The goreleaser command-line tool is used during the release process. During development, it is advisable to create binaries with the same tool from time to time.
 
 ```bash
-rm -f build/k6registry
-goreleaser build --snapshot --clean --single-target -o build/k6registry
+rm -f k6registry
+goreleaser build --snapshot --clean --single-target -o k6registry
 ```
 
 [snapshot]: <#snapshot---creating-an-executable-binary-with-a-snapshot-version>
+
+### docker - Build docker image
+
+Building a Docker image. Before building the image, it is advisable to perform a snapshot build using goreleaser. To build the image, it is advisable to use the same `Docker.goreleaser` file that `goreleaser` uses during release.
+
+Requires
+: snapshot
+
+```bash
+docker build -t k6registry -f Dockerfile.goreleaser .
+```
 
 ### clean - Delete the build directory
 
@@ -132,3 +143,9 @@ The most robust thing is to update everything (both the schema and the example) 
 
 Requires
 : schema, example, readme
+
+## legacy - Convert legacy registry
+
+```bash
+ go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","official","cloud","imports","outputs","repo"])|sort_by(.module)' > ./docs/legacy.yaml
+```

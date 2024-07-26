@@ -99,6 +99,15 @@ type Registry []Extension
 // are not registered, they are queried at runtime using the repository manager
 // API.
 type Repository struct {
+	// Archived repository flag.
+	//
+	// A `true` value indicates that the repository is archived, read only.
+	//
+	// If a repository is archived, it usually means that the owner has no intention
+	// of maintaining it. Such extensions should be removed from the registry.
+	//
+	Archived bool `json:"archived,omitempty" yaml:"archived,omitempty" mapstructure:"archived,omitempty"`
+
 	// Repository description.
 	//
 	Description string `json:"description,omitempty" yaml:"description,omitempty" mapstructure:"description,omitempty"`
@@ -109,19 +118,32 @@ type Repository struct {
 	//
 	Homepage string `json:"homepage,omitempty" yaml:"homepage,omitempty" mapstructure:"homepage,omitempty"`
 
+	// The SPDX ID of the extension's license.
+	//
+	// For more information about SPDX, visit https://spdx.org/licenses/
+	//
+	License string `json:"license,omitempty" yaml:"license,omitempty" mapstructure:"license,omitempty"`
+
+	// The name of the repository.
+	//
+	Name string `json:"name" yaml:"name" mapstructure:"name"`
+
+	// The owner of the repository.
+	//
+	Owner string `json:"owner" yaml:"owner" mapstructure:"owner"`
+
+	// Public repository flag.
+	//
+	// A `true` value indicates that the repository is public, available to anyone.
+	//
+	Public bool `json:"public,omitempty" yaml:"public,omitempty" mapstructure:"public,omitempty"`
+
 	// The number of stars in the extension's repository.
 	//
 	// The extension's popularity is indicated by how many users have starred the
 	// extension's repository.
 	//
 	Stars int `json:"stars,omitempty" yaml:"stars,omitempty" mapstructure:"stars,omitempty"`
-
-	// The repository's git tags.
-	//
-	// States of the git repository marked with tags can be reproduced. Versions are
-	// also tags, they must meet certain format requirements.
-	//
-	Tags []string `json:"tags,omitempty" yaml:"tags,omitempty" mapstructure:"tags,omitempty"`
 
 	// Repository topics.
 	//
@@ -135,7 +157,7 @@ type Repository struct {
 	// The URL is provided by the repository manager and can be displayed in a
 	// browser.
 	//
-	Url string `json:"url,omitempty" yaml:"url,omitempty" mapstructure:"url,omitempty"`
+	Url string `json:"url" yaml:"url" mapstructure:"url"`
 
 	// List of supported versions.
 	//

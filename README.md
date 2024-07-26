@@ -22,10 +22,10 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
   cloud: true
   official: true
 
-- module: github.com/grafana/xk6-distruptor
+- module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
-    - k6/x/distruptor
+    - k6/x/disruptor
   official: true
 
 - module: github.com/szkiba/xk6-faker
@@ -33,6 +33,8 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
   imports:
     - k6/x/faker
 ```
+
+A [legacy extension registry](docs/legacy.yaml) converted to the new format is also a good example.
 
 ## Install
 
@@ -55,17 +57,33 @@ k6 extension registry processor
 
 Command line k6 extension registry processor.
 
-`k6registry` is a command line tool that enables k6 extension registry processing and the generation of customized JSON output for different applications. Processing is based on popular `jq` expressions using an embedded `jq` implementation.
+k6registry is a command line tool that enables k6 extension registry processing and the generation of customized JSON output for different applications. Processing is based on popular `jq` expressions using an embedded `jq` implementation.
+
+The first argument is the jq filter expression. This is the basis for processing.
+
+The extension registry is read from the YAML format file specified in the second argument. If it is missing, the extension registry is read from the standard input.
+
+Repository metadata is collected using the repository manager APIs. Currently only the GitHub API is supported.
+
+The output of the processing will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
 
 
 ```
-k6registry [flags]
+k6registry [flags] <jq filter> [file]
 ```
 
 ### Flags
 
 ```
-  -h, --help   help for k6registry
+  -o, --out string   write output to file instead of stdout
+  -m, --mute         no output, only validation
+      --loose        skip JSON schema validation
+      --lint         enable built-in linter
+  -c, --compact      compact instead of pretty-printed output
+  -r, --raw          output raw strings, not JSON texts
+  -y, --yaml         output YAML instead of JSON
+  -V, --version      print version
+  -h, --help         help for k6registry
 ```
 
 <!-- #endregion cli -->

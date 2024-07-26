@@ -1,0 +1,302 @@
+- module: github.com/AckeeCZ/xk6-google-iap
+  description: Provides access to Google Auth token
+  imports:
+    - k6/x/googleIap
+- module: github.com/BarthV/xk6-es
+  description: Output test results to Elasticsearch
+  outputs:
+    - xk6-es
+- module: github.com/GhMartingit/xk6-mongo
+  description: Load-test Mongo no-SQL databases
+  imports:
+    - k6/x/mongo
+- module: github.com/JorTurFer/xk6-input-prometheus
+  description: Enables real-time input from prometheus
+  imports:
+    - k6/x/prometheusread
+- module: github.com/Juandavi1/xk6-prompt
+  description: Support for input arguments via UI.
+  imports:
+    - k6/x/prompt
+- module: github.com/LeonAdato/xk6-output-statsd
+  description: Enables real-time output of test metrics to a StatsD service
+  outputs:
+    - output-statsd
+- module: github.com/Maksimall89/xk6-output-clickhouse
+  description: Export results to ClickHouse
+  outputs:
+    - -clickhouse
+- module: github.com/NAlexandrov/xk6-tcp
+  description: Send data to TCP port
+  imports:
+    - k6/x/tcp
+- module: github.com/SYM01/xk6-proxy
+  description: Add a dynamic proxy support to k6. Allow changing the HTTP proxy settings in the script.
+  imports:
+    - k6/x/proxy
+- module: github.com/acuenca-facephi/xk6-read
+  description: Read files and directories
+  imports:
+    - k6/x/read
+- module: github.com/akiomik/xk6-nostr
+  description: Interact with Nostr relays
+  imports:
+    - k6/x/nostr
+- module: github.com/anycable/xk6-cable
+  description: Test Action Cable and AnyCable functionality
+  imports:
+    - k6/x/cable
+- module: github.com/avitalique/xk6-file
+  description: Write files
+  imports:
+    - k6/x/file
+- module: github.com/deejiw/xk6-gcp
+  description: A k6 extension for Google Cloud Platform services.
+  imports:
+    - k6/x/gcp
+- module: github.com/deejiw/xk6-interpret
+  description: Interpret Go code
+  imports:
+    - k6/x/interpret
+- module: github.com/distribworks/xk6-ethereum
+  description: K6 extension for ethereum protocols
+  imports:
+    - k6/x/ethereum
+- module: github.com/domsolutions/xk6-fasthttp
+  description: Enable RPS increase & file streaming on HTTP/1.1 requests
+  imports:
+    - k6/x/fasthttp
+- module: github.com/dynatrace/xk6-output-dynatrace
+  description: Export results to Dynatrace
+  outputs:
+    - output-dynatrace
+- module: github.com/elastic/xk6-output-elasticsearch
+  description: Export results to Elasticsearch 8.x
+  outputs:
+    - output-elasticsearch
+- module: github.com/fornfrey/xk6-celery
+  description: Generate load on Celery workers
+  imports:
+    - k6/x/celery
+- module: github.com/frankhefeng/xk6-oauth-pkce
+  description: Generate OAuth PKCE code verifier and code challenge
+  imports:
+    - k6/x/oauth-pkce
+- module: github.com/gjergjsheldija/xk6-mllp
+  description: Simple MLLP sender for k6
+  imports:
+    - k6/x/mllp
+- module: github.com/goharbor/xk6-harbor
+  description: Client for load testing Harbor container registry
+  imports:
+    - k6/x/harbor
+- module: github.com/golioth/xk6-coap
+  description: Interact with Constrained Application Protocol endpoints.
+  imports:
+    - k6/x/coap
+- module: github.com/gpiechnik2/xk6-httpagg
+  description: Aggregate HTTP requests into an HTML report
+  imports:
+    - k6/x/httpagg
+- module: github.com/gpiechnik2/xk6-smtp
+  description: Use SMTP protocol to send emails
+  imports:
+    - k6/x/smtp
+- module: github.com/grafana/xk6-client-prometheus-remote
+  description: Test Prometheus Remote Write performance
+  imports:
+    - k6/x/remotewrite
+- module: github.com/grafana/xk6-client-tracing
+  description: Client for load testing distributed tracing backends
+  official: true
+  imports:
+    - k6/x/tracing
+- module: github.com/grafana/xk6-dashboard
+  description: Create a web-based metrics dashboard
+  official: true
+  outputs:
+    - dashboard
+- module: github.com/grafana/xk6-disruptor
+  description: "Inject faults to test \U0001F4A3"
+  official: true
+  imports:
+    - k6/x/disruptor
+- module: github.com/grafana/xk6-exec
+  description: Run external commands
+  official: true
+  imports:
+    - k6/x/exec
+- module: github.com/grafana/xk6-kubernetes
+  description: Interact with Kubernetes clusters
+  official: true
+  imports:
+    - k6/x/kubernetes
+- module: github.com/grafana/xk6-loki
+  description: Client for load testing Loki
+  official: true
+  imports:
+    - k6/x/loki
+- module: github.com/grafana/xk6-notification
+  description: Create notifications
+  official: true
+  imports:
+    - k6/x/notification
+- module: github.com/grafana/xk6-output-influxdb
+  description: Export results to InfluxDB v2
+  official: true
+  outputs:
+    - xk6-influxdb
+- module: github.com/grafana/xk6-output-kafka
+  description: Export k6 results in real-time to Kafka
+  official: true
+  outputs:
+    - xk6-kafka
+- module: github.com/grafana/xk6-output-timescaledb
+  description: Export k6 results to TimescaleDB
+  official: true
+  outputs:
+    - -timescaledb
+- module: github.com/grafana/xk6-sql
+  description: Load-test SQL Servers (PostgreSQL, MySQL and SQLite3 for now)
+  official: true
+  imports:
+    - k6/x/sql
+- module: github.com/grafana/xk6-ssh
+  description: SSH
+  official: true
+  imports:
+    - k6/x/ssh
+- module: github.com/grafana/xk6-ts
+  description: Add TypeScript support for k6
+  imports:
+    - k6/x/ts
+- module: github.com/kelseyaubrecht/xk6-webtransport
+  description: Add support for webtransport protocol
+  imports:
+    - k6/x/webtransport
+- module: github.com/kubeshop/xk6-tracetest
+  description: Support for Tracetest test execution and tracing client
+  outputs:
+    - tracetest
+- module: github.com/leonyork/xk6-output-timestream
+  description: Export results to AWS Timestream
+  outputs:
+    - -timestream
+- module: github.com/maksimall89/xk6-telegram
+  description: Interact with Telegram Bots
+  imports:
+    - k6/x/telegram
+- module: github.com/martymarron/xk6-output-prometheus-pushgateway
+  description: Export results to Prometheus pushgateway
+  imports:
+    - k6/x/output-prometheus-pushgateway
+  outputs:
+    - output-prometheus-pushgateway
+- module: github.com/mcosta74/xk6-plist
+  description: Parse/serialize property list (.plist) payloads
+  imports:
+    - k6/x/plist
+- module: github.com/mostafa/xk6-kafka
+  description: Load-test Apache Kafka. Includes support for Avro messages
+  imports:
+    - k6/x/kafka
+- module: github.com/mridehalgh/xk6-sqs
+  description: Produce to an SQS queue
+  imports:
+    - k6/x/sqs
+- module: github.com/nicholasvuono/xk6-playwright
+  description: Browser automation and end-to-end web testing using Playwright
+  imports:
+    - k6/x/playwright
+- module: github.com/oleiade/xk6-kv
+  description: Share key-value data between VUs
+  imports:
+    - k6/x/kv
+- module: github.com/patrick-janeiro/xk6-neo4j
+  description: Interact with Neo4J graph databases
+  imports:
+    - k6/x/neo4j
+- module: github.com/phymbert/xk6-sse
+  description: A k6 extension for Server-Sent Events (SSE)
+  imports:
+    - k6/x/sse
+- module: github.com/pmalhaire/xk6-mqtt
+  description: mqtt extension
+  imports:
+    - k6/x/mqtt
+- module: github.com/skibum55/xk6-git
+  description: Clone Git repositories from tests
+  imports:
+    - k6/x/git
+- module: github.com/szkiba/xk6-ansible-vault
+  description: Encrypt and decrypt Ansible Vault
+  imports:
+    - k6/x/ansible-vault
+- module: github.com/szkiba/xk6-cache
+  description: Enable vendoring remote HTTP modules to a single source-control-friendly file
+  outputs:
+    - cache
+- module: github.com/szkiba/xk6-chai
+  description: Embed k6chaijs into the k6 binary
+  imports:
+    - k6/x/chai
+- module: github.com/szkiba/xk6-csv
+  description: Parse CSV values
+  imports:
+    - k6/x/csv
+- module: github.com/szkiba/xk6-dotenv
+  description: Load env vars from a .env file
+  imports:
+    - k6/x/dotenv
+- module: github.com/szkiba/xk6-faker
+  description: Generate random fake data
+  imports:
+    - k6/x/faker
+- module: github.com/szkiba/xk6-g0
+  description: Write k6 tests in golang
+  imports:
+    - k6/x/g0
+- module: github.com/szkiba/xk6-mock
+  description: Mock HTTP(S) servers
+  imports:
+    - k6/x/mock
+- module: github.com/szkiba/xk6-output-plugin
+  description: Write k6 output extension as a dynamically loadable plugin using your favorite programming language
+  outputs:
+    - -plugin
+- module: github.com/szkiba/xk6-prometheus
+  description: Prometheus HTTP exporter for k6
+  outputs:
+    - prometheus
+- module: github.com/szkiba/xk6-toml
+  description: Encode and decode TOML values
+  imports:
+    - k6/x/toml
+- module: github.com/szkiba/xk6-top
+  description: Updating the current k6 metrics summaries on the terminal during the test run
+  outputs:
+    - top
+- module: github.com/szkiba/xk6-yaml
+  description: Encode and decode YAML values
+  imports:
+    - k6/x/yaml
+- module: github.com/thmshmm/xk6-opentelemetry
+  description: Generate OpenTelemetry signals from within your test scripts
+  imports:
+    - k6/x/opentelemetry
+- module: github.com/thotasrinath/xk6-couchbase
+  description: Load-test Couchbase no-SQL databases
+  imports:
+    - k6/x/couchbase
+- module: github.com/tmieulet/xk6-cognito
+  description: Get a cognito access token using USER_SRP_AUTH flow
+  imports:
+    - k6/x/cognito
+- module: github.com/walterwanderley/xk6-stomp
+  description: Client for STOMP protocol
+  imports:
+    - k6/x/stomp
+- module: github.com/ydarias/xk6-nats
+  description: Provides NATS support for k6 tests
+  imports:
+    - k6/x/nats

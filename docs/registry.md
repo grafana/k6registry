@@ -77,13 +77,29 @@ The `true` value of the `official` flag indicates that the extension is official
 
 Repository metadata provided by the extension's git repository manager. Repository metadata are not registered, they are queried at processing time using the repository manager API.
 
+#### Owner
+
+The `owner` property contains the owner of the extension's git repository.
+
+#### Name
+
+The `name` property contains the name of the extension's git repository.
+
+#### License
+
+The `license` property contains the SPDX ID of the extension's license. For more information about SPDX, visit https://spdx.org/licenses/
+
+#### Public
+
+The `true` value of the `public` flag indicates that the repository is public, available to anyone.
+
 #### URL
 
 The `url` property contains the URL of the repository. The `url` is provided by the repository manager and can be displayed in a browser.
 
 #### Homepage
 
-The `homepage` property contains the the project homepage URL. If no homepage is set, the value is the same as the `url` property.
+The `homepage` property contains the project homepage URL. If no homepage is set, the value is the same as the `url` property.
 
 #### Stars
 
@@ -93,13 +109,15 @@ The `stars` property contains the number of stars in the extension's repository.
 
 The `topics` property contains the repository topics. Topics make it easier to find the repository. It is recommended to set the `xk6` topic to the extensions repository.
 
-#### Tags
-
-The `tags` property contains the repository's git tags. States of the git repository marked with tags can be reproduced. Versions are also tags, they must meet certain format requirements.
-
 #### Versions
 
 The `versions` property contains the list of supported versions. Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
+
+#### Archived
+
+The `true` value of the `archived` flag indicates that the repository is archived, read only.
+
+If a repository is archived, it usually means that the owner has no intention of maintaining it. Such extensions should be removed from the registry.
 
 ## Registry Processing
 
@@ -117,19 +135,22 @@ erDiagram
     "custom JSON" }|--|{ "application" : uses
 ```
 
-The registry is processed based on the popular `jq` expressions. Predefined `jq` filters should be included for common uses (for example, extension catalog generation).
+The registry is processed based on the popular `jq` expressions.
 
 The input of the processing is the extension registry supplemented with repository metadata (for example, available versions, number of stars, etc). The output of the processing is defined by the `jq` filter.
 
 ### Registry Validation
 
-The registry is validated using [JSON schema](https://grafana.github.io/k6registry/registry.schema.json). Requirements that cannot be validated using the JSON schema are validated using custom logic.
+The registry is validated using [JSON schema](https://grafana.github.io/k6registry/registry.schema.json). Requirements that cannot be validated using the JSON schema are validated using custom linter.
 
-Custom validation logic checks the following for each extension:
+Custom linter checks the following for each extension:
 
-  - is the go module path valid?
-  - is there at least one versioned release?
+  - Is the go module path valid?
+  - Is there at least one versioned release?
+  - Is a valid license configured?
+  - Is the xk6 topic set for the repository?
+  - Is the repository not archived?
 
-Validation is always done before processing. The noop filter ('.') can be used for validation only by ignoring the output.
+Schema based validation is always done before processing. The noop filter ('.') can be used for validation only by ignoring (or muting) the output.
 
-It is strongly recommended to validate the extension registry after each modification, but at least before approving the change.
+It is strongly recommended to lint the extension registry after each modification, but at least before approving the change.

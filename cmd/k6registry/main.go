@@ -12,11 +12,18 @@ import (
 var version = "dev"
 
 func main() {
-	runCmd(newCmd(os.Args[1:])) //nolint:forbidigo
+	log.SetFlags(0)
+	log.Writer()
+
+	runCmd(newCmd(getArgs()))
 }
 
 func newCmd(args []string) *cobra.Command {
-	cmd := cmd.New()
+	cmd, err := cmd.New()
+	if err != nil {
+		log.Fatal(formatError(err))
+	}
+
 	cmd.Version = version
 	cmd.SetArgs(args)
 
@@ -24,10 +31,65 @@ func newCmd(args []string) *cobra.Command {
 }
 
 func runCmd(cmd *cobra.Command) {
-	log.SetFlags(0)
-	log.Writer()
-
 	if err := cmd.Execute(); err != nil {
 		log.Fatal(formatError(err))
 	}
+}
+
+//nolint:forbidigo
+func isGitHubAction() bool {
+	return os.Getenv("GITHUB_ACTIONS") == "true"
+}
+
+//nolint:forbidigo
+func getArgs() []string {
+	if !isGitHubAction() {
+		return os.Args[1:]
+	}
+
+	var args []string
+
+	if out := getenv("INPUT_MUTE", "false"); len(out) != 0 {
+		args = append(args, "--mute", out)
+	}
+
+	if out := getenv("INPUT_LOOSE", "false"); len(out) != 0 {
+		args = append(args, "--loose", out)
+	}
+
+	if out := getenv("INPUT_LINT", "false"); len(out) != 0 {
+		args = append(args, "--lint", out)
+	}
+
+	if getenv("INPUT_COMPACT", "false") == "true" {
+		args = append(args, "--compact")
+	}
+
+	if getenv("INPUT_RAW", "false") == "true" {
+		args = append(args, "--raw")
+	}
+
+	if getenv("INPUT_YAML", "false") == "true" {
+		args = append(args, "--yaml")
+	}
+
+	if out := getenv("INPUT_OUT", ""); len(out) != 0 {
+		args = append(args, "--out", out)
+	}
+
+	args = append(args, getenv("INPUT_FILTER", "."))
+
+	args = append(args, getenv("INPUT_IN", ""))
+
+	return args
+}
+
+//nolint:forbidigo
+func getenv(name string, defval string) string {
+	value, found := os.LookupEnv(name)
+	if found {
+		return value
+	}
+
+	return defval
 }
