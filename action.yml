@@ -46,4 +46,4 @@ inputs:
 
 runs:
   using: docker
-  image: ghcr.io/grafana/k6registry:v0
+  image: docker://ghcr.io/grafana/k6registry:v0
