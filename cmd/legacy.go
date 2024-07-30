@@ -116,6 +116,10 @@ func legacyPatch(ext *k6registry.Extension) {
 	if len(override.module) != 0 {
 		ext.Module = override.module
 	}
+
+	for from, to := range phrases {
+		ext.Description = strings.ReplaceAll(ext.Description, from, to)
+	}
 }
 
 type extOverride struct {
@@ -201,4 +205,8 @@ var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
 	"github.com/ydarias/xk6-nats":                              {},
 	"go.k6.io/k6":                                              {},
 	"github.com/wosp-io/xk6-playwright":                        {module: "github.com/nicholasvuono/xk6-playwright"},
+}
+
+var phrases = map[string]string{ //nolint:gochecknoglobals
+	"mqtt": "MQTT",
 }

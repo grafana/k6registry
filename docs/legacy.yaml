@@ -221,7 +221,7 @@
   imports:
     - k6/x/sse
 - module: github.com/pmalhaire/xk6-mqtt
-  description: mqtt extension
+  description: MQTT extension
   imports:
     - k6/x/mqtt
 - module: github.com/skibum55/xk6-git
