@@ -25,7 +25,7 @@
 - module: github.com/Maksimall89/xk6-output-clickhouse
   description: Export results to ClickHouse
   outputs:
-    - -clickhouse
+    - clickhouse
 - module: github.com/NAlexandrov/xk6-tcp
   description: Send data to TCP port
   imports:
@@ -155,7 +155,7 @@
   description: Export k6 results to TimescaleDB
   official: true
   outputs:
-    - -timescaledb
+    - timescaledb
 - module: github.com/grafana/xk6-sql
   description: Load-test SQL Servers (PostgreSQL, MySQL and SQLite3 for now)
   official: true
@@ -181,7 +181,7 @@
 - module: github.com/leonyork/xk6-output-timestream
   description: Export results to AWS Timestream
   outputs:
-    - -timestream
+    - timestream
 - module: github.com/maksimall89/xk6-telegram
   description: Interact with Telegram Bots
   imports:
@@ -263,7 +263,7 @@
 - module: github.com/szkiba/xk6-output-plugin
   description: Write k6 output extension as a dynamically loadable plugin using your favorite programming language
   outputs:
-    - -plugin
+    - plugin
 - module: github.com/szkiba/xk6-prometheus
   description: Prometheus HTTP exporter for k6
   outputs:

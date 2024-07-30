@@ -75,7 +75,7 @@ func legacyConvert(ctx context.Context) error {
 				continue
 			}
 
-			name := strings.TrimPrefix(legacyExt.Name, "xk6-output")
+			name := strings.TrimPrefix(legacyExt.Name, "xk6-output-")
 			name = strings.TrimPrefix(name, "xk6-")
 
 			ext.Outputs = []string{name}
