@@ -34,6 +34,12 @@ func runCmd(cmd *cobra.Command) {
 	if err := cmd.Execute(); err != nil {
 		log.Fatal(formatError(err))
 	}
+
+	if isGitHubAction() {
+		if err := emitOutput(); err != nil {
+			log.Fatal(formatError(err))
+		}
+	}
 }
 
 //nolint:forbidigo
