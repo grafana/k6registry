@@ -104,6 +104,7 @@
     - k6/x/smtp
 - module: github.com/grafana/xk6-client-prometheus-remote
   description: Test Prometheus Remote Write performance
+  official: true
   imports:
     - k6/x/remotewrite
 - module: github.com/grafana/xk6-client-tracing
