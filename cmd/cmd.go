@@ -81,7 +81,6 @@ func New() (*cobra.Command, error) {
 
 //nolint:forbidigo
 func run(ctx context.Context, args []string, opts *options) (result error) {
-
 	input := os.Stdin
 
 	if len(args) > 1 {
