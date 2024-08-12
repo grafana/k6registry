@@ -71,6 +71,9 @@ lint   |    no   | `false` | enable built-in linter
 compact|    no   | `false` | compact instead of pretty-printed output
 raw    |    no   | `false` | output raw strings, not JSON texts
 yaml   |    no   | `false` | output YAML instead of JSON
+ref    |    no   |         | reference output URL for change detection
+
+In GitHub action mode, the change can be indicated by comparing the output to a reference output. The reference output URL can be passed in the `ref` action parameter. The `changed` output variable will be `true` or `false` depending on whether the output has changed or not compared to the reference output.
 
 **Example usage**
 
