@@ -44,6 +44,10 @@ inputs:
     description: output YAML instead of JSON
     required: false
 
+  ref:
+    description: reference output URL for change detection
+    required: false
+
 runs:
   using: docker
   image: docker://ghcr.io/grafana/k6registry:v0
