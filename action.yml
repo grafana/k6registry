@@ -48,6 +48,10 @@ inputs:
     description: reference output URL for change detection
     required: false
 
+outputs:
+  changed:
+    description: "true if the output has changed compared to ref"
+
 runs:
   using: docker
   image: docker://ghcr.io/grafana/k6registry:v0
