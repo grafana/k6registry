@@ -58,7 +58,7 @@ Repository metadata is collected using the repository manager APIs. Currently on
 
 The output of the processing will be written to the standard output by default. The output can be saved to a file using the `out` parameter.
 
-**Parameters**
+**Inputs**
 
 name   | reqired | default | description
 -------|---------|---------|-------------
@@ -74,6 +74,12 @@ yaml   |    no   | `false` | output YAML instead of JSON
 ref    |    no   |         | reference output URL for change detection
 
 In GitHub action mode, the change can be indicated by comparing the output to a reference output. The reference output URL can be passed in the `ref` action parameter. The `changed` output variable will be `true` or `false` depending on whether the output has changed or not compared to the reference output.
+
+**Outputs**
+
+name    | description
+--------|------------
+changed | `true` if the output has changed compared to `ref`, otherwise `false`
 
 **Example usage**
 
