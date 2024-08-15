@@ -34,7 +34,8 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 		return nil, err
 	}
 
-	registry = append(registry, k6registry.Extension{Module: k6Module, Description: k6Description})
+	registry = append(registry,
+		k6registry.Extension{Module: k6Module, Description: k6Description, Cloud: true, Official: true})
 
 	for idx, ext := range registry {
 		if ext.Repo != nil {
