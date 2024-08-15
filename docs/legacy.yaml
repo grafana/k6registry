@@ -1,11 +1,3 @@
-- module: github.com/AckeeCZ/xk6-google-iap
-  description: Provides access to Google Auth token
-  imports:
-    - k6/x/googleIap
-- module: github.com/BarthV/xk6-es
-  description: Output test results to Elasticsearch
-  outputs:
-    - xk6-es
 - module: github.com/GhMartingit/xk6-mongo
   description: Load-test Mongo no-SQL databases
   imports:
@@ -26,10 +18,6 @@
   description: Export results to ClickHouse
   outputs:
     - clickhouse
-- module: github.com/NAlexandrov/xk6-tcp
-  description: Send data to TCP port
-  imports:
-    - k6/x/tcp
 - module: github.com/SYM01/xk6-proxy
   description: Add a dynamic proxy support to k6. Allow changing the HTTP proxy settings in the script.
   imports:
@@ -66,18 +54,10 @@
   description: Enable RPS increase & file streaming on HTTP/1.1 requests
   imports:
     - k6/x/fasthttp
-- module: github.com/dynatrace/xk6-output-dynatrace
-  description: Export results to Dynatrace
-  outputs:
-    - output-dynatrace
 - module: github.com/elastic/xk6-output-elasticsearch
   description: Export results to Elasticsearch 8.x
   outputs:
     - output-elasticsearch
-- module: github.com/fornfrey/xk6-celery
-  description: Generate load on Celery workers
-  imports:
-    - k6/x/celery
 - module: github.com/frankhefeng/xk6-oauth-pkce
   description: Generate OAuth PKCE code verifier and code challenge
   imports:
@@ -86,10 +66,6 @@
   description: Simple MLLP sender for k6
   imports:
     - k6/x/mllp
-- module: github.com/goharbor/xk6-harbor
-  description: Client for load testing Harbor container registry
-  imports:
-    - k6/x/harbor
 - module: github.com/golioth/xk6-coap
   description: Interact with Constrained Application Protocol endpoints.
   imports:
@@ -132,11 +108,6 @@
   official: true
   imports:
     - k6/x/kubernetes
-- module: github.com/grafana/xk6-loki
-  description: Client for load testing Loki
-  official: true
-  imports:
-    - k6/x/loki
 - module: github.com/grafana/xk6-notification
   description: Create notifications
   official: true
@@ -193,18 +164,10 @@
     - k6/x/output-prometheus-pushgateway
   outputs:
     - output-prometheus-pushgateway
-- module: github.com/mcosta74/xk6-plist
-  description: Parse/serialize property list (.plist) payloads
-  imports:
-    - k6/x/plist
 - module: github.com/mostafa/xk6-kafka
   description: Load-test Apache Kafka. Includes support for Avro messages
   imports:
     - k6/x/kafka
-- module: github.com/mridehalgh/xk6-sqs
-  description: Produce to an SQS queue
-  imports:
-    - k6/x/sqs
 - module: github.com/nicholasvuono/xk6-playwright
   description: Browser automation and end-to-end web testing using Playwright
   imports:
@@ -213,10 +176,6 @@
   description: Share key-value data between VUs
   imports:
     - k6/x/kv
-- module: github.com/patrick-janeiro/xk6-neo4j
-  description: Interact with Neo4J graph databases
-  imports:
-    - k6/x/neo4j
 - module: github.com/phymbert/xk6-sse
   description: A k6 extension for Server-Sent Events (SSE)
   imports:
@@ -297,7 +256,3 @@
   description: Client for STOMP protocol
   imports:
     - k6/x/stomp
-- module: github.com/ydarias/xk6-nats
-  description: Provides NATS support for k6 tests
-  imports:
-    - k6/x/nats

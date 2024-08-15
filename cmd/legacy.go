@@ -83,7 +83,17 @@ func legacyConvert(ctx context.Context) error {
 
 		legacyPatch(ext)
 
-		reg = append(reg, ext)
+		repo, err := loadRepository(ctx, ext.Module)
+		if err != nil {
+			return err
+		}
+
+		tmp := *ext
+		tmp.Repo = repo
+
+		if ok, _ := lintExtension(tmp); ok {
+			reg = append(reg, ext)
+		}
 	}
 
 	encoder := yaml.NewEncoder(os.Stdout) //nolint:forbidigo
