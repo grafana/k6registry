@@ -3,6 +3,8 @@ package cmd
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io"
 	"strings"
 
@@ -34,21 +36,20 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 		return nil, err
 	}
 
-	registry = append(registry, k6registry.Extension{Module: k6Module, Description: k6Description})
+	registry = append(registry,
+		k6registry.Extension{Module: k6Module, Description: k6Description, Cloud: true, Official: true})
 
 	for idx, ext := range registry {
 		if ext.Repo != nil {
 			continue
 		}
 
-		if strings.HasPrefix(ext.Module, k6Module) || strings.HasPrefix(ext.Module, ghModulePrefix) {
-			repo, err := loadGitHub(ctx, ext.Module)
-			if err != nil {
-				return nil, err
-			}
-
-			registry[idx].Repo = repo
+		repo, err := loadRepository(ctx, ext.Module)
+		if err != nil {
+			return nil, err
 		}
+
+		registry[idx].Repo = repo
 	}
 
 	if lint {
@@ -69,6 +70,19 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 	}
 
 	return result, nil
+}
+
+func loadRepository(ctx context.Context, module string) (*k6registry.Repository, error) {
+	if strings.HasPrefix(module, k6Module) || strings.HasPrefix(module, ghModulePrefix) {
+		repo, err := loadGitHub(ctx, module)
+		if err != nil {
+			return nil, err
+		}
+
+		return repo, nil
+	}
+
+	return nil, fmt.Errorf("%w: %s", errUnsupportedModule, module)
 }
 
 func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, error) {
@@ -141,3 +155,5 @@ const (
 	k6Module       = "go.k6.io/k6"
 	k6Description  = "A modern load testing tool, using Go and JavaScript"
 )
+
+var errUnsupportedModule = errors.New("unsupported module")
