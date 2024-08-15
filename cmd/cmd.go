@@ -90,7 +90,10 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		}
 
 		defer func() {
-			result = file.Close()
+			err := file.Close()
+			if result == nil && err != nil {
+				result = err
+			}
 		}()
 
 		input = file
@@ -105,7 +108,10 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		}
 
 		defer func() {
-			result = file.Close()
+			err := file.Close()
+			if result == nil && err != nil {
+				result = err
+			}
 		}()
 
 		output = file
