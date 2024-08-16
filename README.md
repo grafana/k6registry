@@ -2,11 +2,11 @@
 
 **Data model and tooling for the k6 extension registry**
 
-This repository contains the [JSON schema](docs/registry.schema.json) of the k6 extension registry and the [`k6registry`](#k6registry) command line tool for registry processing. The command line tool can also be used as a [GitHub Action](#github-action).
+This repository contains the [JSON schema](docs/registry.schema.json) of the k6 extension registry and the [`k6registry`](#k6registry) command line tool for generating registry from source. The command line tool can also be used as a [GitHub Action](#github-action).
 
 Check [k6 Extension Registry Concept](docs/registry.md) for information on design considerations.
 
-**Example registry**
+**Example registry source**
 
 ```yaml file=docs/example.yaml
 - module: github.com/grafana/xk6-dashboard
@@ -62,15 +62,12 @@ The output of the processing will be written to the standard output by default. 
 
 name   | reqired | default | description
 -------|---------|---------|-------------
-filter |    no   |    `.`  | jq compatible filter
 in     |   yes   |         | input file name
 out    |    no   |  stdout | output file name
 mute   |    no   | `false` | no output, only validation
 loose  |    no   | `false` | skip JSON schema validation
 lint   |    no   | `false` | enable built-in linter
 compact|    no   | `false` | compact instead of pretty-printed output
-raw    |    no   | `false` | output raw strings, not JSON texts
-yaml   |    no   | `false` | output YAML instead of JSON
 ref    |    no   |         | reference output URL for change detection
 
 In GitHub action mode, the change can be indicated by comparing the output to a reference output. The reference output URL can be passed in the `ref` action parameter. The `changed` output variable will be `true` or `false` depending on whether the output has changed or not compared to the reference output.
@@ -97,25 +94,23 @@ changed | `true` if the output has changed compared to `ref`, otherwise `false`
 <!-- #region cli -->
 ## k6registry
 
-k6 extension registry processor
+k6 extension registry generator
 
 ### Synopsis
 
-Command line k6 extension registry processor.
+Command line k6 extension registry generator.
 
-k6registry is a command line tool that enables k6 extension registry processing and the generation of customized JSON output for different applications. Processing is based on popular `jq` expressions using an embedded `jq` implementation.
+The source of the extension registry contains only the most important properties of the extensions. The rest of the properties are collected by k6registry using the API of the extensions' git repository managers.
 
-The first argument is the jq filter expression. This is the basis for processing.
+The source of the extension registry is read from the YAML format file specified as command line argument. If it is missing, the source is read from the standard input.
 
-The extension registry is read from the YAML format file specified in the second argument. If it is missing, the extension registry is read from the standard input.
+Repository metadata is collected using the API of the extensions' git repository managers. Currently only the GitHub API is supported.
 
-Repository metadata is collected using the repository manager APIs. Currently only the GitHub API is supported.
-
-The output of the processing will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
+The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
 
 
 ```
-k6registry [flags] <jq filter> [file]
+k6registry [flags] [file]
 ```
 
 ### Flags
@@ -126,8 +121,6 @@ k6registry [flags] <jq filter> [file]
       --loose        skip JSON schema validation
       --lint         enable built-in linter
   -c, --compact      compact instead of pretty-printed output
-  -r, --raw          output raw strings, not JSON texts
-  -y, --yaml         output YAML instead of JSON
   -V, --version      print version
   -h, --help         help for k6registry
 ```

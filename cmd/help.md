@@ -1,11 +1,9 @@
-Command line k6 extension registry processor.
+Command line k6 extension registry generator.
 
-k6registry is a command line tool that enables k6 extension registry processing and the generation of customized JSON output for different applications. Processing is based on popular `jq` expressions using an embedded `jq` implementation.
+The source of the extension registry contains only the most important properties of the extensions. The rest of the properties are collected by k6registry using the API of the extensions' git repository managers.
 
-The first argument is the jq filter expression. This is the basis for processing.
+The source of the extension registry is read from the YAML (or JSON) format file specified as command line argument. If it is missing, the source is read from the standard input.
 
-The extension registry is read from the YAML format file specified in the second argument. If it is missing, the extension registry is read from the standard input.
+Repository metadata is collected using the API of the extensions' git repository managers. Currently only the GitHub API is supported.
 
-Repository metadata is collected using the repository manager APIs. Currently only the GitHub API is supported.
-
-The output of the processing will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
+The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
