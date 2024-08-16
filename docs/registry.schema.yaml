@@ -70,24 +70,42 @@ $defs:
           Repository metadata.
 
           Metadata provided by the extension's git repository manager. Repository metadata are not registered, they are queried at runtime using the repository manager API.
-      official:
-        type: boolean
-        default: "false"
+      tier:
+        $ref: "#/$defs/tier"
+        default: "community"
         description: |
-          Officially supported extension flag.
+          Maintainer of the extension.
 
-          The `true` value of the `official` flag indicates that the extension is officially supported by Grafana.
+          Possible values:
 
-          Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default. There are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only. The `official` flag is needed so that officially supported extensions can be distinguished from them.
-      cloud:
-        type: boolean
-        default: "false"
+            - official: Extensions owned, maintained, and designated by Grafana as "official"
+            - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.
+            - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.
+
+          Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.
+          There are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only.
+          The `official` tier value is needed so that officially supported extensions can be distinguished from them.
+
+          If it is missing from the registry source, it will be set with the default "community" value during generation.
+
+      product:
+        type: array
+        items:
+          $ref: "#/$defs/product"
         description: |
-          Cloud-enabled extension flag.
+          Products in which the extension can be used.
 
-          The `true` value of the `cloud` flag indicates that the extension is also available in the Grafana k6 cloud.
+          Some extensions are not available in all k6 products.
+          This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
 
-          The use of certain extensions is not supported in a cloud environment. There may be a technological reason for this, or the extension's functionality is meaningless in the cloud.
+          Possible values:
+
+            - oss: Extensions are available in k6 OSS
+            - cloud: Extensions are available in Grafana Cloud k6
+
+          If the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.
+          In this case, the registry will be filled in accordingly during generation.
+
     required:
       - module
       - description
@@ -175,3 +193,40 @@ $defs:
           A `true` value indicates that the repository is archived, read only.
 
           If a repository is archived, it usually means that the owner has no intention of maintaining it. Such extensions should be removed from the registry.
+  tier:
+    type: string
+    enum: ["official", "partner", "community"]
+    description: |
+      Maintainer of the extension.
+
+      Extensions can be classified according to who maintains the extension.
+      This usually also specifies who the user can get support from.
+
+      Possible values:
+
+        - official: Extensions owned, maintained, and designated by Grafana as "official"
+        - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.
+        - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.
+
+      Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.
+      There are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only.
+      The `official` tier value is needed so that officially supported extensions can be distinguished from them.
+
+      If it is missing from the registry source, it will be set with the default "community" value during generation.
+
+  product:
+    type: string
+    enum: ["oss", "cloud"]
+    description: |
+      Products in which the extension can be used.
+
+      Some extensions are not available in all k6 products.
+      This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
+
+      Possible values:
+
+        - oss: Extensions are available in k6 OSS
+        - cloud: Extensions are available in Grafana Cloud k6
+
+      If the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.
+      In this case, the registry will be filled in accordingly during generation.

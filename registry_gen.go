@@ -16,17 +16,6 @@ package k6registry
 // documentation site without approval. Therefore, these properties are registered
 // (eg `description`)
 type Extension struct {
-	// Cloud-enabled extension flag.
-	//
-	// The `true` value of the `cloud` flag indicates that the extension is also
-	// available in the Grafana k6 cloud.
-	//
-	// The use of certain extensions is not supported in a cloud environment. There
-	// may be a technological reason for this, or the extension's functionality is
-	// meaningless in the cloud.
-	//
-	Cloud bool `json:"cloud,omitempty" yaml:"cloud,omitempty" mapstructure:"cloud,omitempty"`
-
 	// Brief description of the extension.
 	//
 	Description string `json:"description" yaml:"description" mapstructure:"description"`
@@ -57,19 +46,6 @@ type Extension struct {
 	//
 	Module string `json:"module" yaml:"module" mapstructure:"module"`
 
-	// Officially supported extension flag.
-	//
-	// The `true` value of the `official` flag indicates that the extension is
-	// officially supported by Grafana.
-	//
-	// Extensions owned by the `grafana` GitHub organization are not officially
-	// supported by Grafana by default. There are several k6 extensions owned by the
-	// `grafana` GitHub organization, which were created for experimental or example
-	// purposes only. The `official` flag is needed so that officially supported
-	// extensions can be distinguished from them.
-	//
-	Official bool `json:"official,omitempty" yaml:"official,omitempty" mapstructure:"official,omitempty"`
-
 	// List of output names registered by the extension.
 	//
 	// The extensions used by k6 scripts are automatically detected based on the
@@ -78,6 +54,24 @@ type Extension struct {
 	//
 	Outputs []string `json:"outputs,omitempty" yaml:"outputs,omitempty" mapstructure:"outputs,omitempty"`
 
+	// Products in which the extension can be used.
+	//
+	// Some extensions are not available in all k6 products.
+	// This may be for a technological or business reason, or the functionality of the
+	// extension may not make sense in the given product.
+	//
+	// Possible values:
+	//
+	//   - oss: Extensions are available in k6 OSS
+	//   - cloud: Extensions are available in Grafana Cloud k6
+	//
+	// If the property is missing or empty in the source of the registry, it means
+	// that the extension is only available in the k6 OSS product.
+	// In this case, the registry will be filled in accordingly during generation.
+	//
+	//
+	Product []Product `json:"product,omitempty" yaml:"product,omitempty" mapstructure:"product,omitempty"`
+
 	// Repository metadata.
 	//
 	// Metadata provided by the extension's git repository manager. Repository
@@ -85,7 +79,33 @@ type Extension struct {
 	// manager API.
 	//
 	Repo *Repository `json:"repo,omitempty" yaml:"repo,omitempty" mapstructure:"repo,omitempty"`
+
+	// Maintainer of the extension.
+	//
+	// Possible values:
+	//
+	//   - official: Extensions owned, maintained, and designated by Grafana as
+	// "official"
+	//   - partner: Extensions written, maintained, validated, and published by
+	// third-party companies against their own projects.
+	//   - community: Extensions are listed on the Registry by individual maintainers,
+	// groups of maintainers, or other members of the k6 community.
+	//
+	// Extensions owned by the `grafana` GitHub organization are not officially
+	// supported by Grafana by default.
+	// There are several k6 extensions owned by the `grafana` GitHub organization,
+	// which were created for experimental or example purposes only.
+	// The `official` tier value is needed so that officially supported extensions can
+	// be distinguished from them.
+	//
+	//
+	Tier Tier `json:"tier,omitempty" yaml:"tier,omitempty" mapstructure:"tier,omitempty"`
 }
+
+type Product string
+
+const ProductCloud Product = "cloud"
+const ProductOss Product = "oss"
 
 // k6 Extension Registry.
 //
@@ -167,3 +187,9 @@ type Repository struct {
 	//
 	Versions []string `json:"versions,omitempty" yaml:"versions,omitempty" mapstructure:"versions,omitempty"`
 }
+
+type Tier string
+
+const TierCommunity Tier = "community"
+const TierOfficial Tier = "official"
+const TierPartner Tier = "partner"
