@@ -71,19 +71,9 @@ func getArgs() []string {
 		args = append(args, "--compact")
 	}
 
-	if getenv("INPUT_RAW", "false") == "true" {
-		args = append(args, "--raw")
-	}
-
-	if getenv("INPUT_YAML", "false") == "true" {
-		args = append(args, "--yaml")
-	}
-
 	if out := getenv("INPUT_OUT", ""); len(out) != 0 {
 		args = append(args, "--out", out)
 	}
-
-	args = append(args, getenv("INPUT_FILTER", "."))
 
 	args = append(args, getenv("INPUT_IN", ""))
 

@@ -5,12 +5,9 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
-	"fmt"
-	"io"
 	"os"
 
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v3"
 )
 
 //go:embed help.md
@@ -19,8 +16,6 @@ var help string
 type options struct {
 	out     string
 	compact bool
-	raw     bool
-	yaml    bool
 	mute    bool
 	loose   bool
 	lint    bool
@@ -33,13 +28,13 @@ func New() (*cobra.Command, error) {
 	legacy := false
 
 	root := &cobra.Command{
-		Use:               "k6registry [flags] <jq filter> [file]",
-		Short:             "k6 extension registry processor",
+		Use:               "k6registry [flags] [source-file]",
+		Short:             "k6 extension registry generator",
 		Long:              help,
 		SilenceUsage:      true,
 		SilenceErrors:     true,
 		DisableAutoGenTag: true,
-		Args:              cobra.RangeArgs(1, 2),
+		Args:              cobra.MaximumNArgs(1),
 		CompletionOptions: cobra.CompletionOptions{DisableDefaultCmd: true},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if legacy {
@@ -66,9 +61,7 @@ func New() (*cobra.Command, error) {
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
-	flags.BoolVarP(&opts.raw, "raw", "r", false, "output raw strings, not JSON texts")
-	flags.BoolVarP(&opts.yaml, "yaml", "y", false, "output YAML instead of JSON")
-	root.MarkFlagsMutuallyExclusive("raw", "compact", "yaml", "mute")
+	root.MarkFlagsMutuallyExclusive("compact", "mute")
 
 	flags.BoolP("version", "V", false, "print version")
 
@@ -83,8 +76,8 @@ func New() (*cobra.Command, error) {
 func run(ctx context.Context, args []string, opts *options) (result error) {
 	input := os.Stdin
 
-	if len(args) > 1 {
-		file, err := os.Open(args[1])
+	if len(args) > 0 {
+		file, err := os.Open(args[0])
 		if err != nil {
 			return err
 		}
@@ -122,32 +115,8 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		return err
 	}
 
-	if err := jq(registry, args[0], printer(output, opts)); err != nil {
-		return err
-	}
-
-	return result
-}
-
-func printer(output io.Writer, opts *options) func(interface{}) error {
-	if opts.raw {
-		return func(v interface{}) error {
-			_, err := fmt.Fprintln(output, v)
-
-			return err
-		}
-	}
-
-	if opts.yaml {
-		encoder := yaml.NewEncoder(output)
-
-		return encoder.Encode
-	}
-
 	if opts.mute {
-		return func(_ interface{}) error {
-			return nil
-		}
+		return nil
 	}
 
 	encoder := json.NewEncoder(output)
@@ -156,5 +125,5 @@ func printer(output io.Writer, opts *options) func(interface{}) error {
 		encoder.SetIndent("", "  ")
 	}
 
-	return encoder.Encode
+	return encoder.Encode(registry)
 }

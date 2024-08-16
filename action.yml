@@ -1,5 +1,5 @@
 name: k6registry
-description: k6 extension registry processor
+description: k6 extension registry generator
 author: Grafana Labs
 
 branding:
@@ -7,11 +7,6 @@ branding:
   color: purple
 
 inputs:
-  filter:
-    description: jq compatible filter
-    required: false
-    default: .
-
   in:
     description: input file name
     required: true
@@ -34,14 +29,6 @@ inputs:
 
   compact:
     description: compact instead of pretty-printed output
-    required: false
-
-  raw:
-    description: output raw strings, not JSON texts
-    required: false
-
-  yaml:
-    description: output YAML instead of JSON
     required: false
 
   ref:

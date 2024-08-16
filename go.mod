@@ -7,7 +7,6 @@ require (
 	github.com/cli/go-gh/v2 v2.9.0
 	github.com/google/go-github/v62 v62.0.0
 	github.com/grafana/clireadme v0.1.0
-	github.com/itchyny/gojq v0.12.16
 	github.com/spf13/cobra v1.8.1
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/term v0.23.0
@@ -21,7 +20,6 @@ require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/henvic/httpretty v0.0.6 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/itchyny/timefmt-go v0.1.6 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
