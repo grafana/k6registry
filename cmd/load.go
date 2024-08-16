@@ -37,9 +37,25 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 	}
 
 	registry = append(registry,
-		k6registry.Extension{Module: k6Module, Description: k6Description, Cloud: true, Official: true})
+		k6registry.Extension{
+			Module:      k6Module,
+			Description: k6Description,
+			Tier:        k6registry.TierOfficial,
+			Product: []k6registry.Product{
+				k6registry.ProductCloud,
+				k6registry.ProductOss,
+			},
+		})
 
 	for idx, ext := range registry {
+		if len(ext.Tier) == 0 {
+			registry[idx].Tier = k6registry.TierCommunity
+		}
+
+		if len(ext.Product) == 0 {
+			registry[idx].Product = append(registry[idx].Product, k6registry.ProductOss)
+		}
+
 		if ext.Repo != nil {
 			continue
 		}

@@ -55,6 +55,7 @@ go-jsonschema -p k6registry --only-models -o registry_gen.go docs/registry.schem
 The example registry can be found in [example.yaml] file, the documentation ([registry.md], [README.md]) must be updated after modification.
 
 ```bash
+go run ./cmd/k6registry --lint docs/example.yaml > docs/example.json
 mdcode update docs/registry.md
 mdcode update README.md
 ```
@@ -147,5 +148,5 @@ Requires
 ## legacy - Convert legacy registry
 
 ```bash
- go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","official","cloud","imports","outputs","repo"])|sort_by(.module)' > ./docs/legacy.yaml
+ go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","tier","product","imports","outputs","repo"])|sort_by(.module)' > ./docs/legacy.yaml
 ```

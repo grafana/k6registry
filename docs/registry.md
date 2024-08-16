@@ -37,13 +37,34 @@ The JavaScript module names implemented by the extension can be specified in the
 
 The output names implemented by the extension can be specified in the `outputs` property. An extension can register multiple output names, so this is an array property.
 
-### Cloud
+### Tier
 
-The `true` value of the `cloud` flag indicates that the extension is also available in the Grafana k6 cloud. The use of certain extensions is not supported in a cloud environment. There may be a technological reason for this, or the extension's functionality is meaningless in the cloud.
+Extensions can be classified according to who maintains the extension. This usually also specifies who the user can get support from.
 
-### Official
+The `tier` property refers to the maintainer of the extension.
 
-The `true` value of the `official` flag indicates that the extension is officially supported by Grafana. Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default. There are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only. The `official` flag is needed so that officially supported extensions can be distinguished from them.
+Possible values:
+
+  - **official**: Extensions owned, maintained, and designated by Grafana as "official"
+  - **partner**: Extensions written, maintained, validated, and published by third-party companies against their own projects.
+  - **community**: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.
+
+Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default. There are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only. The `official` tier value is needed so that officially supported extensions can be distinguished from them.
+
+If it is missing from the registry source, it will be set with the default `community` value during generation.
+
+### Product
+
+The `product` property contains the names of the k6 products in which the extension is available.
+
+Some extensions are not available in all k6 products. This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
+
+Possible values:
+
+  - **oss**: Extensions are available in *k6 OSS*
+  - **cloud**: Extensions are available in *Grafana Cloud k6*
+
+If the property is missing or empty in the source of the registry, it means that the extension is only available in the *k6 OSS* product. In this case, the registry will be filled in accordingly during generation.
 
 ### Example registry
 
@@ -52,20 +73,20 @@ The `true` value of the `official` flag indicates that the extension is official
   description: Web-based metrics dashboard for k6
   outputs:
     - dashboard
-  official: true
+  tier: official
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
-  cloud: true
-  official: true
+  tier: official
+  product: ["cloud", "oss"]
 
-- module: github.com/grafana/xk6-distruptor
+- module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
-    - k6/x/distruptor
-  official: true
+    - k6/x/disruptor
+  tier: official
 
 - module: github.com/szkiba/xk6-faker
   description: Generate random fake data
@@ -150,7 +171,5 @@ Custom linter checks the following for each extension:
   - Is a valid license configured?
   - Is the xk6 topic set for the repository?
   - Is the repository not archived?
-
-Schema based validation is always done before processing. The noop filter ('.') can be used for validation only by ignoring (or muting) the output.
 
 It is strongly recommended to lint the extension registry after each modification, but at least before approving the change.

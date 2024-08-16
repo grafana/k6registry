@@ -2,20 +2,20 @@
   description: Web-based metrics dashboard for k6
   outputs:
     - dashboard
-  official: true
+  tier: official
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
-  cloud: true
-  official: true
+  tier: official
+  product: ["cloud", "oss"]
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
-  official: true
+  tier: official
 
 - module: github.com/szkiba/xk6-faker
   description: Generate random fake data

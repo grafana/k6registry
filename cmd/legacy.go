@@ -57,12 +57,7 @@ func legacyConvert(ctx context.Context) error {
 
 		ext.Module = strings.TrimPrefix(legacyExt.URL, "https://")
 		ext.Description = legacyExt.Description
-
-		for _, tier := range legacyExt.Tiers {
-			if strings.ToLower(tier) == "official" {
-				ext.Official = true
-			}
-		}
+		ext.Tier = legacyTierToTier(legacyExt.Tiers)
 
 		for _, legacyType := range legacyExt.Type {
 			typ := strings.ToLower(legacyType)
@@ -103,6 +98,21 @@ func legacyConvert(ctx context.Context) error {
 	}
 
 	return nil
+}
+
+func legacyTierToTier(tiers []string) k6registry.Tier {
+	for _, tier := range tiers {
+		switch strings.ToLower(tier) {
+		case "official":
+			return k6registry.TierOfficial
+		case "partner":
+			return k6registry.TierPartner
+		default:
+			return ""
+		}
+	}
+
+	return ""
 }
 
 func legacyPatch(ext *k6registry.Extension) {

@@ -80,62 +80,62 @@
     - k6/x/smtp
 - module: github.com/grafana/xk6-client-prometheus-remote
   description: Test Prometheus Remote Write performance
-  official: true
+  tier: official
   imports:
     - k6/x/remotewrite
 - module: github.com/grafana/xk6-client-tracing
   description: Client for load testing distributed tracing backends
-  official: true
+  tier: official
   imports:
     - k6/x/tracing
 - module: github.com/grafana/xk6-dashboard
   description: Create a web-based metrics dashboard
-  official: true
+  tier: official
   outputs:
     - dashboard
 - module: github.com/grafana/xk6-disruptor
   description: "Inject faults to test \U0001F4A3"
-  official: true
+  tier: official
   imports:
     - k6/x/disruptor
 - module: github.com/grafana/xk6-exec
   description: Run external commands
-  official: true
+  tier: official
   imports:
     - k6/x/exec
 - module: github.com/grafana/xk6-kubernetes
   description: Interact with Kubernetes clusters
-  official: true
+  tier: official
   imports:
     - k6/x/kubernetes
 - module: github.com/grafana/xk6-notification
   description: Create notifications
-  official: true
+  tier: official
   imports:
     - k6/x/notification
 - module: github.com/grafana/xk6-output-influxdb
   description: Export results to InfluxDB v2
-  official: true
+  tier: official
   outputs:
     - xk6-influxdb
 - module: github.com/grafana/xk6-output-kafka
   description: Export k6 results in real-time to Kafka
-  official: true
+  tier: official
   outputs:
     - xk6-kafka
 - module: github.com/grafana/xk6-output-timescaledb
   description: Export k6 results to TimescaleDB
-  official: true
+  tier: official
   outputs:
     - timescaledb
 - module: github.com/grafana/xk6-sql
   description: Load-test SQL Servers (PostgreSQL, MySQL and SQLite3 for now)
-  official: true
+  tier: official
   imports:
     - k6/x/sql
 - module: github.com/grafana/xk6-ssh
   description: SSH
-  official: true
+  tier: official
   imports:
     - k6/x/ssh
 - module: github.com/grafana/xk6-ts
