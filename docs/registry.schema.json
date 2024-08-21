@@ -25,7 +25,8 @@
         "imports": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^k6/x/"
           },
           "description": "List of JavaScript import paths registered by the extension.\n\nCurrently, paths must start with the prefix `k6/x/`.\n\nThe extensions used by k6 scripts are automatically detected based on the values specified here, therefore it is important that the values used here are consistent with the values registered by the extension at runtime.\n",
           "examples": [
@@ -65,14 +66,21 @@
         "tier": {
           "$ref": "#/$defs/tier",
           "default": "community",
-          "description": "Maintainer of the extension.\n\nPossible values:\n\n  - official: Extensions owned, maintained, and designated by Grafana as \"official\"\n  - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.\n  - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.\n\nExtensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.\nThere are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only.\nThe `official` tier value is needed so that officially supported extensions can be distinguished from them.\n"
+          "description": "Maintainer of the extension.\n\nPossible values:\n\n  - official: Extensions owned, maintained, and designated by Grafana as \"official\"\n  - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.\n  - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.\n\nExtensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.\nThere are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only.\nThe `official` tier value is needed so that officially supported extensions can be distinguished from them.\n\nIf it is missing from the registry source, it will be set with the default \"community\" value during generation.\n"
         },
-        "product": {
+        "products": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/product"
           },
           "description": "Products in which the extension can be used.\n\nSome extensions are not available in all k6 products.\nThis may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.\n\nPossible values:\n\n  - oss: Extensions are available in k6 OSS\n  - cloud: Extensions are available in Grafana Cloud k6\n\nIf the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.\nIn this case, the registry will be filled in accordingly during generation.\n"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/category"
+          },
+          "description": "The categories to which the extension belongs.\n\nIf the property is missing or empty in the registry source, the default value is \"misc\".\n\nPossible values:\n\n  - authentication\n  - browser\n  - data\n  - kubernetes\n  - messaging\n  - misc\n  - observability\n  - protocol\n  - reporting\n"
         }
       },
       "required": [
@@ -155,7 +163,7 @@
         "partner",
         "community"
       ],
-      "description": "Maintainer of the extension.\n\nExtensions can be classified according to who maintains the extension.\nThis usually also specifies who the user can get support from.\n\nPossible values:\n\n  - official: Extensions owned, maintained, and designated by Grafana as \"official\"\n  - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.\n  - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.\n\nExtensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.\nThere are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only.\nThe `official` tier value is needed so that officially supported extensions can be distinguished from them.\n"
+      "description": "Maintainer of the extension.\n\nExtensions can be classified according to who maintains the extension.\nThis usually also specifies who the user can get support from.\n\nPossible values:\n\n  - official: Extensions owned, maintained, and designated by Grafana as \"official\"\n  - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.\n  - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.\n\nExtensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.\nThere are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only.\nThe `official` tier value is needed so that officially supported extensions can be distinguished from them.\n\nIf it is missing from the registry source, it will be set with the default \"community\" value during generation.\n"
     },
     "product": {
       "type": "string",
@@ -164,6 +172,21 @@
         "cloud"
       ],
       "description": "Products in which the extension can be used.\n\nSome extensions are not available in all k6 products.\nThis may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.\n\nPossible values:\n\n  - oss: Extensions are available in k6 OSS\n  - cloud: Extensions are available in Grafana Cloud k6\n\nIf the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.\nIn this case, the registry will be filled in accordingly during generation.\n"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "authentication",
+        "browser",
+        "data",
+        "kubernetes",
+        "messaging",
+        "misc",
+        "observability",
+        "protocol",
+        "reporting"
+      ],
+      "description": "The categories to which the extension belongs.\n\nIf the property is missing or empty in the registry source, the default value is \"misc\".\n\nPossible values:\n\n  - authentication\n  - browser\n  - data\n  - kubernetes\n  - messaging\n  - misc\n  - observability\n  - protocol\n  - reporting\n"
     }
   }
 }

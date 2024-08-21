@@ -1,11 +1,15 @@
 [
   {
+    "categories": [
+      "reporting",
+      "observability"
+    ],
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
       "dashboard"
     ],
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -15,7 +19,7 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 320,
+      "stars": 323,
       "topics": [
         "xk6",
         "xk6-official",
@@ -62,12 +66,15 @@
     "tier": "official"
   },
   {
+    "categories": [
+      "data"
+    ],
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "product": [
+    "products": [
       "cloud",
       "oss"
     ],
@@ -78,7 +85,7 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 102,
+      "stars": 104,
       "topics": [
         "k6",
         "sql",
@@ -98,12 +105,15 @@
     "tier": "official"
   },
   {
+    "categories": [
+      "kubernetes"
+    ],
     "description": "Inject faults to test",
     "imports": [
       "k6/x/disruptor"
     ],
     "module": "github.com/grafana/xk6-disruptor",
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -148,12 +158,15 @@
     "tier": "official"
   },
   {
+    "categories": [
+      "data"
+    ],
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
     ],
     "module": "github.com/szkiba/xk6-faker",
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -181,9 +194,12 @@
     "tier": "community"
   },
   {
+    "categories": [
+      "misc"
+    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "module": "go.k6.io/k6",
-    "product": [
+    "products": [
       "cloud",
       "oss"
     ],
@@ -194,7 +210,7 @@
       "name": "k6",
       "owner": "grafana",
       "public": true,
-      "stars": 24184,
+      "stars": 24285,
       "topics": [
         "es6",
         "go",

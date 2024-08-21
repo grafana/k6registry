@@ -39,6 +39,7 @@ $defs:
         type: array
         items:
           type: string
+          pattern: "^k6/x/"
         description: |
           List of JavaScript import paths registered by the extension.
 
@@ -88,7 +89,7 @@ $defs:
 
           If it is missing from the registry source, it will be set with the default "community" value during generation.
 
-      product:
+      products:
         type: array
         items:
           $ref: "#/$defs/product"
@@ -105,6 +106,27 @@ $defs:
 
           If the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.
           In this case, the registry will be filled in accordingly during generation.
+
+      categories:
+        type: array
+        items:
+          $ref: "#/$defs/category"
+        description: |
+          The categories to which the extension belongs.
+
+          If the property is missing or empty in the registry source, the default value is "misc".
+
+          Possible values:
+
+            - authentication
+            - browser
+            - data
+            - kubernetes
+            - messaging
+            - misc
+            - observability
+            - protocol
+            - reporting
 
     required:
       - module
@@ -230,3 +252,31 @@ $defs:
 
       If the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.
       In this case, the registry will be filled in accordingly during generation.
+  category:
+    type: string
+    enum:
+      - authentication
+      - browser
+      - data
+      - kubernetes
+      - messaging
+      - misc
+      - observability
+      - protocol
+      - reporting
+    description: |
+      The categories to which the extension belongs.
+
+      If the property is missing or empty in the registry source, the default value is "misc".
+
+      Possible values:
+
+        - authentication
+        - browser
+        - data
+        - kubernetes
+        - messaging
+        - misc
+        - observability
+        - protocol
+        - reporting

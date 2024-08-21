@@ -41,7 +41,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 			Module:      k6Module,
 			Description: k6Description,
 			Tier:        k6registry.TierOfficial,
-			Product: []k6registry.Product{
+			Products: []k6registry.Product{
 				k6registry.ProductCloud,
 				k6registry.ProductOss,
 			},
@@ -52,8 +52,12 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 			registry[idx].Tier = k6registry.TierCommunity
 		}
 
-		if len(ext.Product) == 0 {
-			registry[idx].Product = append(registry[idx].Product, k6registry.ProductOss)
+		if len(ext.Products) == 0 {
+			registry[idx].Products = append(registry[idx].Products, k6registry.ProductOss)
+		}
+
+		if len(ext.Categories) == 0 {
+			registry[idx].Categories = append(registry[idx].Categories, k6registry.CategoryMisc)
 		}
 
 		if ext.Repo != nil {

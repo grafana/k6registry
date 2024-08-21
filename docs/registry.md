@@ -53,9 +53,9 @@ Extensions owned by the `grafana` GitHub organization are not officially support
 
 If it is missing from the registry source, it will be set with the default `community` value during generation.
 
-### Product
+### Products
 
-The `product` property contains the names of the k6 products in which the extension is available.
+The `products` property contains the names of the k6 products in which the extension is available.
 
 Some extensions are not available in all k6 products. This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
 
@@ -74,25 +74,52 @@ If the property is missing or empty in the source of the registry, it means that
   outputs:
     - dashboard
   tier: official
+  categories:
+    - reporting
+    - observability
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
   tier: official
-  product: ["cloud", "oss"]
+  products: ["cloud", "oss"]
+  categories:
+    - data
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
   tier: official
+  categories:
+    - kubernetes
 
 - module: github.com/szkiba/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
+  categories:
+    - data
 ```
+
+### Categories
+
+The `categories` property contains the categories to which the extension belongs.
+
+If the property is missing or empty in the registry source, the default value is "misc".
+
+Possible values:
+
+  - **authentication**
+  - **browser**
+  - **data**
+  - **kubernetes**
+  - **messaging**
+  - **misc**
+  - **observability**
+  - **protocol**
+  - **reporting**
 
 ### Repository Metadata
 
