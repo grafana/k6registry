@@ -23,7 +23,7 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
   imports:
     - k6/x/sql
   tier: official
-  product: ["cloud", "oss"]
+  products: ["cloud", "oss"]
   categories:
     - data
 
@@ -60,7 +60,7 @@ Registry generated from the source above.
     "outputs": [
       "dashboard"
     ],
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -125,7 +125,7 @@ Registry generated from the source above.
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "product": [
+    "products": [
       "cloud",
       "oss"
     ],
@@ -164,7 +164,7 @@ Registry generated from the source above.
       "k6/x/disruptor"
     ],
     "module": "github.com/grafana/xk6-disruptor",
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -217,7 +217,7 @@ Registry generated from the source above.
       "k6/x/faker"
     ],
     "module": "github.com/szkiba/xk6-faker",
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -250,7 +250,7 @@ Registry generated from the source above.
     ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "module": "go.k6.io/k6",
-    "product": [
+    "products": [
       "cloud",
       "oss"
     ],

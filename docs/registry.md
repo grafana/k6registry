@@ -53,9 +53,9 @@ Extensions owned by the `grafana` GitHub organization are not officially support
 
 If it is missing from the registry source, it will be set with the default `community` value during generation.
 
-### Product
+### Products
 
-The `product` property contains the names of the k6 products in which the extension is available.
+The `products` property contains the names of the k6 products in which the extension is available.
 
 Some extensions are not available in all k6 products. This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
 
@@ -83,7 +83,7 @@ If the property is missing or empty in the source of the registry, it means that
   imports:
     - k6/x/sql
   tier: official
-  product: ["cloud", "oss"]
+  products: ["cloud", "oss"]
   categories:
     - data
 

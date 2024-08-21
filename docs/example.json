@@ -9,7 +9,7 @@
     "outputs": [
       "dashboard"
     ],
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -74,7 +74,7 @@
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "product": [
+    "products": [
       "cloud",
       "oss"
     ],
@@ -113,7 +113,7 @@
       "k6/x/disruptor"
     ],
     "module": "github.com/grafana/xk6-disruptor",
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -166,7 +166,7 @@
       "k6/x/faker"
     ],
     "module": "github.com/szkiba/xk6-faker",
-    "product": [
+    "products": [
       "oss"
     ],
     "repo": {
@@ -199,7 +199,7 @@
     ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "module": "go.k6.io/k6",
-    "product": [
+    "products": [
       "cloud",
       "oss"
     ],

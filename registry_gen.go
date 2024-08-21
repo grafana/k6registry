@@ -102,7 +102,7 @@ type Extension struct {
 	// In this case, the registry will be filled in accordingly during generation.
 	//
 	//
-	Product []Product `json:"product,omitempty" yaml:"product,omitempty" mapstructure:"product,omitempty"`
+	Products []Product `json:"products,omitempty" yaml:"products,omitempty" mapstructure:"products,omitempty"`
 
 	// Repository metadata.
 	//

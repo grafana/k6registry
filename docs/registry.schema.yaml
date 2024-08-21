@@ -88,7 +88,7 @@ $defs:
 
           If it is missing from the registry source, it will be set with the default "community" value during generation.
 
-      product:
+      products:
         type: array
         items:
           $ref: "#/$defs/product"

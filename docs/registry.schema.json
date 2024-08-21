@@ -67,7 +67,7 @@
           "default": "community",
           "description": "Maintainer of the extension.\n\nPossible values:\n\n  - official: Extensions owned, maintained, and designated by Grafana as \"official\"\n  - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.\n  - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.\n\nExtensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.\nThere are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only.\nThe `official` tier value is needed so that officially supported extensions can be distinguished from them.\n\nIf it is missing from the registry source, it will be set with the default \"community\" value during generation.\n"
         },
-        "product": {
+        "products": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/product"

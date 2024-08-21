@@ -12,7 +12,7 @@
   imports:
     - k6/x/sql
   tier: official
-  product: ["cloud", "oss"]
+  products: ["cloud", "oss"]
   categories:
     - data
 
