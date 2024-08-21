@@ -169,23 +169,23 @@ If a repository is archived, it usually means that the owner has no intention of
 
 ## Registry Processing
 
-The source of the registry is a YAML file optimized for human use. For programs that use the registry, it is advisable to generate an output in JSON format optimized for the given application (for example, an extension catalog for the k6build service).
+The source of the registry is a YAML file optimized for human use. Since collecting extension metadata is a complicated and time-consuming task, it is advisable to extract this step into a registry generator CLI tool. The output of this tool is an extension registry in JSON format.
+
+For programs that use the registry, it is advisable to generate an output in JSON format optimized for the given application (for example, an extension catalog for the k6build service).
+
+Generating custom JSON from the extension registry can be done with any standard JSON filtering tool, for example using the popular `jq` tool.
 
 ```mermaid
 ---
 title: registry processing
 ---
 erDiagram
-    "registry processor" ||--|| "extension registry" : input
-    "registry processor" ||--|{ "repository manager" : metadata
-    "registry processor" ||--|| "jq expression" : filter
-    "registry processor" ||--|| "custom JSON" : output
+    "registry generator" ||--|| "extension registry source" : input
+    "registry generator" ||--|{ "repository manager" : metadata
+    "registry generator" ||--|| "extension registry" : output
+    "extension registry" ||--|| "custom JSON" : "generate (jq)"
     "custom JSON" }|--|{ "application" : uses
 ```
-
-The registry is processed based on the popular `jq` expressions.
-
-The input of the processing is the extension registry supplemented with repository metadata (for example, available versions, number of stars, etc). The output of the processing is defined by the `jq` filter.
 
 ### Registry Validation
 
