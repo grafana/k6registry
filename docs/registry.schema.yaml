@@ -39,6 +39,7 @@ $defs:
         type: array
         items:
           type: string
+          pattern: "^k6/x/"
         description: |
           List of JavaScript import paths registered by the extension.
 
