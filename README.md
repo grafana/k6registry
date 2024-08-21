@@ -14,6 +14,9 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
   outputs:
     - dashboard
   tier: official
+  categories:
+    - reporting
+    - observability
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
@@ -21,17 +24,23 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
     - k6/x/sql
   tier: official
   product: ["cloud", "oss"]
+  categories:
+    - data
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
   tier: official
+  categories:
+    - kubernetes
 
 - module: github.com/szkiba/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
+  categories:
+    - data
 ```
 
 <details>
@@ -42,6 +51,10 @@ Registry generated from the source above.
 ```json file=docs/example.json
 [
   {
+    "categories": [
+      "reporting",
+      "observability"
+    ],
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
@@ -57,7 +70,7 @@ Registry generated from the source above.
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 320,
+      "stars": 323,
       "topics": [
         "xk6",
         "xk6-official",
@@ -104,6 +117,9 @@ Registry generated from the source above.
     "tier": "official"
   },
   {
+    "categories": [
+      "data"
+    ],
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
@@ -120,7 +136,7 @@ Registry generated from the source above.
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 102,
+      "stars": 104,
       "topics": [
         "k6",
         "sql",
@@ -140,6 +156,9 @@ Registry generated from the source above.
     "tier": "official"
   },
   {
+    "categories": [
+      "kubernetes"
+    ],
     "description": "Inject faults to test",
     "imports": [
       "k6/x/disruptor"
@@ -190,6 +209,9 @@ Registry generated from the source above.
     "tier": "official"
   },
   {
+    "categories": [
+      "data"
+    ],
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
@@ -223,6 +245,9 @@ Registry generated from the source above.
     "tier": "community"
   },
   {
+    "categories": [
+      "misc"
+    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "module": "go.k6.io/k6",
     "product": [
@@ -236,7 +261,7 @@ Registry generated from the source above.
       "name": "k6",
       "owner": "grafana",
       "public": true,
-      "stars": 24184,
+      "stars": 24285,
       "topics": [
         "es6",
         "go",

@@ -56,6 +56,10 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 			registry[idx].Product = append(registry[idx].Product, k6registry.ProductOss)
 		}
 
+		if len(ext.Categories) == 0 {
+			registry[idx].Categories = append(registry[idx].Categories, k6registry.CategoryMisc)
+		}
+
 		if ext.Repo != nil {
 			continue
 		}

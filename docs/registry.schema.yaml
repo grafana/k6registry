@@ -106,6 +106,27 @@ $defs:
           If the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.
           In this case, the registry will be filled in accordingly during generation.
 
+      categories:
+        type: array
+        items:
+          $ref: "#/$defs/category"
+        description: |
+          The categories to which the extension belongs.
+
+          If the property is missing or empty in the registry source, the default value is "misc".
+
+          Possible values:
+
+            - authentication
+            - browser
+            - data
+            - kubernetes
+            - messaging
+            - misc
+            - observability
+            - protocol
+            - reporting
+
     required:
       - module
       - description
@@ -230,3 +251,31 @@ $defs:
 
       If the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.
       In this case, the registry will be filled in accordingly during generation.
+  category:
+    type: string
+    enum:
+      - authentication
+      - browser
+      - data
+      - kubernetes
+      - messaging
+      - misc
+      - observability
+      - protocol
+      - reporting
+    description: |
+      The categories to which the extension belongs.
+
+      If the property is missing or empty in the registry source, the default value is "misc".
+
+      Possible values:
+
+        - authentication
+        - browser
+        - data
+        - kubernetes
+        - messaging
+        - misc
+        - observability
+        - protocol
+        - reporting

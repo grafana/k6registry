@@ -1,5 +1,9 @@
 [
   {
+    "categories": [
+      "reporting",
+      "observability"
+    ],
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
@@ -15,7 +19,7 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 320,
+      "stars": 323,
       "topics": [
         "xk6",
         "xk6-official",
@@ -62,6 +66,9 @@
     "tier": "official"
   },
   {
+    "categories": [
+      "data"
+    ],
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
@@ -78,7 +85,7 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 102,
+      "stars": 104,
       "topics": [
         "k6",
         "sql",
@@ -98,6 +105,9 @@
     "tier": "official"
   },
   {
+    "categories": [
+      "kubernetes"
+    ],
     "description": "Inject faults to test",
     "imports": [
       "k6/x/disruptor"
@@ -148,6 +158,9 @@
     "tier": "official"
   },
   {
+    "categories": [
+      "data"
+    ],
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
@@ -181,6 +194,9 @@
     "tier": "community"
   },
   {
+    "categories": [
+      "misc"
+    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "module": "go.k6.io/k6",
     "product": [
@@ -194,7 +210,7 @@
       "name": "k6",
       "owner": "grafana",
       "public": true,
-      "stars": 24184,
+      "stars": 24285,
       "topics": [
         "es6",
         "go",

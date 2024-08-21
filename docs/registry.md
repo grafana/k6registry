@@ -74,6 +74,9 @@ If the property is missing or empty in the source of the registry, it means that
   outputs:
     - dashboard
   tier: official
+  categories:
+    - reporting
+    - observability
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
@@ -81,17 +84,23 @@ If the property is missing or empty in the source of the registry, it means that
     - k6/x/sql
   tier: official
   product: ["cloud", "oss"]
+  categories:
+    - data
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
   tier: official
+  categories:
+    - kubernetes
 
 - module: github.com/szkiba/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
+  categories:
+    - data
 ```
 
 ### Repository Metadata

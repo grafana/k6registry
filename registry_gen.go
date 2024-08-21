@@ -2,6 +2,18 @@
 
 package k6registry
 
+type Category string
+
+const CategoryAuthentication Category = "authentication"
+const CategoryBrowser Category = "browser"
+const CategoryData Category = "data"
+const CategoryKubernetes Category = "kubernetes"
+const CategoryMessaging Category = "messaging"
+const CategoryMisc Category = "misc"
+const CategoryObservability Category = "observability"
+const CategoryProtocol Category = "protocol"
+const CategoryReporting Category = "reporting"
+
 // Properties of the registered k6 extension.
 //
 // Only those properties of the extensions are registered, which either cannot be
@@ -16,6 +28,26 @@ package k6registry
 // documentation site without approval. Therefore, these properties are registered
 // (eg `description`)
 type Extension struct {
+	// The categories to which the extension belongs.
+	//
+	// If the property is missing or empty in the registry source, the default value
+	// is "misc".
+	//
+	// Possible values:
+	//
+	//   - authentication
+	//   - browser
+	//   - data
+	//   - kubernetes
+	//   - messaging
+	//   - misc
+	//   - observability
+	//   - protocol
+	//   - reporting
+	//
+	//
+	Categories []Category `json:"categories,omitempty" yaml:"categories,omitempty" mapstructure:"categories,omitempty"`
+
 	// Brief description of the extension.
 	//
 	Description string `json:"description" yaml:"description" mapstructure:"description"`
@@ -97,6 +129,9 @@ type Extension struct {
 	// which were created for experimental or example purposes only.
 	// The `official` tier value is needed so that officially supported extensions can
 	// be distinguished from them.
+	//
+	// If it is missing from the registry source, it will be set with the default
+	// "community" value during generation.
 	//
 	//
 	Tier Tier `json:"tier,omitempty" yaml:"tier,omitempty" mapstructure:"tier,omitempty"`
