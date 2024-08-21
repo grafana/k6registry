@@ -103,6 +103,24 @@ If the property is missing or empty in the source of the registry, it means that
     - data
 ```
 
+### Categories
+
+The `categories` property contains the categories to which the extension belongs.
+
+If the property is missing or empty in the registry source, the default value is "misc".
+
+Possible values:
+
+  - **authentication**
+  - **browser**
+  - **data**
+  - **kubernetes**
+  - **messaging**
+  - **misc**
+  - **observability**
+  - **protocol**
+  - **reporting**
+
 ### Repository Metadata
 
 Repository metadata provided by the extension's git repository manager. Repository metadata are not registered, they are queried at processing time using the repository manager API.
