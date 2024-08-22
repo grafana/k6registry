@@ -31,7 +31,7 @@ func legacyConvert(ctx context.Context) error {
 
 	content, _, _, err := client.Repositories.GetContents(
 		ctx,
-		"szkiba",
+		"grafana",
 		"k6-docs",
 		"src/data/doc-extensions/extensions.json",
 		nil,
