@@ -31,7 +31,7 @@ func legacyConvert(ctx context.Context) error {
 
 	content, _, _, err := client.Repositories.GetContents(
 		ctx,
-		"grafana",
+		"szkiba",
 		"k6-docs",
 		"src/data/doc-extensions/extensions.json",
 		nil,
@@ -248,6 +248,7 @@ var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
 	"github.com/ydarias/xk6-nats":                              {},
 	"go.k6.io/k6":                                              {},
 	"github.com/wosp-io/xk6-playwright":                        {module: "github.com/nicholasvuono/xk6-playwright"},
+	"gitlab.com/szkiba/xk6-banner":                             {},
 }
 
 var phrases = map[string]string{ //nolint:gochecknoglobals

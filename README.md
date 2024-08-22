@@ -41,6 +41,13 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
     - k6/x/faker
   categories:
     - data
+
+- module: gitlab.com/szkiba/xk6-banner
+  description: Print ASCII art banner from k6 test
+  imports:
+    - k6/x/banner
+  categories:
+    - misc
 ```
 
 <details>
@@ -70,7 +77,7 @@ Registry generated from the source above.
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 323,
+      "stars": 325,
       "topics": [
         "xk6",
         "xk6-official",
@@ -174,7 +181,7 @@ Registry generated from the source above.
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 87,
+      "stars": 88,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -248,6 +255,35 @@ Registry generated from the source above.
     "categories": [
       "misc"
     ],
+    "description": "Print ASCII art banner from k6 test",
+    "imports": [
+      "k6/x/banner"
+    ],
+    "module": "gitlab.com/szkiba/xk6-banner",
+    "products": [
+      "oss"
+    ],
+    "repo": {
+      "description": "Print ASCII art banner from k6 test.",
+      "homepage": "https://gitlab.com/szkiba/xk6-banner",
+      "license": "MIT",
+      "name": "xk6-banner",
+      "owner": "szkiba",
+      "public": true,
+      "topics": [
+        "xk6"
+      ],
+      "url": "https://gitlab.com/szkiba/xk6-banner",
+      "versions": [
+        "v0.1.0"
+      ]
+    },
+    "tier": "community"
+  },
+  {
+    "categories": [
+      "misc"
+    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "module": "go.k6.io/k6",
     "products": [
@@ -261,7 +297,7 @@ Registry generated from the source above.
       "name": "k6",
       "owner": "grafana",
       "public": true,
-      "stars": 24285,
+      "stars": 24302,
       "topics": [
         "es6",
         "go",
@@ -441,7 +477,7 @@ Command line k6 extension registry generator.
 
 The source of the extension registry contains only the most important properties of the extensions. The rest of the properties are collected by k6registry using the API of the extensions' git repository managers.
 
-The source of the extension registry is read from the YAML format file specified as command line argument. If it is missing, the source is read from the standard input.
+The source of the extension registry is read from the YAML (or JSON) format file specified as command line argument. If it is missing, the source is read from the standard input.
 
 Repository metadata is collected using the API of the extensions' git repository managers. Currently only the GitHub API is supported.
 
@@ -449,7 +485,7 @@ The output of the generation will be written to the standard output by default. 
 
 
 ```
-k6registry [flags] [file]
+k6registry [flags] [source-file]
 ```
 
 ### Flags

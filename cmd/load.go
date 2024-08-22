@@ -11,6 +11,7 @@ import (
 	"github.com/Masterminds/semver"
 	"github.com/google/go-github/v62/github"
 	"github.com/grafana/k6registry"
+	"github.com/xanzy/go-gitlab"
 	"gopkg.in/yaml.v3"
 )
 
@@ -102,6 +103,15 @@ func loadRepository(ctx context.Context, module string) (*k6registry.Repository,
 		return repo, nil
 	}
 
+	if strings.HasPrefix(module, glModulePrefix) {
+		repo, err := loadGitLab(ctx, module)
+		if err != nil {
+			return nil, err
+		}
+
+		return repo, nil
+	}
+
 	return nil, fmt.Errorf("%w: %s", errUnsupportedModule, module)
 }
 
@@ -170,8 +180,63 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 	return repo, nil
 }
 
+func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, error) {
+	client, err := gitlab.NewClient("")
+	if err != nil {
+		return nil, err
+	}
+
+	pid := strings.TrimPrefix(module, glModulePrefix)
+
+	lic := true
+
+	proj, _, err := client.Projects.GetProject(pid, &gitlab.GetProjectOptions{License: &lic}, gitlab.WithContext(ctx))
+	if err != nil {
+		return nil, err
+	}
+
+	repo := new(k6registry.Repository)
+
+	repo.Owner = proj.Namespace.FullPath
+	repo.Name = proj.Name
+	repo.Description = proj.Description
+	repo.Stars = proj.StarCount
+	repo.Archived = proj.Archived
+	repo.Url = proj.WebURL
+	repo.Homepage = proj.WebURL
+	repo.Topics = proj.Topics
+	repo.Public = len(proj.Visibility) == 0 || proj.Visibility == gitlab.PublicVisibility
+
+	if proj.License != nil {
+		for key := range validLicenses {
+			if strings.EqualFold(key, proj.License.Key) {
+				repo.License = key
+			}
+		}
+	}
+
+	rels, _, err := client.Releases.ListReleases(pid,
+		&gitlab.ListReleasesOptions{
+			ListOptions: gitlab.ListOptions{PerPage: 50},
+		})
+	if err != nil {
+		return nil, err
+	}
+
+	for _, rel := range rels {
+		if _, err := semver.NewVersion(rel.TagName); err != nil {
+			continue
+		}
+
+		repo.Versions = append(repo.Versions, rel.TagName)
+	}
+
+	return repo, nil
+}
+
 const (
 	ghModulePrefix = "github.com/"
+	glModulePrefix = "gitlab.com/"
 	k6Module       = "go.k6.io/k6"
 	k6Description  = "A modern load testing tool, using Go and JavaScript"
 )
