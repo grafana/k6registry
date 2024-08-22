@@ -101,6 +101,13 @@ If the property is missing or empty in the source of the registry, it means that
     - k6/x/faker
   categories:
     - data
+
+- module: gitlab.com/szkiba/xk6-banner
+  description: Print ASCII art banner from k6 test
+  imports:
+    - k6/x/banner
+  categories:
+    - misc
 ```
 
 ### Categories

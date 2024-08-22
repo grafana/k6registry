@@ -19,7 +19,7 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 323,
+      "stars": 325,
       "topics": [
         "xk6",
         "xk6-official",
@@ -123,7 +123,7 @@
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 87,
+      "stars": 88,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -197,6 +197,35 @@
     "categories": [
       "misc"
     ],
+    "description": "Print ASCII art banner from k6 test",
+    "imports": [
+      "k6/x/banner"
+    ],
+    "module": "gitlab.com/szkiba/xk6-banner",
+    "products": [
+      "oss"
+    ],
+    "repo": {
+      "description": "Print ASCII art banner from k6 test.",
+      "homepage": "https://gitlab.com/szkiba/xk6-banner",
+      "license": "MIT",
+      "name": "xk6-banner",
+      "owner": "szkiba",
+      "public": true,
+      "topics": [
+        "xk6"
+      ],
+      "url": "https://gitlab.com/szkiba/xk6-banner",
+      "versions": [
+        "v0.1.0"
+      ]
+    },
+    "tier": "community"
+  },
+  {
+    "categories": [
+      "misc"
+    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "module": "go.k6.io/k6",
     "products": [
@@ -210,7 +239,7 @@
       "name": "k6",
       "owner": "grafana",
       "public": true,
-      "stars": 24285,
+      "stars": 24302,
       "topics": [
         "es6",
         "go",
