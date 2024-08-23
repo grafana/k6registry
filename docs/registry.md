@@ -180,6 +180,10 @@ The `timestamp` property contains the timestamp of the last modification of the 
 
 Its value depends on the repository manager, in the case of GitHub it contains the time of the last push operation, in the case of GitLab the time of the last repository activity.
 
+#### Clone URL
+
+The `clone_url` property contains a (typically HTTP) URL, which is used to clone the repository.
+
 ## Registry Processing
 
 The source of the registry is a YAML file optimized for human use. Since collecting extension metadata is a complicated and time-consuming task, it is advisable to extract this step into a registry generator CLI tool. The output of this tool is an extension registry in JSON format.

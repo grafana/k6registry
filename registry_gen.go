@@ -163,6 +163,13 @@ type Repository struct {
 	//
 	Archived bool `json:"archived,omitempty" yaml:"archived,omitempty" mapstructure:"archived,omitempty"`
 
+	// URL for the git clone operation.
+	//
+	// The clone_url property contains a (typically HTTP) URL, which is used to clone
+	// the repository.
+	//
+	CloneUrl string `json:"clone_url,omitempty" yaml:"clone_url,omitempty" mapstructure:"clone_url,omitempty"`
+
 	// Repository description.
 	//
 	Description string `json:"description,omitempty" yaml:"description,omitempty" mapstructure:"description,omitempty"`

@@ -71,6 +71,7 @@ Registry generated from the source above.
       "oss"
     ],
     "repo": {
+      "clone_url": "https://github.com/grafana/xk6-dashboard.git",
       "description": "A k6 extension that makes k6 metrics available on a web-based dashboard.",
       "homepage": "https://github.com/grafana/xk6-dashboard",
       "license": "AGPL-3.0",
@@ -138,6 +139,7 @@ Registry generated from the source above.
       "oss"
     ],
     "repo": {
+      "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "k6 extension to load test RDBMSs (PostgreSQL, MySQL, MS SQL and SQLite3)",
       "homepage": "https://github.com/grafana/xk6-sql",
       "license": "Apache-2.0",
@@ -177,6 +179,7 @@ Registry generated from the source above.
       "oss"
     ],
     "repo": {
+      "clone_url": "https://github.com/grafana/xk6-disruptor.git",
       "description": "Extension for injecting faults into k6 tests",
       "homepage": "https://k6.io/docs/javascript-api/xk6-disruptor/",
       "license": "AGPL-3.0",
@@ -231,6 +234,7 @@ Registry generated from the source above.
       "oss"
     ],
     "repo": {
+      "clone_url": "https://github.com/szkiba/xk6-faker.git",
       "description": "Random fake data generator for k6.",
       "homepage": "http://ivan.szkiba.hu/xk6-faker/",
       "license": "AGPL-3.0",
@@ -268,6 +272,7 @@ Registry generated from the source above.
       "oss"
     ],
     "repo": {
+      "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
       "description": "Print ASCII art banner from k6 test.",
       "homepage": "https://gitlab.com/szkiba/xk6-banner",
       "license": "MIT",
@@ -296,6 +301,7 @@ Registry generated from the source above.
       "oss"
     ],
     "repo": {
+      "clone_url": "https://github.com/grafana/k6.git",
       "description": "A modern load testing tool, using Go and JavaScript - https://k6.io",
       "homepage": "https://github.com/grafana/k6",
       "license": "AGPL-3.0",
