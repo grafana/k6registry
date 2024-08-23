@@ -153,6 +153,17 @@
           "type": "boolean",
           "default": "false",
           "description": "Archived repository flag.\n\nA `true` value indicates that the repository is archived, read only.\n\nIf a repository is archived, it usually means that the owner has no intention of maintaining it. Such extensions should be removed from the registry.\n"
+        },
+        "timestamp": {
+          "type": "number",
+          "default": 0,
+          "description": "Last modification timestamp.\n\nThe timestamp property contains the timestamp of the last modification of the repository in UNIX time format (the number of non-leap seconds that have elapsed since 00:00:00 UTC on 1st January 1970).\nIts value depends on the repository manager, in the case of GitHub it contains the time of the last push operation, in the case of GitLab the time of the last repository activity.\n"
+        },
+        "clone_url": {
+          "type": "string",
+          "format": "uri",
+          "default": "",
+          "description": "URL for the git clone operation.\n\nThe clone_url property contains a (typically HTTP) URL, which is used to clone the repository.\n"
         }
       }
     },
