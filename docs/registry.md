@@ -174,6 +174,12 @@ The `true` value of the `archived` flag indicates that the repository is archive
 
 If a repository is archived, it usually means that the owner has no intention of maintaining it. Such extensions should be removed from the registry.
 
+#### Timestamp
+
+The `timestamp` property contains the timestamp of the last modification of the repository in UNIX time format (the number of non-leap seconds that have elapsed since 00:00:00 UTC on 1st January 1970).
+
+Its value depends on the repository manager, in the case of GitHub it contains the time of the last push operation, in the case of GitLab the time of the last repository activity.
+
 ## Registry Processing
 
 The source of the registry is a YAML file optimized for human use. Since collecting extension metadata is a complicated and time-consuming task, it is advisable to extract this step into a registry generator CLI tool. The output of this tool is an extension registry in JSON format.

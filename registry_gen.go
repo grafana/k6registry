@@ -200,6 +200,17 @@ type Repository struct {
 	//
 	Stars int `json:"stars,omitempty" yaml:"stars,omitempty" mapstructure:"stars,omitempty"`
 
+	// Last modification timestamp.
+	//
+	// The timestamp property contains the timestamp of the last modification of the
+	// repository in UNIX time format (the number of non-leap seconds that have
+	// elapsed since 00:00:00 UTC on 1st January 1970).
+	// Its value depends on the repository manager, in the case of GitHub it contains
+	// the time of the last push operation, in the case of GitLab the time of the last
+	// repository activity.
+	//
+	Timestamp float64 `json:"timestamp,omitempty" yaml:"timestamp,omitempty" mapstructure:"timestamp,omitempty"`
+
 	// Repository topics.
 	//
 	// Topics make it easier to find the repository. It is recommended to set the xk6

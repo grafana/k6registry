@@ -100,6 +100,12 @@ func loadRepository(ctx context.Context, module string) (*k6registry.Repository,
 			return nil, err
 		}
 
+		// Some unused metadata in the k6 repository changes too often
+		if strings.HasPrefix(module, k6Module) {
+			repo.Stars = 0
+			repo.Timestamp = 0
+		}
+
 		return repo, nil
 	}
 
@@ -162,6 +168,10 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 
 	repo.Public = rep.GetVisibility() == "public"
 
+	if ts := rep.GetPushedAt(); !ts.IsZero() {
+		repo.Timestamp = float64(ts.Unix())
+	}
+
 	tags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: 100})
 	if err != nil {
 		return nil, err
@@ -206,6 +216,10 @@ func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, err
 	repo.Homepage = proj.WebURL
 	repo.Topics = proj.Topics
 	repo.Public = len(proj.Visibility) == 0 || proj.Visibility == gitlab.PublicVisibility
+
+	if proj.LastActivityAt != nil {
+		repo.Timestamp = float64(proj.LastActivityAt.Unix())
+	}
 
 	if proj.License != nil {
 		for key := range validLicenses {

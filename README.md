@@ -78,6 +78,7 @@ Registry generated from the source above.
       "owner": "grafana",
       "public": true,
       "stars": 325,
+      "timestamp": 1719907965,
       "topics": [
         "xk6",
         "xk6-official",
@@ -144,6 +145,7 @@ Registry generated from the source above.
       "owner": "grafana",
       "public": true,
       "stars": 104,
+      "timestamp": 1721400602,
       "topics": [
         "k6",
         "sql",
@@ -182,6 +184,7 @@ Registry generated from the source above.
       "owner": "grafana",
       "public": true,
       "stars": 88,
+      "timestamp": 1724358828,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -235,6 +238,7 @@ Registry generated from the source above.
       "owner": "szkiba",
       "public": true,
       "stars": 49,
+      "timestamp": 1719935566,
       "topics": [
         "xk6",
         "xk6-javascript-k6-x-faker"
@@ -270,6 +274,7 @@ Registry generated from the source above.
       "name": "xk6-banner",
       "owner": "szkiba",
       "public": true,
+      "timestamp": 1724312566,
       "topics": [
         "xk6"
       ],
@@ -297,7 +302,6 @@ Registry generated from the source above.
       "name": "k6",
       "owner": "grafana",
       "public": true,
-      "stars": 24302,
       "topics": [
         "es6",
         "go",
