@@ -16,7 +16,7 @@ var help string
 type options struct {
 	out     string
 	compact bool
-	mute    bool
+	quiet   bool
 	loose   bool
 	lint    bool
 }
@@ -57,11 +57,11 @@ func New() (*cobra.Command, error) {
 	flags.SortFlags = false
 
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
-	flags.BoolVarP(&opts.mute, "mute", "m", false, "no output, only validation")
+	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
-	root.MarkFlagsMutuallyExclusive("compact", "mute")
+	root.MarkFlagsMutuallyExclusive("compact", "quiet")
 
 	flags.BoolP("version", "V", false, "print version")
 
@@ -115,7 +115,7 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		return err
 	}
 
-	if opts.mute {
+	if opts.quiet {
 		return nil
 	}
 

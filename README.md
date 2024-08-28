@@ -502,7 +502,7 @@ k6registry [flags] [source-file]
 
 ```
   -o, --out string   write output to file instead of stdout
-  -m, --mute         no output, only validation
+  -q, --quiet        no output, only validation
       --loose        skip JSON schema validation
       --lint         enable built-in linter
   -c, --compact      compact instead of pretty-printed output
