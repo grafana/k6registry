@@ -7,9 +7,7 @@ Before you begin, make sure to familiarize yourself with the [Code of Conduct](C
 
 ## Prerequisites
 
-If you have a golang development environment installed, a `go generate` command must be issued after modifying the source files.
-
-The other option is to install the [cdo] tool and perform the tasks described here. The [cdo] tool can most conveniently be installed using the [eget] tool.
+The tools listed in the [tools] section should be installed before contributing. It is advisable to first install the [cdo] tool, which can be used to easily perform the tasks described here. The [cdo] tool can most conveniently be installed using the [eget] tool.
 
 ```bash
 eget szkiba/cdo
@@ -44,7 +42,7 @@ The JSON schema of the registry can be found in the [registry.schema.yaml] file,
 
 ```bash
 yq -o=json -P docs/registry.schema.yaml > docs/registry.schema.json
-go-jsonschema -p k6registry --only-models -o registry_gen.go docs/registry.schema.yaml
+go-jsonschema --capitalization URL -p k6registry --only-models -o registry_gen.go docs/registry.schema.yaml
 ```
 
 [registry.schema.json]: docs/registry.schema.json

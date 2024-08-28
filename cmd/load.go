@@ -148,13 +148,13 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 
 	repo.Topics = rep.Topics
 
-	repo.Url = rep.GetHTMLURL()
+	repo.URL = rep.GetHTMLURL()
 	repo.Name = rep.GetName()
 	repo.Owner = rep.GetOwner().GetLogin()
 
 	repo.Homepage = rep.GetHomepage()
 	if len(repo.Homepage) == 0 {
-		repo.Homepage = repo.Url
+		repo.Homepage = repo.URL
 	}
 
 	repo.Archived = rep.GetArchived()
@@ -172,7 +172,7 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 		repo.Timestamp = float64(ts.Unix())
 	}
 
-	repo.CloneUrl = rep.GetCloneURL()
+	repo.CloneURL = rep.GetCloneURL()
 
 	tags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: 100})
 	if err != nil {
@@ -214,12 +214,12 @@ func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, err
 	repo.Description = proj.Description
 	repo.Stars = proj.StarCount
 	repo.Archived = proj.Archived
-	repo.Url = proj.WebURL
+	repo.URL = proj.WebURL
 	repo.Homepage = proj.WebURL
 	repo.Topics = proj.Topics
 	repo.Public = len(proj.Visibility) == 0 || proj.Visibility == gitlab.PublicVisibility
 
-	repo.CloneUrl = proj.HTTPURLToRepo
+	repo.CloneURL = proj.HTTPURLToRepo
 
 	if proj.LastActivityAt != nil {
 		repo.Timestamp = float64(proj.LastActivityAt.Unix())
