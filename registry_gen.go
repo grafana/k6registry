@@ -168,7 +168,7 @@ type Repository struct {
 	// The clone_url property contains a (typically HTTP) URL, which is used to clone
 	// the repository.
 	//
-	CloneUrl string `json:"clone_url,omitempty" yaml:"clone_url,omitempty" mapstructure:"clone_url,omitempty"`
+	CloneURL string `json:"clone_url,omitempty" yaml:"clone_url,omitempty" mapstructure:"clone_url,omitempty"`
 
 	// Repository description.
 	//
@@ -230,7 +230,7 @@ type Repository struct {
 	// The URL is provided by the repository manager and can be displayed in a
 	// browser.
 	//
-	Url string `json:"url" yaml:"url" mapstructure:"url"`
+	URL string `json:"url" yaml:"url" mapstructure:"url"`
 
 	// List of supported versions.
 	//
