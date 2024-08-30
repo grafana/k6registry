@@ -433,7 +433,8 @@ Registry generated from the source above.
     },
     "tier": "official"
   }
-]```
+]
+```
 
 </details>
 
