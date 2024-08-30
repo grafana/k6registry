@@ -71,6 +71,10 @@ func getArgs() []string {
 		args = append(args, "--compact")
 	}
 
+	if api := getenv("INPUT_API", ""); len(api) != 0 {
+		args = append(args, "--api", api)
+	}
+
 	if out := getenv("INPUT_OUT", ""); len(out) != 0 {
 		args = append(args, "--out", out)
 	}

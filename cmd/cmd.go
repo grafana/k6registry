@@ -19,6 +19,7 @@ type options struct {
 	quiet   bool
 	loose   bool
 	lint    bool
+	api     string
 }
 
 // New creates new cobra command for exec command.
@@ -45,7 +46,7 @@ func New() (*cobra.Command, error) {
 		},
 	}
 
-	ctx, err := newContext(context.TODO())
+	ctx, err := newContext(context.TODO(), root.Root().Name())
 	if err != nil {
 		return nil, err
 	}
@@ -57,6 +58,7 @@ func New() (*cobra.Command, error) {
 	flags.SortFlags = false
 
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
+	flags.StringVar(&opts.api, "api", "", "write outputs to directory instead of stdout")
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
@@ -74,6 +76,16 @@ func New() (*cobra.Command, error) {
 
 //nolint:forbidigo
 func run(ctx context.Context, args []string, opts *options) (result error) {
+	if len(opts.api) != 0 {
+		if err := os.MkdirAll(opts.api, 0o750); err != nil {
+			return err
+		}
+
+		if len(opts.out) == 0 {
+			opts.quiet = true
+		}
+	}
+
 	input := os.Stdin
 
 	if len(args) > 0 {
@@ -115,6 +127,10 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		return err
 	}
 
+	if len(opts.api) != 0 {
+		return writeAPI(registry, opts.api)
+	}
+
 	if opts.quiet {
 		return nil
 	}
@@ -125,5 +141,10 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		encoder.SetIndent("", "  ")
 	}
 
-	return encoder.Encode(registry)
+	err = encoder.Encode(registry)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

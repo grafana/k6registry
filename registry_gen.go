@@ -14,6 +14,27 @@ const CategoryObservability Category = "observability"
 const CategoryProtocol Category = "protocol"
 const CategoryReporting Category = "reporting"
 
+// The result of the extension's k6 compliance checks.
+type Compliance struct {
+	// Compliance expressed as a grade.
+	//
+	// The `grade` property contains a grade (A-F) of how well the extension complies
+	// with best practices.
+	// The value of the `grade` can be `A`,`B`,`C`,`D`,`E`,`F` and is calculated from
+	// the `level` property.
+	//
+	Grade Grade `json:"grade" yaml:"grade" mapstructure:"grade"`
+
+	// Compliance expressed as a percentage.
+	//
+	// The `level` property contains a percentage of how well the extension complies
+	// with best practices.
+	// The value of the `level` can be between `0-100` and is determined by the
+	// weighted and normalized sum of the scores of the compliance checks.
+	//
+	Level interface{} `json:"level" yaml:"level" mapstructure:"level"`
+}
+
 // Properties of the registered k6 extension.
 //
 // Only those properties of the extensions are registered, which either cannot be
@@ -45,8 +66,11 @@ type Extension struct {
 	//   - protocol
 	//   - reporting
 	//
-	//
 	Categories []Category `json:"categories,omitempty" yaml:"categories,omitempty" mapstructure:"categories,omitempty"`
+
+	// The result of the extension's k6 compliance checks.
+	//
+	Compliance *Compliance `json:"compliance,omitempty" yaml:"compliance,omitempty" mapstructure:"compliance,omitempty"`
 
 	// Brief description of the extension.
 	//
@@ -137,10 +161,20 @@ type Extension struct {
 	Tier Tier `json:"tier,omitempty" yaml:"tier,omitempty" mapstructure:"tier,omitempty"`
 }
 
+type Grade string
+
+const GradeA Grade = "A"
+const GradeB Grade = "B"
+const GradeC Grade = "C"
+const GradeD Grade = "D"
+const GradeE Grade = "E"
+const GradeF Grade = "F"
+const GradeG Grade = "G"
+
 type Product string
 
 const ProductCloud Product = "cloud"
-const ProductOss Product = "oss"
+const ProductOSS Product = "oss"
 
 // k6 Extension Registry.
 //

@@ -1,0 +1,57 @@
+docs/example-api
+├── registry.json
+├── registry.schema.json
+├── category
+│   ├── authentication.json
+│   ├── browser.json
+│   ├── data.json
+│   ├── kubernetes.json
+│   ├── messaging.json
+│   ├── misc.json
+│   ├── observability.json
+│   ├── protocol.json
+│   └── reporting.json
+├── grade
+│   ├── A.json
+│   ├── B.json
+│   ├── C.json
+│   ├── D.json
+│   ├── E.json
+│   ├── F.json
+│   └── passing
+│       ├── A.json
+│       ├── B.json
+│       ├── C.json
+│       ├── D.json
+│       ├── E.json
+│       └── F.json
+├── module
+│   ├── github.com
+│   │   ├── grafana
+│   │   │   ├── xk6-dashboard
+│   │   │   │   ├── badge.svg
+│   │   │   │   └── extension.json
+│   │   │   ├── xk6-disruptor
+│   │   │   │   ├── badge.svg
+│   │   │   │   └── extension.json
+│   │   │   └── xk6-sql
+│   │   │       ├── badge.svg
+│   │   │       └── extension.json
+│   │   └── szkiba
+│   │       └── xk6-faker
+│   │           ├── badge.svg
+│   │           └── extension.json
+│   ├── gitlab.com
+│   │   └── szkiba
+│   │       └── xk6-banner
+│   │           ├── badge.svg
+│   │           └── extension.json
+│   └── go.k6.io
+│       └── k6
+│           └── extension.json
+├── product
+│   ├── cloud.json
+│   └── oss.json
+└── tier
+    ├── community.json
+    └── official.json

@@ -127,11 +127,43 @@ $defs:
             - observability
             - protocol
             - reporting
-
+      compliance:
+        $ref: "#/$defs/compliance"
+        description: |
+          The result of the extension's k6 compliance checks.
     required:
       - module
       - description
     additionalProperties: false
+  compliance:
+    description: |
+      The result of the extension's k6 compliance checks.
+    type: object
+    required:
+      - grade
+      - level
+    properties:
+      level:
+        description: |
+          Compliance expressed as a percentage.
+
+          The `level` property contains a percentage of how well the extension complies with best practices.
+          The value of the `level` can be between `0-100` and is determined by the weighted and normalized sum of the scores of the compliance checks.
+      grade:
+        $ref: "#/$defs/grade"
+        description: |
+          Compliance expressed as a grade.
+
+          The `grade` property contains a grade (A-F) of how well the extension complies with best practices.
+          The value of the `grade` can be `A`,`B`,`C`,`D`,`E`,`F` and is calculated from the `level` property.
+        type: integer
+    additionalProperties: false
+  grade:
+    description: |
+      The results of the checks are in the form of a grade.
+    type: string
+    enum: ["A", "B", "C", "D", "E", "F", "G"]
+
   repository:
     type: object
     description: |

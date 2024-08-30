@@ -128,6 +128,24 @@ Possible values:
   - **protocol**
   - **reporting**
 
+### Compliance Checks
+
+Compliance checks are run after every repository modification and their results are stored in the `compliance` property. The registry contains up-to-date information on how well the extensions meet the requirements.
+
+#### Level
+
+Compliance expressed as a percentage.
+
+The `level` property contains a percentage of how well the extension complies with best practices.
+The value of the `level` can be between `0-100` and is determined by the weighted and normalized sum of the scores of the compliance checks.
+
+#### Grade
+
+Compliance expressed as a grade.
+
+The `grade` property contains a grade (A-F) of how well the extension complies with best practices.
+The value of the `grade` can be `A`,`B`,`C`,`D`,`E`,`F` and is calculated from the `level` property.
+
 ### Repository Metadata
 
 Repository metadata provided by the extension's git repository manager. Repository metadata are not registered, they are queried at processing time using the repository manager API.
