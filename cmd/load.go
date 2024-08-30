@@ -2,20 +2,31 @@ package cmd
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"strings"
 
-	"github.com/Masterminds/semver"
+	"github.com/Masterminds/semver/v3"
 	"github.com/google/go-github/v62/github"
 	"github.com/grafana/k6registry"
 	"github.com/xanzy/go-gitlab"
 	"gopkg.in/yaml.v3"
 )
 
-func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}, error) {
+func k6AsExtension() k6registry.Extension {
+	return k6registry.Extension{
+		Module:      k6Module,
+		Description: k6Description,
+		Tier:        k6registry.TierOfficial,
+		Products: []k6registry.Product{
+			k6registry.ProductCloud,
+			k6registry.ProductOSS,
+		},
+	}
+}
+
+func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.Registry, error) {
 	var (
 		raw []byte
 		err error
@@ -37,16 +48,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 		return nil, err
 	}
 
-	registry = append(registry,
-		k6registry.Extension{
-			Module:      k6Module,
-			Description: k6Description,
-			Tier:        k6registry.TierOfficial,
-			Products: []k6registry.Product{
-				k6registry.ProductCloud,
-				k6registry.ProductOss,
-			},
-		})
+	registry = append(registry, k6AsExtension())
 
 	for idx, ext := range registry {
 		if len(ext.Tier) == 0 {
@@ -54,7 +56,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 		}
 
 		if len(ext.Products) == 0 {
-			registry[idx].Products = append(registry[idx].Products, k6registry.ProductOss)
+			registry[idx].Products = append(registry[idx].Products, k6registry.ProductOSS)
 		}
 
 		if len(ext.Categories) == 0 {
@@ -71,6 +73,15 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 		}
 
 		registry[idx].Repo = repo
+
+		if lint && ext.Module != k6Module {
+			compliance, err := checkCompliance(ctx, ext.Module, repo.CloneURL, repo.Timestamp)
+			if err != nil {
+				return nil, err
+			}
+
+			registry[idx].Compliance = &k6registry.Compliance{Grade: k6registry.Grade(compliance.Grade), Level: compliance.Level}
+		}
 	}
 
 	if lint {
@@ -79,18 +90,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (interface{}
 		}
 	}
 
-	bin, err := json.Marshal(registry)
-	if err != nil {
-		return nil, err
-	}
-
-	var result []interface{}
-
-	if err := json.Unmarshal(bin, &result); err != nil {
-		return nil, err
-	}
-
-	return result, nil
+	return registry, nil
 }
 
 func loadRepository(ctx context.Context, module string) (*k6registry.Repository, error) {
@@ -104,6 +104,7 @@ func loadRepository(ctx context.Context, module string) (*k6registry.Repository,
 		if strings.HasPrefix(module, k6Module) {
 			repo.Stars = 0
 			repo.Timestamp = 0
+			repo.CloneURL = ""
 		}
 
 		return repo, nil

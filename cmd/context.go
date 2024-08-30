@@ -5,8 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
+	"syscall"
 	"time"
 
+	"github.com/adrg/xdg"
 	"github.com/cli/go-gh/v2/pkg/api"
 	"github.com/cli/go-gh/v2/pkg/auth"
 	"github.com/cli/go-gh/v2/pkg/config"
@@ -31,11 +35,23 @@ func contextGitHubClient(ctx context.Context) (*github.Client, error) {
 
 // newContext prepares GitHub CLI extension context with http.Client and github.Client values.
 // You can use ContextHTTPClient and ContextGitHubClient later to get client instances from the context.
-func newContext(ctx context.Context) (context.Context, error) {
+func newContext(ctx context.Context, appname string) (context.Context, error) {
 	htc, err := newHTTPClient()
 	if err != nil {
 		return nil, err
 	}
+
+	cacheDir, err := xdg.CacheFile(appname)
+	if err != nil {
+		return nil, err
+	}
+
+	err = os.MkdirAll(cacheDir, syscall.S_IWUSR|syscall.S_IRUSR|syscall.S_IXUSR) //nolint:forbidigo
+	if err != nil {
+		return nil, err
+	}
+
+	ctx = context.WithValue(ctx, cacheDirKey{}, cacheDir)
 
 	return context.WithValue(ctx, githubClientKey{}, github.NewClient(htc)), nil
 }
@@ -58,4 +74,40 @@ func newHTTPClient() (*http.Client, error) {
 	opts.CacheTTL = 2 * time.Hour
 
 	return api.NewHTTPClient(opts)
+}
+
+type cacheDirKey struct{}
+
+func contextCacheDir(ctx context.Context) (string, error) {
+	value := ctx.Value(cacheDirKey{})
+	if value != nil {
+		if client, ok := value.(string); ok {
+			return client, nil
+		}
+	}
+
+	return "", fmt.Errorf("%w: missing cache dir", errInvalidContext)
+}
+
+//nolint:forbidigo
+func cacheSubDir(ctx context.Context, subdir string) (string, error) {
+	base, err := contextCacheDir(ctx)
+	if err != nil {
+		return "", err
+	}
+
+	dir := filepath.Join(base, subdir)
+	if err := os.MkdirAll(dir, syscall.S_IWUSR|syscall.S_IRUSR|syscall.S_IXUSR); err != nil {
+		return "", err
+	}
+
+	return dir, nil
+}
+
+func modulesDir(ctx context.Context) (string, error) {
+	return cacheSubDir(ctx, "modules")
+}
+
+func checksDir(ctx context.Context) (string, error) {
+	return cacheSubDir(ctx, "checks")
 }

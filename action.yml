@@ -15,6 +15,10 @@ inputs:
     description: output file name
     required: false
 
+  api:
+    description: api directory name
+    required: false
+
   mute:
     description: no output, only validation
     required: false

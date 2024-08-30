@@ -42,7 +42,7 @@ The JSON schema of the registry can be found in the [registry.schema.yaml] file,
 
 ```bash
 yq -o=json -P docs/registry.schema.yaml > docs/registry.schema.json
-go-jsonschema --capitalization URL -p k6registry --only-models -o registry_gen.go docs/registry.schema.yaml
+go-jsonschema --capitalization URL --capitalization OSS -p k6registry --only-models -o registry_gen.go docs/registry.schema.yaml
 ```
 
 [registry.schema.json]: docs/registry.schema.json
@@ -53,7 +53,8 @@ go-jsonschema --capitalization URL -p k6registry --only-models -o registry_gen.g
 The example registry can be found in [example.yaml] file, the documentation ([registry.md], [README.md]) must be updated after modification.
 
 ```bash
-go run ./cmd/k6registry --lint docs/example.yaml > docs/example.json
+go run ./cmd/k6registry --lint -o docs/example.json --api docs/example-api docs/example.yaml
+tree -n --noreport --filesfirst -o docs/example-api.txt docs/example-api 
 mdcode update docs/registry.md
 mdcode update README.md
 ```
