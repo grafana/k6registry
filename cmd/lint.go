@@ -63,6 +63,24 @@ func saveCompliance(ctx context.Context, module string, comp *k6lint.Compliance)
 	return os.WriteFile(filename, data, permFile)
 }
 
+func fixWorkdirPerm(dir string) error {
+	return filepath.Walk(dir, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		var mode fs.FileMode
+
+		if info.IsDir() {
+			mode = permDir
+		} else {
+			mode = permFile
+		}
+
+		return os.Chmod(path, mode) //nolint:forbidigo
+	})
+}
+
 //nolint:forbidigo
 func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 	_, err := os.Stat(dir)
@@ -74,7 +92,11 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 
 	if notfound {
 		_, err = git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
-		return err
+		if err != nil {
+			return err
+		}
+
+		return fixWorkdirPerm(dir)
 	}
 
 	repo, err := git.PlainOpen(dir)
@@ -92,7 +114,7 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 		return err
 	}
 
-	return nil
+	return fixWorkdirPerm(dir)
 }
 
 func checkCompliance(ctx context.Context, module string, cloneURL string, tstamp float64) (*k6lint.Compliance, error) {
