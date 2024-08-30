@@ -5,6 +5,7 @@ import (
 	"context"
 	_ "embed"
 	"encoding/json"
+	"io/fs"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -77,7 +78,7 @@ func New() (*cobra.Command, error) {
 //nolint:forbidigo
 func run(ctx context.Context, args []string, opts *options) (result error) {
 	if len(opts.api) != 0 {
-		if err := os.MkdirAll(opts.api, 0o750); err != nil {
+		if err := os.MkdirAll(opts.api, permDir); err != nil {
 			return err
 		}
 
@@ -148,3 +149,8 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 
 	return nil
 }
+
+const (
+	permFile fs.FileMode = 0o644
+	permDir  fs.FileMode = 0o755
+)

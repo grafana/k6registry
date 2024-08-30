@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"syscall"
 	"time"
 
 	"github.com/adrg/xdg"
@@ -46,7 +45,7 @@ func newContext(ctx context.Context, appname string) (context.Context, error) {
 		return nil, err
 	}
 
-	err = os.MkdirAll(cacheDir, syscall.S_IWUSR|syscall.S_IRUSR|syscall.S_IXUSR) //nolint:forbidigo
+	err = os.MkdirAll(cacheDir, permDir) //nolint:forbidigo
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +96,7 @@ func cacheSubDir(ctx context.Context, subdir string) (string, error) {
 	}
 
 	dir := filepath.Join(base, subdir)
-	if err := os.MkdirAll(dir, syscall.S_IWUSR|syscall.S_IRUSR|syscall.S_IXUSR); err != nil {
+	if err := os.MkdirAll(dir, permDir); err != nil {
 		return "", err
 	}
 

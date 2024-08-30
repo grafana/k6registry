@@ -51,7 +51,7 @@ func saveCompliance(ctx context.Context, module string, comp *k6lint.Compliance)
 
 	filename := filepath.Join(base, module) + ".json"
 
-	if err := os.MkdirAll(filepath.Dir(filename), 0o750); err != nil {
+	if err := os.MkdirAll(filepath.Dir(filename), permDir); err != nil {
 		return err
 	}
 
@@ -60,7 +60,7 @@ func saveCompliance(ctx context.Context, module string, comp *k6lint.Compliance)
 		return err
 	}
 
-	return os.WriteFile(filename, data, 0o600)
+	return os.WriteFile(filename, data, permFile)
 }
 
 //nolint:forbidigo

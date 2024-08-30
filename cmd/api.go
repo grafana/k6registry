@@ -29,7 +29,7 @@ func writeAPI(registry k6registry.Registry, target string) error {
 func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {
 	filename := filepath.Join(target, "registry.schema.json")
 
-	if err := os.WriteFile(filename, k6registry.Schema, 0o600); err != nil {
+	if err := os.WriteFile(filename, k6registry.Schema, permFile); err != nil {
 		return err
 	}
 
@@ -40,21 +40,21 @@ func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {
 		return err
 	}
 
-	return os.WriteFile(filename, data, 0o600)
+	return os.WriteFile(filename, data, permFile)
 }
 
 //nolint:forbidigo
 func writeAPIGroupModule(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "module")
 
-	if err := os.MkdirAll(base, 0o750); err != nil {
+	if err := os.MkdirAll(base, permDir); err != nil {
 		return err
 	}
 
 	for _, ext := range registry {
 		dir := filepath.Join(base, ext.Module)
 
-		if err := os.MkdirAll(dir, 0o750); err != nil {
+		if err := os.MkdirAll(dir, permDir); err != nil {
 			return err
 		}
 
@@ -66,7 +66,7 @@ func writeAPIGroupModule(registry k6registry.Registry, target string) error {
 				return err
 			}
 
-			err = os.WriteFile(filename, b, 0o600)
+			err = os.WriteFile(filename, b, permFile)
 			if err != nil {
 				return err
 			}
@@ -79,7 +79,7 @@ func writeAPIGroupModule(registry k6registry.Registry, target string) error {
 			return err
 		}
 
-		if err = os.WriteFile(filename, data, 0o600); err != nil {
+		if err = os.WriteFile(filename, data, permFile); err != nil {
 			return err
 		}
 	}
@@ -107,7 +107,7 @@ func writeAPIGroupSubset(registry k6registry.Registry, target string) error {
 func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "product")
 
-	if err := os.MkdirAll(base, 0o750); err != nil {
+	if err := os.MkdirAll(base, permDir); err != nil {
 		return err
 	}
 
@@ -131,7 +131,7 @@ func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 			return err
 		}
 
-		err = os.WriteFile(filepath.Join(base, string(prod)+".json"), data, 0o600)
+		err = os.WriteFile(filepath.Join(base, string(prod)+".json"), data, permFile)
 		if err != nil {
 			return err
 		}
@@ -144,7 +144,7 @@ func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "tier")
 
-	if err := os.MkdirAll(base, 0o750); err != nil {
+	if err := os.MkdirAll(base, permDir); err != nil {
 		return err
 	}
 
@@ -170,7 +170,7 @@ func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 			return err
 		}
 
-		err = os.WriteFile(filepath.Join(base, string(tier)+".json"), data, 0o600)
+		err = os.WriteFile(filepath.Join(base, string(tier)+".json"), data, permFile)
 		if err != nil {
 			return err
 		}
@@ -183,7 +183,7 @@ func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 func writeAPISubsetGrade(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "grade")
 
-	if err := os.MkdirAll(base, 0o750); err != nil {
+	if err := os.MkdirAll(base, permDir); err != nil {
 		return err
 	}
 
@@ -213,7 +213,7 @@ func writeAPISubsetGrade(registry k6registry.Registry, target string) error {
 			return err
 		}
 
-		err = os.WriteFile(filepath.Join(base, string(grade)+".json"), data, 0o600)
+		err = os.WriteFile(filepath.Join(base, string(grade)+".json"), data, permFile)
 		if err != nil {
 			return err
 		}
@@ -226,7 +226,7 @@ func writeAPISubsetGrade(registry k6registry.Registry, target string) error {
 func writeAPISubsetGradePassing(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "grade", "passing")
 
-	if err := os.MkdirAll(base, 0o750); err != nil {
+	if err := os.MkdirAll(base, permDir); err != nil {
 		return err
 	}
 
@@ -262,7 +262,7 @@ func writeAPISubsetGradePassing(registry k6registry.Registry, target string) err
 			return err
 		}
 
-		err = os.WriteFile(filepath.Join(base, string(grade)+".json"), data, 0o600)
+		err = os.WriteFile(filepath.Join(base, string(grade)+".json"), data, permFile)
 		if err != nil {
 			return err
 		}
@@ -275,7 +275,7 @@ func writeAPISubsetGradePassing(registry k6registry.Registry, target string) err
 func writeAPISubsetCategory(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "category")
 
-	if err := os.MkdirAll(base, 0o750); err != nil {
+	if err := os.MkdirAll(base, permDir); err != nil {
 		return err
 	}
 
@@ -303,7 +303,7 @@ func writeAPISubsetCategory(registry k6registry.Registry, target string) error {
 			return err
 		}
 
-		err = os.WriteFile(filepath.Join(base, string(cat)+".json"), data, 0o600)
+		err = os.WriteFile(filepath.Join(base, string(cat)+".json"), data, permFile)
 		if err != nil {
 			return err
 		}
