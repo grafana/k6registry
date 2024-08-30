@@ -7,7 +7,9 @@ import (
 	"encoding/json"
 	"io/fs"
 	"os"
+	"path/filepath"
 
+	"github.com/adrg/xdg"
 	"github.com/spf13/cobra"
 )
 
@@ -44,6 +46,9 @@ func New() (*cobra.Command, error) {
 			}
 
 			return run(cmd.Context(), args, opts)
+		},
+		PostRunE: func(_ *cobra.Command, _ []string) error {
+			return ghActionFixPerm(xdg.CacheHome)
 		},
 	}
 
@@ -148,6 +153,28 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 	}
 
 	return nil
+}
+
+func ghActionFixPerm(dir string) error {
+	if os.Getenv("GITHUB_ACTIONS") != "true" { //nolint:forbidigo
+		return nil
+	}
+
+	return filepath.Walk(dir, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		var mode fs.FileMode
+
+		if info.IsDir() {
+			mode = permDir
+		} else {
+			mode = permFile
+		}
+
+		return os.Chmod(path, mode) //nolint:forbidigo
+	})
 }
 
 const (
