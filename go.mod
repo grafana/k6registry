@@ -12,7 +12,7 @@ require (
 	github.com/grafana/k6lint v0.1.0
 	github.com/narqo/go-badge v0.0.0-20230821190521-c9a75c019a59
 	github.com/spf13/cobra v1.8.1
-	github.com/xanzy/go-gitlab v0.107.0
+	github.com/xanzy/go-gitlab v0.108.0
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/term v0.23.0
 	gopkg.in/yaml.v3 v3.0.1
