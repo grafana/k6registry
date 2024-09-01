@@ -59,6 +59,13 @@
           "type": "string",
           "description": "Brief description of the extension.\n"
         },
+        "versions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of supported versions.\n\nVersions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.\n"
+        },
         "repo": {
           "$ref": "#/$defs/repository",
           "description": "Repository metadata.\n\nMetadata provided by the extension's git repository manager. Repository metadata are not registered, they are queried at runtime using the repository manager API.\n"
@@ -167,13 +174,6 @@
             "type": "string"
           },
           "description": "Repository topics.\n\nTopics make it easier to find the repository. It is recommended to set the xk6 topic to the extensions repository.\n"
-        },
-        "versions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of supported versions.\n\nVersions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.\n"
         },
         "public": {
           "type": "boolean",

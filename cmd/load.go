@@ -67,12 +67,16 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 			continue
 		}
 
-		repo, err := loadRepository(ctx, ext.Module)
+		repo, tags, err := loadRepository(ctx, ext.Module)
 		if err != nil {
 			return nil, err
 		}
 
 		registry[idx].Repo = repo
+
+		if len(registry[idx].Versions) == 0 {
+			registry[idx].Versions = filterVersions(tags)
+		}
 
 		if lint && ext.Module != k6Module {
 			compliance, err := checkCompliance(ctx, ext.Module, repo.CloneURL, repo.Timestamp)
@@ -93,11 +97,11 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 	return registry, nil
 }
 
-func loadRepository(ctx context.Context, module string) (*k6registry.Repository, error) {
+func loadRepository(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
 	if strings.HasPrefix(module, k6Module) || strings.HasPrefix(module, ghModulePrefix) {
-		repo, err := loadGitHub(ctx, module)
+		repo, tags, err := loadGitHub(ctx, module)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 
 		// Some unused metadata in the k6 repository changes too often
@@ -107,25 +111,39 @@ func loadRepository(ctx context.Context, module string) (*k6registry.Repository,
 			repo.CloneURL = ""
 		}
 
-		return repo, nil
+		return repo, tags, nil
 	}
 
 	if strings.HasPrefix(module, glModulePrefix) {
-		repo, err := loadGitLab(ctx, module)
+		repo, tags, err := loadGitLab(ctx, module)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 
-		return repo, nil
+		return repo, tags, nil
 	}
 
-	return nil, fmt.Errorf("%w: %s", errUnsupportedModule, module)
+	return nil, nil, fmt.Errorf("%w: %s", errUnsupportedModule, module)
 }
 
-func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, error) {
+func filterVersions(tags []string) []string {
+	versions := make([]string, 0, len(tags))
+
+	for _, tag := range tags {
+		if _, err := semver.NewVersion(tag); err != nil {
+			continue
+		}
+
+		versions = append(versions, tag)
+	}
+
+	return versions
+}
+
+func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
 	client, err := contextGitHubClient(ctx)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	var owner, name string
@@ -144,7 +162,7 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 
 	rep, _, err := client.Repositories.Get(ctx, owner, name)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	repo.Topics = rep.Topics
@@ -175,28 +193,24 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, err
 
 	repo.CloneURL = rep.GetCloneURL()
 
-	tags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: 100})
+	repoTags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: 100})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	for _, tag := range tags {
-		name := tag.GetName()
+	tags := make([]string, 0, len(repoTags))
 
-		if _, err := semver.NewVersion(name); err != nil {
-			continue
-		}
-
-		repo.Versions = append(repo.Versions, name)
+	for _, tag := range repoTags {
+		tags = append(tags, tag.GetName())
 	}
 
-	return repo, nil
+	return repo, tags, nil
 }
 
-func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, error) {
+func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
 	client, err := gitlab.NewClient("")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	pid := strings.TrimPrefix(module, glModulePrefix)
@@ -205,7 +219,7 @@ func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, err
 
 	proj, _, err := client.Projects.GetProject(pid, &gitlab.GetProjectOptions{License: &lic}, gitlab.WithContext(ctx))
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	repo := new(k6registry.Repository)
@@ -239,18 +253,16 @@ func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, err
 			ListOptions: gitlab.ListOptions{PerPage: 50},
 		})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
+
+	tags := make([]string, 0, len(rels))
 
 	for _, rel := range rels {
-		if _, err := semver.NewVersion(rel.TagName); err != nil {
-			continue
-		}
-
-		repo.Versions = append(repo.Versions, rel.TagName)
+		tags = append(tags, rel.TagName)
 	}
 
-	return repo, nil
+	return repo, tags, nil
 }
 
 const (

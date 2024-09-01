@@ -30,16 +30,16 @@
       "sql",
       "xk6"
     ],
-    "url": "https://github.com/grafana/xk6-sql",
-    "versions": [
-      "v0.4.0",
-      "v0.3.0",
-      "v0.2.1",
-      "v0.2.0",
-      "v0.1.1",
-      "v0.1.0",
-      "v0.0.1"
-    ]
+    "url": "https://github.com/grafana/xk6-sql"
   },
-  "tier": "official"
+  "tier": "official",
+  "versions": [
+    "v0.4.0",
+    "v0.3.0",
+    "v0.2.1",
+    "v0.2.0",
+    "v0.1.1",
+    "v0.1.0",
+    "v0.0.1"
+  ]
 }

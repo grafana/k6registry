@@ -159,6 +159,14 @@ type Extension struct {
 	//
 	//
 	Tier Tier `json:"tier,omitempty" yaml:"tier,omitempty" mapstructure:"tier,omitempty"`
+
+	// List of supported versions.
+	//
+	// Versions are tags whose format meets the requirements of semantic versioning.
+	// Version tags often start with the letter `v`, which is not part of the semantic
+	// version.
+	//
+	Versions []string `json:"versions,omitempty" yaml:"versions,omitempty" mapstructure:"versions,omitempty"`
 }
 
 type Grade string
@@ -265,14 +273,6 @@ type Repository struct {
 	// browser.
 	//
 	URL string `json:"url" yaml:"url" mapstructure:"url"`
-
-	// List of supported versions.
-	//
-	// Versions are tags whose format meets the requirements of semantic versioning.
-	// Version tags often start with the letter `v`, which is not part of the semantic
-	// version.
-	//
-	Versions []string `json:"versions,omitempty" yaml:"versions,omitempty" mapstructure:"versions,omitempty"`
 }
 
 type Tier string

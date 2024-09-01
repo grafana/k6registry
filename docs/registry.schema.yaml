@@ -65,6 +65,14 @@ $defs:
         type: string
         description: |
           Brief description of the extension.
+      versions:
+        type: array
+        items:
+          type: string
+        description: |
+          List of supported versions.
+
+          Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
       repo:
         $ref: "#/$defs/repository"
         description: |
@@ -216,14 +224,6 @@ $defs:
           Repository topics.
 
           Topics make it easier to find the repository. It is recommended to set the xk6 topic to the extensions repository.
-      versions:
-        type: array
-        items:
-          type: string
-        description: |
-          List of supported versions.
-
-          Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
       public:
         type: boolean
         default: "false"
