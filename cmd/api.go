@@ -126,7 +126,7 @@ func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 	}
 
 	for prod, reg := range products {
-		data, err := json.MarshalIndent(reg, "", " ")
+		data, err := json.MarshalIndent(reg, "", "  ")
 		if err != nil {
 			return err
 		}
@@ -165,7 +165,7 @@ func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 	}
 
 	for tier, reg := range tiers {
-		data, err := json.MarshalIndent(reg, "", " ")
+		data, err := json.MarshalIndent(reg, "", "  ")
 		if err != nil {
 			return err
 		}
@@ -208,7 +208,7 @@ func writeAPISubsetGrade(registry k6registry.Registry, target string) error {
 	}
 
 	for grade, reg := range grades {
-		data, err := json.MarshalIndent(reg, "", " ")
+		data, err := json.MarshalIndent(reg, "", "  ")
 		if err != nil {
 			return err
 		}
@@ -257,7 +257,7 @@ func writeAPISubsetGradePassing(registry k6registry.Registry, target string) err
 	}
 
 	for grade, reg := range grades {
-		data, err := json.MarshalIndent(reg, "", " ")
+		data, err := json.MarshalIndent(reg, "", "  ")
 		if err != nil {
 			return err
 		}
@@ -298,7 +298,7 @@ func writeAPISubsetCategory(registry k6registry.Registry, target string) error {
 	}
 
 	for cat, reg := range categories {
-		data, err := json.MarshalIndent(reg, "", " ")
+		data, err := json.MarshalIndent(reg, "", "  ")
 		if err != nil {
 			return err
 		}
