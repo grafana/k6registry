@@ -93,7 +93,7 @@ func lintExtension(ext k6registry.Extension) (bool, []string) {
 
 	var msgs []string
 
-	if len(ext.Repo.Versions) == 0 {
+	if len(ext.Versions) == 0 {
 		msgs = append(msgs, "no released versions: "+ext.Module)
 	}
 

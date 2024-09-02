@@ -1,4 +1,6 @@
 docs/example-api
+├── catalog.json
+├── openapi.yaml
 ├── registry.json
 ├── registry.schema.json
 ├── category
@@ -18,7 +20,7 @@ docs/example-api
 │   ├── D.json
 │   ├── E.json
 │   ├── F.json
-│   └── passing
+│   └── at-least
 │       ├── A.json
 │       ├── B.json
 │       ├── C.json
@@ -50,8 +52,21 @@ docs/example-api
 │       └── k6
 │           └── extension.json
 ├── product
+│   ├── cloud-catalog.json
 │   ├── cloud.json
+│   ├── oss-catalog.json
 │   └── oss.json
 └── tier
+    ├── community-catalog.json
     ├── community.json
-    └── official.json
+    ├── official-catalog.json
+    ├── official.json
+    ├── partner-catalog.json
+    ├── partner.json
+    └── at-least
+        ├── community-catalog.json
+        ├── community.json
+        ├── official-catalog.json
+        ├── official.json
+        ├── partner-catalog.json
+        └── partner.json

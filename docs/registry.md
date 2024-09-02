@@ -37,6 +37,12 @@ The JavaScript module names implemented by the extension can be specified in the
 
 The output names implemented by the extension can be specified in the `outputs` property. An extension can register multiple output names, so this is an array property.
 
+#### Versions
+
+The `versions` property contains the list of supported versions. Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
+
+The `versions` property is usually queried through the API of the extension's repository manager. This can be overridden if the `versions` property is set in the source of the registry.
+
 ### Tier
 
 Extensions can be classified according to who maintains the extension. This usually also specifies who the user can get support from.
@@ -181,10 +187,6 @@ The `stars` property contains the number of stars in the extension's repository.
 #### Topics
 
 The `topics` property contains the repository topics. Topics make it easier to find the repository. It is recommended to set the `xk6` topic to the extensions repository.
-
-#### Versions
-
-The `versions` property contains the list of supported versions. Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
 
 #### Archived
 

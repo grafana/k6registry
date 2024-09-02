@@ -53,8 +53,9 @@ go-jsonschema --capitalization URL --capitalization OSS -p k6registry --only-mod
 The example registry can be found in [example.yaml] file, the documentation ([registry.md], [README.md]) must be updated after modification.
 
 ```bash
-go run ./cmd/k6registry --lint -o docs/example.json
-go run ./cmd/k6registry --lint -o docs/example.json --api docs/example-api docs/example.yaml
+go run ./cmd/k6registry --lint -o docs/example.json docs/example.yaml
+go run ./cmd/k6registry --lint --catalog -o docs/example-catalog.json docs/example.yaml
+go run ./cmd/k6registry --lint -q --api docs/example-api docs/example.yaml
 tree -n --noreport --filesfirst -o docs/example-api.txt docs/example-api 
 mdcode update docs/registry.md
 mdcode update README.md

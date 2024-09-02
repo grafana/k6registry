@@ -80,7 +80,7 @@ func legacyConvert(ctx context.Context) error {
 
 		legacyPatch(ext)
 
-		repo, err := loadRepository(ctx, ext.Module)
+		repo, _, err := loadRepository(ctx, ext.Module)
 		if err != nil {
 			return err
 		}

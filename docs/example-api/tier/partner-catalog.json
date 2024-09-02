@@ -1,40 +1,5 @@
-[
-  {
-    "categories": [
-      "misc"
-    ],
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
-    "description": "Print ASCII art banner from k6 test",
-    "imports": [
-      "k6/x/banner"
-    ],
-    "module": "gitlab.com/szkiba/xk6-banner",
-    "products": [
-      "oss"
-    ],
-    "repo": {
-      "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
-      "description": "Print ASCII art banner from k6 test.",
-      "homepage": "https://gitlab.com/szkiba/xk6-banner",
-      "license": "MIT",
-      "name": "xk6-banner",
-      "owner": "szkiba",
-      "public": true,
-      "timestamp": 1724312566,
-      "topics": [
-        "xk6"
-      ],
-      "url": "https://gitlab.com/szkiba/xk6-banner"
-    },
-    "tier": "community",
-    "versions": [
-      "v0.1.0"
-    ]
-  },
-  {
+{
+  "k6": {
     "categories": [
       "misc"
     ],
@@ -160,4 +125,4 @@
       "v0.0.1"
     ]
   }
-]
+}

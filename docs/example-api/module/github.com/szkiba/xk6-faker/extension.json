@@ -28,15 +28,15 @@
       "xk6",
       "xk6-javascript-k6-x-faker"
     ],
-    "url": "https://github.com/szkiba/xk6-faker",
-    "versions": [
-      "v0.3.0",
-      "v0.3.0-alpha.1",
-      "v0.2.2",
-      "v0.2.1",
-      "v0.2.0",
-      "v0.1.0"
-    ]
+    "url": "https://github.com/szkiba/xk6-faker"
   },
-  "tier": "community"
+  "tier": "community",
+  "versions": [
+    "v0.3.0",
+    "v0.3.0-alpha.1",
+    "v0.2.2",
+    "v0.2.1",
+    "v0.2.0",
+    "v0.1.0"
+  ]
 }

@@ -10,6 +10,17 @@ $defs:
     items:
       $ref: "#/$defs/extension"
     additionalProperties: false
+  catalog:
+    description: |
+      k6 Extension Catalog.
+
+      The k6 extension catalog is an alternative representation of the k6 extension registry.
+      The catalog stores the extension data in an associative array (object),
+      where the key is the imprt path for JavaScript extensions, and the output name for output extensions.
+      This data structure is optimized to resolve extensions as dependencies.
+    type: object
+    additionalProperties:
+      $ref: "#/$defs/extension"
   extension:
     type: object
     description: |
@@ -53,7 +64,6 @@ $defs:
         type: array
         items:
           type: string
-        example:
         description: |
           List of output names registered by the extension.
 
@@ -65,6 +75,16 @@ $defs:
         type: string
         description: |
           Brief description of the extension.
+      versions:
+        type: array
+        items:
+          type: string
+        description: |
+          List of supported versions.
+
+          Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
+        examples:
+          - ["v0.1.0", "v0.2.0", "v0.2.1"]
       repo:
         $ref: "#/$defs/repository"
         description: |
@@ -163,7 +183,6 @@ $defs:
       The results of the checks are in the form of a grade.
     type: string
     enum: ["A", "B", "C", "D", "E", "F", "G"]
-
   repository:
     type: object
     description: |
@@ -216,14 +235,6 @@ $defs:
           Repository topics.
 
           Topics make it easier to find the repository. It is recommended to set the xk6 topic to the extensions repository.
-      versions:
-        type: array
-        items:
-          type: string
-        description: |
-          List of supported versions.
-
-          Versions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.
       public:
         type: boolean
         default: "false"
@@ -283,7 +294,6 @@ $defs:
       The `official` tier value is needed so that officially supported extensions can be distinguished from them.
 
       If it is missing from the registry source, it will be set with the default "community" value during generation.
-
   product:
     type: string
     enum: ["oss", "cloud"]
