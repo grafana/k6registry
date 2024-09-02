@@ -315,6 +315,9 @@ Registry generated from the source above.
       "misc"
     ],
     "description": "A modern load testing tool, using Go and JavaScript",
+    "imports": [
+      "k6"
+    ],
     "module": "go.k6.io/k6",
     "products": [
       "cloud",
@@ -530,6 +533,7 @@ k6registry [flags] [source-file]
       --loose        skip JSON schema validation
       --lint         enable built-in linter
   -c, --compact      compact instead of pretty-printed output
+      --catalog      generate catalog instead of registry
   -V, --version      print version
   -h, --help         help for k6registry
 ```
@@ -546,6 +550,8 @@ By using the `--api` flag, files are created with relative paths in a base direc
 
 ```ascii file=docs/example-api.txt
 docs/example-api
+├── catalog.json
+├── openapi.yaml
 ├── registry.json
 ├── registry.schema.json
 ├── category
@@ -565,7 +571,7 @@ docs/example-api
 │   ├── D.json
 │   ├── E.json
 │   ├── F.json
-│   └── passing
+│   └── at-least
 │       ├── A.json
 │       ├── B.json
 │       ├── C.json
@@ -597,11 +603,24 @@ docs/example-api
 │       └── k6
 │           └── extension.json
 ├── product
+│   ├── cloud-catalog.json
 │   ├── cloud.json
+│   ├── oss-catalog.json
 │   └── oss.json
 └── tier
+    ├── community-catalog.json
     ├── community.json
-    └── official.json
+    ├── official-catalog.json
+    ├── official.json
+    ├── partner-catalog.json
+    ├── partner.json
+    └── at-least
+        ├── community-catalog.json
+        ├── community.json
+        ├── official-catalog.json
+        ├── official.json
+        ├── partner-catalog.json
+        └── partner.json
 ```
 
 The primary purpose of the `--api` flag is to support a custom *k6 extension registry* instance.

@@ -1,0 +1,310 @@
+openapi: "3.1.0"
+info:
+  version: "0.1.0"
+  title: Grafana k6 Extension Registry Service
+  description: |
+    The **Grafana k6 Extension Registry Service** enables read-only access to the Grafana k6 extension registry.
+
+    Information about modifying the registry (register new extensions, modify or delete existing registrations) can be found in the [grafana/k6-extension-registry](https://github.com/grafana/k6-extension-registry) GitHub repository.
+  termsOfService: https://grafana.com/legal/terms/
+  license:
+    name: AGPL-3.0-only
+    url: https://www.gnu.org/licenses/agpl-3.0.html
+externalDocs:
+  description: Find out more about Grafana k6 extensions
+  url: https://grafana.com/docs/k6/latest/extensions/
+servers:
+  - url: https://registry.k6.io
+tags:
+  - name: global
+    description: Access to the entire registry
+  - name: module
+    description: Query a specific extension
+  - name: catalog
+    description: Extension catalog queries
+  - name: subset
+    description: Query subsets of the registry
+paths:
+  /registry.json:
+    get:
+      tags:
+        - global
+      summary: Download the entire registry
+      description: Download the entire registry as a single JSON file
+      operationId: downloadRegistry
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/registry"
+  /catalog.json:
+    get:
+      tags:
+        - catalog
+      summary: Download the entire catalog
+      description: Download the entire catalog as a single JSON file
+      operationId: downloadCatalog
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/catalog"
+  /module/{module}/extension.json:
+    get:
+      tags:
+        - module
+      summary: Query the data of a specific extension
+      description: Query the data of a specific extension as a single JSON file
+      operationId: getExtension
+      parameters:
+        - $ref: "#/components/parameters/module"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/extension"
+        "404":
+          description: module not found
+  /module/{module}/badge.svg:
+    get:
+      tags:
+        - module
+      summary: Download extension badge
+      description: Download an extension's badge as an SVG image
+      operationId: getBadge
+      parameters:
+        - $ref: "#/components/parameters/module"
+      produces:
+        - image/svg+xml
+      responses:
+        "200":
+          description: successful operation
+        "404":
+          description: module not found
+  /product/{product}.json:
+    get:
+      tags:
+        - subset
+      summary: Query extensions available in a product
+      description: Querying the subset of the registry containing the extensions available in the product specified in the parameter
+      operationId: queryByProduct
+      parameters:
+        - $ref: "#/components/parameters/product"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/registry"
+        "404":
+          description: product not found
+  /product/{product}-catalog.json:
+    get:
+      tags:
+        - catalog
+      summary: Catalog by product
+      description: Query the catalog containing extensions available in a given product.
+      operationId: catalogByProduct
+      parameters:
+        - $ref: "#/components/parameters/product"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/catalog"
+        "404":
+          description: product not found
+  /tier/{tier}.json:
+    get:
+      tags:
+        - subset
+      summary: Query extensions by source of support
+      description: Querying the subset of the registry containing the extensions with support specified in the parameter
+      operationId: queryByTier
+      parameters:
+        - $ref: "#/components/parameters/tier"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/registry"
+        "404":
+          description: tier not found
+  /tier/{tier}-catalog.json:
+    get:
+      tags:
+        - catalog
+      summary: Catalog by support
+      description: Query the catalog containing extensions available with a given support.
+      operationId: catalogByTier
+      parameters:
+        - $ref: "#/components/parameters/tier"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/catalog"
+        "404":
+          description: tier not found
+  /tier/at-least/{tier}.json:
+    get:
+      tags:
+        - subset
+      summary: Query extensions by specifying minimum support
+      description: Query the subset of the registry that contains the extensions whose support is at least the level specified as a parameter.
+      operationId: queryAtLeastTier
+      parameters:
+        - $ref: "#/components/parameters/tier"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/registry"
+        "404":
+          description: tier not found
+  /tier/at-least/{tier}-catalog.json:
+    get:
+      tags:
+        - catalog
+      summary: Catalog by specifying minimum support
+      description: Query the catalog containing extensions available with at least the support specified as a parameter.
+      operationId: catalogAtLeastTier
+      parameters:
+        - $ref: "#/components/parameters/tier"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/catalog"
+        "404":
+          description: tier not found
+  /category/{category}.json:
+    get:
+      tags:
+        - subset
+      summary: Query extensions by category
+      description: Querying the subset of the registry containing extensions belonging to the category specified in the parameter
+      operationId: queryByCategory
+      parameters:
+        - $ref: "#/components/parameters/category"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/registry"
+        "404":
+          description: category not found
+  /grade/{grade}.json:
+    get:
+      tags:
+        - subset
+      summary: Query extensions by grade
+      description: Querying the subset of the registry containing the extensions with the compliance grade specified in the parameter
+      operationId: queryByGrade
+      parameters:
+        - $ref: "#/components/parameters/grade"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/registry"
+        "404":
+          description: grade not found
+  /grade/at-least/{grade}.json:
+    get:
+      tags:
+        - subset
+      summary: Query extensions by passing grade
+      description: Querying the subset of the registry containing extensions with at least compliance grade specified in the parameter
+      operationId: queryByPassingGrade
+      parameters:
+        - $ref: "#/components/parameters/grade"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "registry.schema.json#/$defs/registry"
+        "404":
+          description: grade not found
+
+components:
+  parameters:
+    module:
+      in: path
+      name: module
+      required: true
+      description: go module path of the extension
+      examples:
+        xk6-dashboard:
+          value: "github.com/grafana/xk6-dashboard"
+        xk6-sql:
+          value: "github.com/grafana/xk6-sql"
+      schema:
+        type: string
+    grade:
+      in: path
+      name: grade
+      required: true
+      description: grade to be queried
+      examples:
+        A:
+          value: "A"
+        C:
+          value: "C"
+      schema:
+        $ref: "registry.schema.json#/$defs/grade"
+    category:
+      in: path
+      name: category
+      required: true
+      description: category to be queried
+      example: "data"
+      schema:
+        $ref: "registry.schema.json#/$defs/category"
+    tier:
+      in: path
+      name: tier
+      required: true
+      description: tier to be queried
+      examples:
+        official:
+          value: "official"
+        community:
+          value: "community"
+      schema:
+        $ref: "registry.schema.json#/$defs/tier"
+    product:
+      in: path
+      name: product
+      required: true
+      description: product to be queried
+      examples:
+        oss:
+          value: "oss"
+        cloud:
+          value: "cloud"
+      schema:
+        $ref: "registry.schema.json#/$defs/product"

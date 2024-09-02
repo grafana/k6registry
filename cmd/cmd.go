@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 
 	"github.com/adrg/xdg"
+	"github.com/grafana/k6registry"
 	"github.com/spf13/cobra"
 )
 
@@ -19,6 +20,7 @@ var help string
 type options struct {
 	out     string
 	compact bool
+	catalog bool
 	quiet   bool
 	loose   bool
 	lint    bool
@@ -69,6 +71,7 @@ func New() (*cobra.Command, error) {
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
+	flags.BoolVar(&opts.catalog, "catalog", false, "generate catalog instead of registry")
 	root.MarkFlagsMutuallyExclusive("compact", "quiet")
 
 	flags.BoolP("version", "V", false, "print version")
@@ -147,7 +150,13 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		encoder.SetIndent("", "  ")
 	}
 
-	err = encoder.Encode(registry)
+	var source interface{} = registry
+
+	if opts.catalog {
+		source = k6registry.RegistryToCatalog(registry)
+	}
+
+	err = encoder.Encode(source)
 	if err != nil {
 		return err
 	}

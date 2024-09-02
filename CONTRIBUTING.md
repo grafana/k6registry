@@ -54,6 +54,7 @@ The example registry can be found in [example.yaml] file, the documentation ([re
 
 ```bash
 go run ./cmd/k6registry --lint -o docs/example.json docs/example.yaml
+go run ./cmd/k6registry --lint --catalog -o docs/example-catalog.json docs/example.yaml
 go run ./cmd/k6registry --lint -q --api docs/example-api docs/example.yaml
 tree -n --noreport --filesfirst -o docs/example-api.txt docs/example-api 
 mdcode update docs/registry.md

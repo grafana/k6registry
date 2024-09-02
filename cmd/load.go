@@ -23,6 +23,7 @@ func k6AsExtension() k6registry.Extension {
 			k6registry.ProductCloud,
 			k6registry.ProductOSS,
 		},
+		Imports: []string{k6ImportPath},
 	}
 }
 
@@ -269,6 +270,7 @@ const (
 	ghModulePrefix = "github.com/"
 	glModulePrefix = "gitlab.com/"
 	k6Module       = "go.k6.io/k6"
+	k6ImportPath   = "k6"
 	k6Description  = "A modern load testing tool, using Go and JavaScript"
 )
 

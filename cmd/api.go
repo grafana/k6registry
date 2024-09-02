@@ -26,39 +26,46 @@ func writeAPI(registry k6registry.Registry, target string) error {
 }
 
 //nolint:forbidigo
-func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {
-	filename := filepath.Join(target, "registry.schema.json")
+func writeData(filename string, data []byte) error {
+	dir := filepath.Dir(filename)
 
-	if err := os.WriteFile(filename, k6registry.Schema, permFile); err != nil {
-		return err
-	}
-
-	filename = filepath.Join(target, "registry.json")
-
-	data, err := json.MarshalIndent(registry, "", "  ")
-	if err != nil {
+	if err := os.MkdirAll(dir, permDir); err != nil {
 		return err
 	}
 
 	return os.WriteFile(filename, data, permFile)
 }
 
-//nolint:forbidigo
-func writeAPIGroupModule(registry k6registry.Registry, target string) error {
-	base := filepath.Join(target, "module")
-
-	if err := os.MkdirAll(base, permDir); err != nil {
+func writeJSON(filename string, source interface{}) error {
+	data, err := json.MarshalIndent(source, "", "  ")
+	if err != nil {
 		return err
 	}
 
+	return writeData(filename, data)
+}
+
+func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {
+	if err := writeData(filepath.Join(target, "registry.schema.json"), k6registry.Schema); err != nil {
+		return err
+	}
+
+	if err := writeData(filepath.Join(target, "openapi.yaml"), k6registry.OpenAPI); err != nil {
+		return err
+	}
+
+	if err := writeJSON(filepath.Join(target, "registry.json"), registry); err != nil {
+		return err
+	}
+
+	return writeJSON(filepath.Join(target, "catalog.json"), k6registry.RegistryToCatalog(registry))
+}
+
+func writeAPIGroupModule(registry k6registry.Registry, target string) error {
+	base := filepath.Join(target, "module")
+
 	for _, ext := range registry {
 		dir := filepath.Join(base, ext.Module)
-
-		if err := os.MkdirAll(dir, permDir); err != nil {
-			return err
-		}
-
-		filename := filepath.Join(dir, "badge.svg")
 
 		if ext.Compliance != nil {
 			b, err := badge.RenderBytes("k6 registry", string(ext.Compliance.Grade), badgecolor(ext.Compliance.Grade))
@@ -66,20 +73,13 @@ func writeAPIGroupModule(registry k6registry.Registry, target string) error {
 				return err
 			}
 
-			err = os.WriteFile(filename, b, permFile)
+			err = writeData(filepath.Join(dir, "badge.svg"), b)
 			if err != nil {
 				return err
 			}
 		}
 
-		filename = filepath.Join(dir, "extension.json")
-
-		data, err := json.MarshalIndent(ext, "", "  ")
-		if err != nil {
-			return err
-		}
-
-		if err = os.WriteFile(filename, data, permFile); err != nil {
+		if err := writeJSON(filepath.Join(dir, "extension.json"), ext); err != nil {
 			return err
 		}
 	}
@@ -103,13 +103,8 @@ func writeAPIGroupSubset(registry k6registry.Registry, target string) error {
 	return writeAPISubsetCategory(registry, target)
 }
 
-//nolint:forbidigo
 func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "product")
-
-	if err := os.MkdirAll(base, permDir); err != nil {
-		return err
-	}
 
 	products := make(map[k6registry.Product]k6registry.Registry, len(k6registry.Products))
 
@@ -126,13 +121,12 @@ func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 	}
 
 	for prod, reg := range products {
-		data, err := json.MarshalIndent(reg, "", "  ")
-		if err != nil {
+		prefix := string(prod)
+		if err := writeJSON(filepath.Join(base, prefix+".json"), reg); err != nil {
 			return err
 		}
 
-		err = os.WriteFile(filepath.Join(base, string(prod)+".json"), data, permFile)
-		if err != nil {
+		if err := writeJSON(filepath.Join(base, prefix+"-catalog.json"), k6registry.RegistryToCatalog(reg)); err != nil {
 			return err
 		}
 	}
@@ -140,19 +134,20 @@ func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 	return nil
 }
 
-//nolint:forbidigo
 func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "tier")
 
-	if err := os.MkdirAll(base, permDir); err != nil {
-		return err
-	}
-
 	tiers := make(map[k6registry.Tier]k6registry.Registry, len(k6registry.Tiers))
 
-	for _, ext := range registry {
+	var k6ext *k6registry.Extension
+
+	for idx, ext := range registry {
 		if len(ext.Tier) == 0 {
 			continue
+		}
+
+		if ext.Module == k6Module {
+			k6ext = &registry[idx]
 		}
 
 		reg, found := tiers[ext.Tier]
@@ -164,14 +159,68 @@ func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 		tiers[ext.Tier] = reg
 	}
 
+	for _, tier := range k6registry.Tiers {
+		if tier == k6registry.TierOfficial {
+			continue
+		}
+
+		reg, found := tiers[tier]
+		if !found {
+			reg = make(k6registry.Registry, 0)
+		}
+
+		reg = append(reg, *k6ext)
+		tiers[tier] = reg
+	}
+
 	for tier, reg := range tiers {
-		data, err := json.MarshalIndent(reg, "", "  ")
-		if err != nil {
+		prefix := string(tier)
+
+		if err := writeJSON(filepath.Join(base, prefix+".json"), reg); err != nil {
 			return err
 		}
 
-		err = os.WriteFile(filepath.Join(base, string(tier)+".json"), data, permFile)
-		if err != nil {
+		if err := writeJSON(filepath.Join(base, prefix+"-catalog.json"), k6registry.RegistryToCatalog(reg)); err != nil {
+			return err
+		}
+	}
+
+	return writeAPISubsetTierAtLeast(registry, target)
+}
+
+func writeAPISubsetTierAtLeast(registry k6registry.Registry, target string) error {
+	base := filepath.Join(target, "tier", "at-least")
+
+	tiers := make(map[k6registry.Tier]k6registry.Registry, len(k6registry.Tiers))
+
+	for _, tier := range k6registry.Tiers {
+		tiers[tier] = make(k6registry.Registry, 0)
+	}
+
+	for _, ext := range registry {
+		for _, tier := range k6registry.Tiers {
+			if ext.Tier.Level() > tier.Level() {
+				continue
+			}
+
+			reg, found := tiers[tier]
+			if !found {
+				reg = make(k6registry.Registry, 0)
+			}
+
+			reg = append(reg, ext)
+			tiers[tier] = reg
+		}
+	}
+
+	for tier, reg := range tiers {
+		prefix := string(tier)
+
+		if err := writeJSON(filepath.Join(base, prefix+".json"), reg); err != nil {
+			return err
+		}
+
+		if err := writeJSON(filepath.Join(base, prefix+"-catalog.json"), k6registry.RegistryToCatalog(reg)); err != nil {
 			return err
 		}
 	}
@@ -179,13 +228,8 @@ func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 	return nil
 }
 
-//nolint:forbidigo
 func writeAPISubsetGrade(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "grade")
-
-	if err := os.MkdirAll(base, permDir); err != nil {
-		return err
-	}
 
 	grades := make(map[k6registry.Grade]k6registry.Registry, len(k6registry.Grades))
 
@@ -208,27 +252,16 @@ func writeAPISubsetGrade(registry k6registry.Registry, target string) error {
 	}
 
 	for grade, reg := range grades {
-		data, err := json.MarshalIndent(reg, "", "  ")
-		if err != nil {
-			return err
-		}
-
-		err = os.WriteFile(filepath.Join(base, string(grade)+".json"), data, permFile)
-		if err != nil {
+		if err := writeJSON(filepath.Join(base, string(grade)+".json"), reg); err != nil {
 			return err
 		}
 	}
 
-	return writeAPISubsetGradePassing(registry, target)
+	return writeAPISubsetGradeAtLeast(registry, target)
 }
 
-//nolint:forbidigo
-func writeAPISubsetGradePassing(registry k6registry.Registry, target string) error {
-	base := filepath.Join(target, "grade", "passing")
-
-	if err := os.MkdirAll(base, permDir); err != nil {
-		return err
-	}
+func writeAPISubsetGradeAtLeast(registry k6registry.Registry, target string) error {
+	base := filepath.Join(target, "grade", "at-least")
 
 	grades := make(map[k6registry.Grade]k6registry.Registry, len(k6registry.Grades))
 
@@ -257,13 +290,7 @@ func writeAPISubsetGradePassing(registry k6registry.Registry, target string) err
 	}
 
 	for grade, reg := range grades {
-		data, err := json.MarshalIndent(reg, "", "  ")
-		if err != nil {
-			return err
-		}
-
-		err = os.WriteFile(filepath.Join(base, string(grade)+".json"), data, permFile)
-		if err != nil {
+		if err := writeJSON(filepath.Join(base, string(grade)+".json"), reg); err != nil {
 			return err
 		}
 	}
@@ -271,13 +298,8 @@ func writeAPISubsetGradePassing(registry k6registry.Registry, target string) err
 	return nil
 }
 
-//nolint:forbidigo
 func writeAPISubsetCategory(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "category")
-
-	if err := os.MkdirAll(base, permDir); err != nil {
-		return err
-	}
 
 	categories := make(map[k6registry.Category]k6registry.Registry, len(k6registry.Categories))
 
@@ -298,13 +320,7 @@ func writeAPISubsetCategory(registry k6registry.Registry, target string) error {
 	}
 
 	for cat, reg := range categories {
-		data, err := json.MarshalIndent(reg, "", "  ")
-		if err != nil {
-			return err
-		}
-
-		err = os.WriteFile(filepath.Join(base, string(cat)+".json"), data, permFile)
-		if err != nil {
+		if err := writeJSON(filepath.Join(base, string(cat)+".json"), reg); err != nil {
 			return err
 		}
 	}

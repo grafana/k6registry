@@ -1,40 +1,5 @@
-[
-  {
-    "categories": [
-      "misc"
-    ],
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
-    "description": "Print ASCII art banner from k6 test",
-    "imports": [
-      "k6/x/banner"
-    ],
-    "module": "gitlab.com/szkiba/xk6-banner",
-    "products": [
-      "oss"
-    ],
-    "repo": {
-      "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
-      "description": "Print ASCII art banner from k6 test.",
-      "homepage": "https://gitlab.com/szkiba/xk6-banner",
-      "license": "MIT",
-      "name": "xk6-banner",
-      "owner": "szkiba",
-      "public": true,
-      "timestamp": 1724312566,
-      "topics": [
-        "xk6"
-      ],
-      "url": "https://gitlab.com/szkiba/xk6-banner"
-    },
-    "tier": "community",
-    "versions": [
-      "v0.1.0"
-    ]
-  },
-  {
+{
+  "k6": {
     "categories": [
       "misc"
     ],
@@ -159,5 +124,50 @@
       "v0.0.2",
       "v0.0.1"
     ]
+  },
+  "k6/x/sql": {
+    "categories": [
+      "data"
+    ],
+    "compliance": {
+      "grade": "A",
+      "level": 100
+    },
+    "description": "Load test SQL Servers",
+    "imports": [
+      "k6/x/sql"
+    ],
+    "module": "github.com/grafana/xk6-sql",
+    "products": [
+      "cloud",
+      "oss"
+    ],
+    "repo": {
+      "clone_url": "https://github.com/grafana/xk6-sql.git",
+      "description": "k6 extension to load test RDBMSs (PostgreSQL, MySQL, MS SQL and SQLite3)",
+      "homepage": "https://github.com/grafana/xk6-sql",
+      "license": "Apache-2.0",
+      "name": "xk6-sql",
+      "owner": "grafana",
+      "public": true,
+      "stars": 106,
+      "timestamp": 1721400602,
+      "topics": [
+        "k6",
+        "sql",
+        "xk6"
+      ],
+      "url": "https://github.com/grafana/xk6-sql"
+    },
+    "tier": "official",
+    "versions": [
+      "v0.4.0",
+      "v0.3.0",
+      "v0.2.1",
+      "v0.2.0",
+      "v0.1.1",
+      "v0.1.0",
+      "v0.0.1"
+    ]
   }
-]
+}

@@ -10,6 +10,13 @@
       },
       "additionalProperties": false
     },
+    "catalog": {
+      "description": "k6 Extension Catalog.\n\nThe k6 extension catalog is an alternative representation of the k6 extension registry.\nThe catalog stores the extension data in an associative array (object),\nwhere the key is the imprt path for JavaScript extensions, and the output name for output extensions.\nThis data structure is optimized to resolve extensions as dependencies.\n",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/extension"
+      }
+    },
     "extension": {
       "type": "object",
       "description": "Properties of the registered k6 extension.\n\nOnly those properties of the extensions are registered, which either cannot be detected automatically, or delegation to the extension is not allowed.\n\nProperties that are available using the repository manager API are intentionally not registered.\n\nThe string like properties that are included in the generated Grafana documentation are intentionally not accessed via the API of the repository manager. It is not allowed to inject arbitrary text into the Grafana documentation site without approval. Therefore, these properties are registered (eg `description`)\n",
@@ -44,7 +51,6 @@
           "items": {
             "type": "string"
           },
-          "example": null,
           "description": "List of output names registered by the extension.\n\nThe extensions used by k6 scripts are automatically detected based on the values specified here, therefore it is important that the values used here are consistent with the values registered by the extension at runtime.\n",
           "examples": [
             [
@@ -64,7 +70,14 @@
           "items": {
             "type": "string"
           },
-          "description": "List of supported versions.\n\nVersions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.\n"
+          "description": "List of supported versions.\n\nVersions are tags whose format meets the requirements of semantic versioning. Version tags often start with the letter `v`, which is not part of the semantic version.\n",
+          "examples": [
+            [
+              "v0.1.0",
+              "v0.2.0",
+              "v0.2.1"
+            ]
+          ]
         },
         "repo": {
           "$ref": "#/$defs/repository",
