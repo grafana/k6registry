@@ -80,13 +80,14 @@ func legacyConvert(ctx context.Context) error {
 
 		legacyPatch(ext)
 
-		repo, _, err := loadRepository(ctx, ext.Module)
+		repo, tags, err := loadRepository(ctx, ext.Module)
 		if err != nil {
 			return err
 		}
 
 		tmp := *ext
 		tmp.Repo = repo
+		tmp.Versions = filterVersions(tags)
 
 		if ok, _ := lintExtension(tmp); ok {
 			reg = append(reg, ext)
