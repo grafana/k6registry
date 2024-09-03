@@ -1,8 +1,6 @@
 docs/example-api
 ├── catalog.json
-├── openapi.yaml
 ├── registry.json
-├── registry.schema.json
 ├── category
 │   ├── authentication.json
 │   ├── browser.json

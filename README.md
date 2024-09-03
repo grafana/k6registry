@@ -82,7 +82,7 @@ Registry generated from the source above.
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 327,
+      "stars": 328,
       "timestamp": 1719907965,
       "topics": [
         "xk6",
@@ -551,9 +551,7 @@ By using the `--api` flag, files are created with relative paths in a base direc
 ```ascii file=docs/example-api.txt
 docs/example-api
 ├── catalog.json
-├── openapi.yaml
 ├── registry.json
-├── registry.schema.json
 ├── category
 │   ├── authentication.json
 │   ├── browser.json
