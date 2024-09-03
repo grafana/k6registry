@@ -46,14 +46,6 @@ func writeJSON(filename string, source interface{}) error {
 }
 
 func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {
-	if err := writeData(filepath.Join(target, "registry.schema.json"), k6registry.Schema); err != nil {
-		return err
-	}
-
-	if err := writeData(filepath.Join(target, "openapi.yaml"), k6registry.OpenAPI); err != nil {
-		return err
-	}
-
 	if err := writeJSON(filepath.Join(target, "registry.json"), registry); err != nil {
 		return err
 	}
