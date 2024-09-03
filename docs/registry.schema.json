@@ -1,5 +1,5 @@
 {
-  "$id": "https://grafana.github.io/k6registry/registry.schema.json",
+  "$id": "https://registry.k6.io/registry.schema.json",
   "$ref": "#/$defs/registry",
   "$defs": {
     "registry": {
@@ -11,7 +11,7 @@
       "additionalProperties": false
     },
     "catalog": {
-      "description": "k6 Extension Catalog.\n\nThe k6 extension catalog is an alternative representation of the k6 extension registry.\nThe catalog stores the extension data in an associative array (object),\nwhere the key is the imprt path for JavaScript extensions, and the output name for output extensions.\nThis data structure is optimized to resolve extensions as dependencies.\n",
+      "description": "k6 Extension Catalog.\n\nThe k6 extension catalog is an alternative representation of the k6 extension registry.\nThe catalog stores the extension data in an associative array (object),\nwhere the key is the import path for JavaScript extensions, and the output name for output extensions.\nThis data structure is optimized to resolve extensions as dependencies.\n",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/$defs/extension"

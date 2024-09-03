@@ -7,7 +7,7 @@ package k6registry
 // The k6 extension catalog is an alternative representation of the k6 extension
 // registry.
 // The catalog stores the extension data in an associative array (object),
-// where the key is the imprt path for JavaScript extensions, and the output name
+// where the key is the import path for JavaScript extensions, and the output name
 // for output extensions.
 // This data structure is optimized to resolve extensions as dependencies.
 type Catalog map[string]Extension
