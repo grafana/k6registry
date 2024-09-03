@@ -10,11 +10,6 @@ import (
 //go:embed docs/registry.schema.json
 var Schema []byte
 
-// OpenAPI contains YAML format OpenAPI definition of Grafana k6 Extension Registry Service.
-//
-//go:embed docs/openapi.yaml
-var OpenAPI []byte
-
 //nolint:gochecknoglobals
 var (
 	// Categories contains possible values for Category

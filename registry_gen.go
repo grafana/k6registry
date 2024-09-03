@@ -7,7 +7,7 @@ package k6registry
 // The k6 extension catalog is an alternative representation of the k6 extension
 // registry.
 // The catalog stores the extension data in an associative array (object),
-// where the key is the imprt path for JavaScript extensions, and the output name
+// where the key is the import path for JavaScript extensions, and the output name
 // for output extensions.
 // This data structure is optimized to resolve extensions as dependencies.
 type Catalog map[string]Extension
@@ -42,7 +42,7 @@ type Compliance struct {
 	// The value of the `level` can be between `0-100` and is determined by the
 	// weighted and normalized sum of the scores of the compliance checks.
 	//
-	Level interface{} `json:"level" yaml:"level" mapstructure:"level"`
+	Level int `json:"level" yaml:"level" mapstructure:"level"`
 }
 
 // Properties of the registered k6 extension.
@@ -135,7 +135,6 @@ type Extension struct {
 	// that the extension is only available in the k6 OSS product.
 	// In this case, the registry will be filled in accordingly during generation.
 	//
-	//
 	Products []Product `json:"products,omitempty" yaml:"products,omitempty" mapstructure:"products,omitempty"`
 
 	// Repository metadata.
@@ -166,7 +165,6 @@ type Extension struct {
 	//
 	// If it is missing from the registry source, it will be set with the default
 	// "community" value during generation.
-	//
 	//
 	Tier Tier `json:"tier,omitempty" yaml:"tier,omitempty" mapstructure:"tier,omitempty"`
 

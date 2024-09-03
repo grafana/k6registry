@@ -19,7 +19,7 @@ inputs:
     description: api directory name
     required: false
 
-  mute:
+  quiet:
     description: no output, only validation
     required: false
 
@@ -33,6 +33,10 @@ inputs:
 
   compact:
     description: compact instead of pretty-printed output
+    required: false
+
+  catalog:
+    description: generate catalog instead of registry
     required: false
 
   ref:

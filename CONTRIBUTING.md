@@ -36,19 +36,18 @@ eget golangci/golangci-lint
 eget goreleaser/goreleaser
 ```
 
-## schema - Contribute to the JSON schema
+## schema - Generate code due to schema change
 
-The JSON schema of the registry can be found in the [registry.schema.yaml] file, after modification of which the schema in JSON format ([registry.schema.json]) and the golang data model ([registry_gen.go]) must be regenerated.
+After modifying registry schema ([registry.schema.json]), the [registry_gen.go] file must be regenerated.
 
 ```bash
-yq -o=json -P docs/registry.schema.yaml > docs/registry.schema.json
-go-jsonschema --capitalization URL --capitalization OSS -p k6registry --only-models -o registry_gen.go docs/registry.schema.yaml
+go-jsonschema --capitalization URL --capitalization OSS -p k6registry --only-models -o registry_gen.go docs/registry.schema.json
 ```
 
 [registry.schema.json]: docs/registry.schema.json
 [registry_gen.go]: registry_gen.go
 
-## example - Contribute to the example
+## example - Update documentation due to example changes
 
 The example registry can be found in [example.yaml] file, the documentation ([registry.md], [README.md]) must be updated after modification.
 
@@ -139,14 +138,14 @@ docker build -t k6registry -f Dockerfile.goreleaser .
 rm -rf build
 ```
 
-## all - Update everything
+### update - Update everything
 
 The most robust thing is to update everything (both the schema and the example) after modifying the source.
 
 Requires
 : schema, example, readme
 
-## legacy - Convert legacy registry
+### legacy - Convert legacy registry
 
 ```bash
  go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","tier","products","imports","outputs","repo","categories"])|sort_by(.module)' > ./docs/legacy.yaml
