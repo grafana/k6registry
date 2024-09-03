@@ -35,7 +35,7 @@ func New() (*cobra.Command, error) {
 
 	root := &cobra.Command{
 		Use:               "k6registry [flags] [source-file]",
-		Short:             "k6 Extension Registry Generator",
+		Short:             "k6 Extension Registry/Catalog Generator",
 		Long:              help,
 		SilenceUsage:      true,
 		SilenceErrors:     true,

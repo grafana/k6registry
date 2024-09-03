@@ -1,6 +1,6 @@
 <h1 name="title">k6registry</h1>
 
-**k6 Extension Registry Generator**
+**k6 Extension Registry/Catalog Generator**
 
 k6registry is a CLI tool and a GitHub Action that enables the generation of the k6 extension registry. The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
@@ -503,7 +503,7 @@ changed | `true` if the output has changed compared to `ref`, otherwise `false`
 <!-- #region cli -->
 ## k6registry
 
-k6 Extension Registry Generator
+k6 Extension Registry/Catalog Generator
 
 ### Synopsis
 
