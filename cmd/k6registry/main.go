@@ -55,8 +55,8 @@ func getArgs() []string {
 
 	var args []string
 
-	if getenv("INPUT_MUTE", "false") == "true" {
-		args = append(args, "--mute")
+	if getenv("INPUT_QUIET", "false") == "true" {
+		args = append(args, "--quiet")
 	}
 
 	if getenv("INPUT_LOOSE", "false") == "true" {
@@ -69,6 +69,10 @@ func getArgs() []string {
 
 	if getenv("INPUT_COMPACT", "false") == "true" {
 		args = append(args, "--compact")
+	}
+
+	if getenv("INPUT_CATALOG", "false") == "true" {
+		args = append(args, "--catalog")
 	}
 
 	if api := getenv("INPUT_API", ""); len(api) != 0 {
