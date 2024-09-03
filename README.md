@@ -1,8 +1,14 @@
 <h1 name="title">k6registry</h1>
 
-**Data model and tooling for the k6 extension registry**
+**k6 Extension Registry Generator**
 
-This repository contains the [JSON schema](docs/registry.schema.json) of the k6 extension registry and the [`k6registry`](#k6registry) command line tool for generating registry from source. The command line tool can also be used as a [GitHub Action](#github-action).
+k6registry is a CLI tool and a GitHub Action that enables the generation of the k6 extension registry. The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
+
+The generator also performs static analysis of extensions. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension. Based on the compliance grade, an SVG compliance badge is created for each extension. Example badge:
+
+![xk6-sql](https://registry.k6.io/module/github.com/grafana/xk6-sql/badge.svg)
+
+The k6 Extension Catalog is an alternative representation of the k6 Extension Registry. The output of the generation can be in k6 Extension Catalog format. This format is optimized to resolve extensions as dependencies.
 
 Check [k6 Extension Registry Concept](docs/registry.md) for information on design considerations.
 
@@ -455,15 +461,7 @@ go install github.com/grafana/k6registry/cmd/k6registry@latest
 
 ## GitHub Action
 
-`grafana/k6registry` is a GitHub Action that enables k6 extension registry processing and the generation of customized JSON output for different applications. Processing is based on popular `jq` expressions using an embedded `jq` implementation.
-
-The jq filter expression can be specified in the `filter` parameter.
-
-The extension registry is read from the YAML format file specified in the `in` parameter.
-
-Repository metadata is collected using the repository manager APIs. Currently only the GitHub API is supported.
-
-The output of the processing will be written to the standard output by default. The output can be saved to a file using the `out` parameter.
+`grafana/k6registry` is a GitHub Action that enables k6 Extension Registry and Catalog generation.
 
 **Inputs**
 
@@ -472,10 +470,11 @@ name   | reqired | default | description
 in     |   yes   |         | input file name
 out    |    no   |  stdout | output file name
 api    |    no   |         | output directory name
-mute   |    no   | `false` | no output, only validation
+quiet  |    no   | `false` | no output, only validation
 loose  |    no   | `false` | skip JSON schema validation
 lint   |    no   | `false` | enable built-in linter
 compact|    no   | `false` | compact instead of pretty-printed output
+catalog|    no   | `false` | generate catalog instead of registry
 ref    |    no   |         | reference output URL for change detection
 
 In GitHub action mode, the change can be indicated by comparing the output to a reference output. The reference output URL can be passed in the `ref` action parameter. The `changed` output variable will be `true` or `false` depending on whether the output has changed or not compared to the reference output.
@@ -491,8 +490,8 @@ changed | `true` if the output has changed compared to `ref`, otherwise `false`
 **Example usage**
 
 ```yaml
-- name: Generate registry in JSON format
-  uses: grafana/k6registry@v0.1.10
+- name: Generate extension registry
+  uses: grafana/k6registry@v0.1.18
   with:
     in: "registry.yaml"
     out: "registry.json"
@@ -504,21 +503,22 @@ changed | `true` if the output has changed compared to `ref`, otherwise `false`
 <!-- #region cli -->
 ## k6registry
 
-k6 extension registry generator
+k6 Extension Registry Generator
 
 ### Synopsis
 
-Command line k6 extension registry generator.
+Generate k6 extension registry/catalog from source.
 
-The source of the extension registry contains only the most important properties of the extensions. The rest of the properties are collected by k6registry using the API of the extensions' git repository managers.
+The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
-The source of the extension registry is read from the YAML (or JSON) format file specified as command line argument. If it is missing, the source is read from the standard input.
+The generator also performs static analysis of extensions. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension. Based on the compliance grade, an SVG compliance badge is created for each extension. 
 
-Repository metadata is collected using the API of the extensions' git repository managers. Currently only the GitHub API is supported.
+The source is read from file specified as command line argument. If it is missing, the source is read from the standard input.
 
 The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
 
 The `--api` flag can be used to specify a directory to which the outputs will be written. The `registry.json` file is placed in the root directory. The `extension.json` file and the `badge.svg` file (if the `--lint` flag is used) are placed in a directory with the same name as the extension's go module path.
+
 
 ```
 k6registry [flags] [source-file]
