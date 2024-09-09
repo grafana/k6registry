@@ -101,10 +101,11 @@ If the property is missing or empty in the source of the registry, it means that
   categories:
     - kubernetes
 
-- module: github.com/szkiba/xk6-faker
+- module: github.com/grafana/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
+  tier: official
   categories:
     - data
 

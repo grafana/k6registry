@@ -24,7 +24,7 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 328,
+      "stars": 330,
       "timestamp": 1719907965,
       "topics": [
         "xk6",
@@ -95,8 +95,8 @@
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 89,
-      "timestamp": 1725181167,
+      "stars": 91,
+      "timestamp": 1725571356,
       "topics": [
         "chaos-engineering",
         "fault-injection",

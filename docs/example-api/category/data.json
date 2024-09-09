@@ -24,8 +24,8 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 106,
-      "timestamp": 1721400602,
+      "stars": 107,
+      "timestamp": 1725628398,
       "topics": [
         "k6",
         "sql",
@@ -56,28 +56,29 @@
     "imports": [
       "k6/x/faker"
     ],
-    "module": "github.com/szkiba/xk6-faker",
+    "module": "github.com/grafana/xk6-faker",
     "products": [
       "oss"
     ],
     "repo": {
-      "clone_url": "https://github.com/szkiba/xk6-faker.git",
+      "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
-      "homepage": "http://ivan.szkiba.hu/xk6-faker/",
+      "homepage": "https://faker.x.k6.io",
       "license": "AGPL-3.0",
       "name": "xk6-faker",
-      "owner": "szkiba",
+      "owner": "grafana",
       "public": true,
-      "stars": 49,
-      "timestamp": 1719935566,
+      "stars": 50,
+      "timestamp": 1725533453,
       "topics": [
-        "xk6",
-        "xk6-javascript-k6-x-faker"
+        "xk6"
       ],
-      "url": "https://github.com/szkiba/xk6-faker"
+      "url": "https://github.com/grafana/xk6-faker"
     },
-    "tier": "community",
+    "tier": "official",
     "versions": [
+      "v0.4.0",
+      "v0.3.1",
       "v0.3.0",
       "v0.3.0-alpha.1",
       "v0.2.2",

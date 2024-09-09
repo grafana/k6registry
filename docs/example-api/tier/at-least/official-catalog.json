@@ -24,7 +24,7 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 328,
+      "stars": 330,
       "timestamp": 1719907965,
       "topics": [
         "xk6",
@@ -221,8 +221,8 @@
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 89,
-      "timestamp": 1725181167,
+      "stars": 91,
+      "timestamp": 1725571356,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -256,6 +256,49 @@
       "v0.1.0"
     ]
   },
+  "k6/x/faker": {
+    "categories": [
+      "data"
+    ],
+    "compliance": {
+      "grade": "A",
+      "level": 100
+    },
+    "description": "Generate random fake data",
+    "imports": [
+      "k6/x/faker"
+    ],
+    "module": "github.com/grafana/xk6-faker",
+    "products": [
+      "oss"
+    ],
+    "repo": {
+      "clone_url": "https://github.com/grafana/xk6-faker.git",
+      "description": "Random fake data generator for k6.",
+      "homepage": "https://faker.x.k6.io",
+      "license": "AGPL-3.0",
+      "name": "xk6-faker",
+      "owner": "grafana",
+      "public": true,
+      "stars": 50,
+      "timestamp": 1725533453,
+      "topics": [
+        "xk6"
+      ],
+      "url": "https://github.com/grafana/xk6-faker"
+    },
+    "tier": "official",
+    "versions": [
+      "v0.4.0",
+      "v0.3.1",
+      "v0.3.0",
+      "v0.3.0-alpha.1",
+      "v0.2.2",
+      "v0.2.1",
+      "v0.2.0",
+      "v0.1.0"
+    ]
+  },
   "k6/x/sql": {
     "categories": [
       "data"
@@ -281,8 +324,8 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 106,
-      "timestamp": 1721400602,
+      "stars": 107,
+      "timestamp": 1725628398,
       "topics": [
         "k6",
         "sql",
