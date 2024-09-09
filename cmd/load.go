@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
@@ -34,8 +35,11 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 	)
 
 	if loose {
+		slog.Debug("Read source")
 		raw, err = io.ReadAll(in)
 	} else {
+		slog.Debug("Validate source")
+
 		raw, err = validateWithSchema(in)
 	}
 
@@ -45,6 +49,8 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 
 	var registry k6registry.Registry
 
+	slog.Debug("Unmarshal source")
+
 	if err := yaml.Unmarshal(raw, &registry); err != nil {
 		return nil, err
 	}
@@ -52,6 +58,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 	registry = append(registry, k6AsExtension())
 
 	for idx, ext := range registry {
+		slog.Debug("Process extension", "module", ext.Module)
 		if len(ext.Tier) == 0 {
 			registry[idx].Tier = k6registry.TierCommunity
 		}
@@ -99,6 +106,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 }
 
 func loadRepository(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
+	slog.Debug("Loading repository", "module", module)
 	if strings.HasPrefix(module, k6Module) || strings.HasPrefix(module, ghModulePrefix) {
 		repo, tags, err := loadGitHub(ctx, module)
 		if err != nil {

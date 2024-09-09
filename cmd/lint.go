@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io/fs"
+	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -73,6 +74,8 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 	}
 
 	if notfound {
+		slog.Debug("Clone", "url", cloneURL)
+
 		_, err = git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
 		return err
 	}
@@ -87,6 +90,8 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 		return err
 	}
 
+	slog.Debug("Pull", "url", cloneURL)
+
 	err = wtree.Pull(&git.PullOptions{Force: true})
 	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
 		return err
@@ -98,6 +103,8 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 func checkCompliance(ctx context.Context, module string, cloneURL string, tstamp float64) (*k6lint.Compliance, error) {
 	com, found, err := loadCompliance(ctx, module, tstamp)
 	if found {
+		slog.Debug("Compliance from cache", "module", module)
+
 		return com, nil
 	}
 
@@ -115,6 +122,8 @@ func checkCompliance(ctx context.Context, module string, cloneURL string, tstamp
 	if err := updateWorkdir(ctx, dir, cloneURL); err != nil {
 		return nil, err
 	}
+
+	slog.Debug("Check compliance", "module", module)
 
 	compliance, err := k6lint.Lint(ctx, dir, &k6lint.Options{
 		Passed: []k6lint.Checker{k6lint.CheckerLicense, k6lint.CheckerVersions, k6lint.CheckerGit},
