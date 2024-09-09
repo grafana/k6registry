@@ -62,19 +62,7 @@ type Extension struct {
 	// The categories to which the extension belongs.
 	//
 	// If the property is missing or empty in the registry source, the default value
-	// is "misc".
-	//
-	// Possible values:
-	//
-	//   - authentication
-	//   - browser
-	//   - data
-	//   - kubernetes
-	//   - messaging
-	//   - misc
-	//   - observability
-	//   - protocol
-	//   - reporting
+	// is `["misc"]`.
 	//
 	Categories []Category `json:"categories,omitempty" yaml:"categories,omitempty" mapstructure:"categories,omitempty"`
 
