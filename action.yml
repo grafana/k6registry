@@ -23,6 +23,10 @@ inputs:
     description: no output, only validation
     required: false
 
+  verbose:
+    description: verbose logging
+    required: false
+
   loose:
     description: skip JSON schema validation
     required: false

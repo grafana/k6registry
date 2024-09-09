@@ -6,6 +6,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"io/fs"
+	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -22,13 +23,14 @@ type options struct {
 	compact bool
 	catalog bool
 	quiet   bool
+	verbose bool
 	loose   bool
 	lint    bool
 	api     string
 }
 
 // New creates new cobra command for exec command.
-func New() (*cobra.Command, error) {
+func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	opts := new(options)
 
 	legacy := false
@@ -43,6 +45,10 @@ func New() (*cobra.Command, error) {
 		Args:              cobra.MaximumNArgs(1),
 		CompletionOptions: cobra.CompletionOptions{DisableDefaultCmd: true},
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if opts.verbose && levelVar != nil {
+				levelVar.Set(slog.LevelDebug)
+			}
+
 			if legacy {
 				return legacyConvert(cmd.Context())
 			}
@@ -72,6 +78,7 @@ func New() (*cobra.Command, error) {
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
 	flags.BoolVar(&opts.catalog, "catalog", false, "generate catalog instead of registry")
+	flags.BoolVarP(&opts.verbose, "verbose", "v", false, "verbose logging")
 	root.MarkFlagsMutuallyExclusive("compact", "quiet")
 
 	flags.BoolP("version", "V", false, "print version")

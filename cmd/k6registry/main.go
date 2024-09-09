@@ -3,23 +3,38 @@ package main
 
 import (
 	"log"
+	"log/slog"
 	"os"
 
 	"github.com/grafana/k6registry/cmd"
+	sloglogrus "github.com/samber/slog-logrus/v2"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
 var version = "dev"
 
+func initLogging() *slog.LevelVar {
+	levelVar := new(slog.LevelVar)
+
+	logrus.SetLevel(logrus.DebugLevel)
+
+	logger := slog.New(sloglogrus.Option{Level: levelVar}.NewLogrusHandler())
+
+	slog.SetDefault(logger)
+
+	return levelVar
+}
+
 func main() {
 	log.SetFlags(0)
 	log.Writer()
 
-	runCmd(newCmd(getArgs()))
+	runCmd(newCmd(getArgs(), initLogging()))
 }
 
-func newCmd(args []string) *cobra.Command {
-	cmd, err := cmd.New()
+func newCmd(args []string, levelVar *slog.LevelVar) *cobra.Command {
+	cmd, err := cmd.New(levelVar)
 	if err != nil {
 		log.Fatal(formatError(err))
 	}
@@ -57,6 +72,10 @@ func getArgs() []string {
 
 	if getenv("INPUT_QUIET", "false") == "true" {
 		args = append(args, "--quiet")
+	}
+
+	if getenv("INPUT_VERBOSE", "false") == "true" {
+		args = append(args, "--verbose")
 	}
 
 	if getenv("INPUT_LOOSE", "false") == "true" {

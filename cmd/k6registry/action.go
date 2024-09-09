@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -33,7 +34,11 @@ func emitOutput() error {
 		return err
 	}
 
-	_, err = fmt.Fprintf(file, "changed=%t\n", isChanged(ref, out))
+	changed := isChanged(ref, out)
+
+	slog.Debug("Detect change", "changed", changed, "ref", ref)
+
+	_, err = fmt.Fprintf(file, "changed=%t\n", changed)
 	if err != nil {
 		return err
 	}

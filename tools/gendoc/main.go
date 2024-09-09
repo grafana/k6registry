@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	root, _ := cmd.New()
+	root, _ := cmd.New(nil)
 	clireadme.Main(root, 1)
 }
