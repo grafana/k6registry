@@ -580,21 +580,17 @@ docs/example-api
 │       └── F.json
 ├── module
 │   ├── github.com
-│   │   ├── grafana
-│   │   │   ├── xk6-dashboard
-│   │   │   │   ├── badge.svg
-│   │   │   │   └── extension.json
-│   │   │   ├── xk6-disruptor
-│   │   │   │   ├── badge.svg
-│   │   │   │   └── extension.json
-│   │   │   ├── xk6-faker
-│   │   │   │   ├── badge.svg
-│   │   │   │   └── extension.json
-│   │   │   └── xk6-sql
-│   │   │       ├── badge.svg
-│   │   │       └── extension.json
-│   │   └── szkiba
-│   │       └── xk6-faker
+│   │   └── grafana
+│   │       ├── xk6-dashboard
+│   │       │   ├── badge.svg
+│   │       │   └── extension.json
+│   │       ├── xk6-disruptor
+│   │       │   ├── badge.svg
+│   │       │   └── extension.json
+│   │       ├── xk6-faker
+│   │       │   ├── badge.svg
+│   │       │   └── extension.json
+│   │       └── xk6-sql
 │   │           ├── badge.svg
 │   │           └── extension.json
 │   ├── gitlab.com
