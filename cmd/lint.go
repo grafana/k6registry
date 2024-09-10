@@ -94,7 +94,7 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 
 	err = wtree.Pull(&git.PullOptions{Force: true})
 	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
-		if !errors.Is(err, git.ErrWorktreeNotClean) {
+		if !errors.Is(err, git.ErrWorktreeNotClean) && !errors.Is(err, git.ErrUnstagedChanges) {
 			return err
 		}
 
