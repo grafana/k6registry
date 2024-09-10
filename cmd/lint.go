@@ -94,7 +94,26 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 
 	err = wtree.Pull(&git.PullOptions{Force: true})
 	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
-		return err
+		if !errors.Is(err, git.ErrWorktreeNotClean) {
+			return err
+		}
+
+		slog.Debug("Retry pull", "url", cloneURL)
+
+		head, err := repo.Head()
+		if err != nil {
+			return err
+		}
+
+		err = wtree.Checkout(&git.CheckoutOptions{Force: true, Branch: head.Name()})
+		if err != nil {
+			return err
+		}
+
+		err = wtree.Pull(&git.PullOptions{Force: true})
+		if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
+			return err
+		}
 	}
 
 	return nil
