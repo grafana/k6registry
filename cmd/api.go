@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -350,6 +351,8 @@ func isCatalog(filename string) bool {
 
 func testAPI(paths []string, dir string) error {
 	for _, name := range paths {
+		slog.Debug("Testing API", "path", name)
+
 		name = filepath.FromSlash(strings.TrimPrefix(name, "/"))
 		name = filepath.Join(dir, name)
 
