@@ -472,6 +472,7 @@ name   | reqired | default | description
 in     |   yes   |         | input file name
 out    |    no   |  stdout | output file name
 api    |    no   |         | output directory name
+test   |    no   |         | api path(s) to test after generation
 quiet  |    no   | `false` | no output, only validation
 loose  |    no   | `false` | skip JSON schema validation
 lint   |    no   | `false` | enable built-in linter
@@ -482,6 +483,8 @@ ref    |    no   |         | reference output URL for change detection
 In GitHub action mode, the change can be indicated by comparing the output to a reference output. The reference output URL can be passed in the `ref` action parameter. The `changed` output variable will be `true` or `false` depending on whether the output has changed or not compared to the reference output.
 
 The `api` parameter can be used to specify a directory into which the outputs are written. The `registry.json` file is placed in the root directory. The `extension.json` file and the `badge.svg` file are placed in a directory with the same name as the go module path of the extension (if the `lint` parameter is `true`).
+
+The `test` parameter can be used to test registry and catalog files generated with the `api` parameter. The test is successful if the file is not empty, contains `k6` and at least one extension, and if all extensions meet the minimum requirements (e.g. it has versions).
 
 **Outputs**
 
@@ -521,6 +524,8 @@ The output of the generation will be written to the standard output by default. 
 
 The `--api` flag can be used to specify a directory to which the outputs will be written. The `registry.json` file is placed in the root directory. The `extension.json` file and the `badge.svg` file (if the `--lint` flag is used) are placed in a directory with the same name as the extension's go module path.
 
+The `--test` flag can be used to test registry and catalog files generated with the `--api` flag. The test is successful if the file is not empty, contains `k6` and at least one extension, and if all extensions meet the minimum requirements (e.g. it has versions).
+
 
 ```
 k6registry [flags] [source-file]
@@ -529,15 +534,17 @@ k6registry [flags] [source-file]
 ### Flags
 
 ```
-  -o, --out string   write output to file instead of stdout
-      --api string   write outputs to directory instead of stdout
-  -q, --quiet        no output, only validation
-      --loose        skip JSON schema validation
-      --lint         enable built-in linter
-  -c, --compact      compact instead of pretty-printed output
-      --catalog      generate catalog instead of registry
-  -V, --version      print version
-  -h, --help         help for k6registry
+  -o, --out string     write output to file instead of stdout
+      --api string     write outputs to directory instead of stdout
+      --test strings   test api path(s) (example: /registry.json,/catalog.json)
+  -q, --quiet          no output, only validation
+      --loose          skip JSON schema validation
+      --lint           enable built-in linter
+  -c, --compact        compact instead of pretty-printed output
+      --catalog        generate catalog instead of registry
+  -v, --verbose        verbose logging
+  -V, --version        print version
+  -h, --help           help for k6registry
 ```
 
 <!-- #endregion cli -->

@@ -5,7 +5,9 @@ import (
 	"log"
 	"log/slog"
 	"os"
+	"strings"
 
+	"github.com/google/shlex"
 	"github.com/grafana/k6registry/cmd"
 	sloglogrus "github.com/samber/slog-logrus/v2"
 	"github.com/sirupsen/logrus"
@@ -100,6 +102,15 @@ func getArgs() []string {
 
 	if out := getenv("INPUT_OUT", ""); len(out) != 0 {
 		args = append(args, "--out", out)
+	}
+
+	if paths := getenv("INPUT_TEST", ""); len(paths) != 0 {
+		parts, err := shlex.Split(paths)
+		if err != nil {
+			paths = strings.Join(parts, ",")
+		}
+
+		args = append(args, "--test", paths)
 	}
 
 	args = append(args, getenv("INPUT_IN", ""))
