@@ -47,6 +47,10 @@ inputs:
     description: reference output URL for change detection
     required: false
 
+  test:
+    description: api path(s) to test after generation
+    required: false
+
 outputs:
   changed:
     description: "true if the output has changed compared to ref"

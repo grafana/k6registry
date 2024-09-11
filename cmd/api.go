@@ -2,8 +2,11 @@ package cmd
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/grafana/k6registry"
 	"github.com/narqo/go-badge"
@@ -338,3 +341,65 @@ func badgecolor(grade k6registry.Grade) badge.Color {
 		return "blue"
 	}
 }
+
+func isCatalog(filename string) bool {
+	basename := strings.TrimSuffix(filename, filepath.Ext(filename))
+
+	return strings.HasSuffix(basename, "catalog")
+}
+
+func testAPI(paths []string, dir string) error {
+	for _, name := range paths {
+		name = filepath.FromSlash(strings.TrimPrefix(name, "/"))
+		name = filepath.Join(dir, name)
+
+		if err := testFile(name); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+//nolint:forbidigo
+func testFile(filename string) error {
+	data, err := os.ReadFile(filepath.Clean(filename))
+	if err != nil {
+		return err
+	}
+
+	var catalog k6registry.Catalog
+
+	if isCatalog(filename) {
+		if err := json.Unmarshal(data, &catalog); err != nil {
+			return err
+		}
+	} else {
+		var registry k6registry.Registry
+
+		if err := json.Unmarshal(data, &registry); err != nil {
+			return err
+		}
+
+		catalog = k6registry.RegistryToCatalog(registry)
+	}
+
+	_, found := catalog[k6ImportPath]
+	if !found {
+		return fmt.Errorf("%w: %s: missing %s module", errTestFailed, filename, k6Module)
+	}
+
+	if len(catalog) == 1 {
+		return fmt.Errorf("%w: %s: missing extensions", errTestFailed, filename)
+	}
+
+	for _, ext := range catalog {
+		if ok, msgs := lintExtension(ext); !ok && len(msgs) != 0 {
+			return fmt.Errorf("%w: %s: %s", errTestFailed, filename, msgs[0])
+		}
+	}
+
+	return nil
+}
+
+var errTestFailed = errors.New("test failed")
