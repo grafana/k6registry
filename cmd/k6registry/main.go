@@ -106,7 +106,7 @@ func getArgs() []string {
 
 	if paths := getenv("INPUT_TEST", ""); len(paths) != 0 {
 		parts, err := shlex.Split(paths)
-		if err != nil {
+		if err == nil {
 			paths = strings.Join(parts, ",")
 		}
 
