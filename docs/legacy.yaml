@@ -11,7 +11,7 @@
   categories:
     - data
 - module: github.com/Juandavi1/xk6-prompt
-  description: Support for input arguments via UI.
+  description: Support for input arguments via UI
   imports:
     - k6/x/prompt
   categories:
@@ -30,7 +30,7 @@
     - reporting
     - observability
 - module: github.com/SYM01/xk6-proxy
-  description: Add a dynamic proxy support to k6. Allow changing the HTTP proxy settings in the script.
+  description: Dynamic proxy support, allow changing the HTTP proxy settings in the script
   imports:
     - k6/x/proxy
   categories:
@@ -103,7 +103,7 @@
   categories:
     - messaging
 - module: github.com/golioth/xk6-coap
-  description: Interact with Constrained Application Protocol endpoints.
+  description: Interact with Constrained Application Protocol endpoints
   imports:
     - k6/x/coap
   categories:
@@ -157,6 +157,13 @@
     - k6/x/exec
   categories:
     - misc
+- module: github.com/grafana/xk6-faker
+  description: Generate random fake data
+  tier: official
+  imports:
+    - k6/x/faker
+  categories:
+    - data
 - module: github.com/grafana/xk6-kubernetes
   description: Interact with Kubernetes clusters
   tier: official
@@ -203,7 +210,7 @@
     - reporting
     - data
 - module: github.com/grafana/xk6-sql
-  description: Load-test SQL Servers (PostgreSQL, MySQL and SQLite3 for now)
+  description: Load-test SQL Servers
   tier: official
   imports:
     - k6/x/sql
@@ -260,7 +267,7 @@
     - observability
     - data
 - module: github.com/mostafa/xk6-kafka
-  description: Load-test Apache Kafka. Includes support for Avro messages
+  description: Load test Apache Kafka. Includes support for Avro messages.
   imports:
     - k6/x/kafka
   categories:
@@ -278,7 +285,7 @@
   categories:
     - data
 - module: github.com/phymbert/xk6-sse
-  description: A k6 extension for Server-Sent Events (SSE)
+  description: Server Sent Event
   imports:
     - k6/x/sse
   categories:
@@ -326,12 +333,6 @@
     - k6/x/dotenv
   categories:
     - misc
-- module: github.com/szkiba/xk6-faker
-  description: Generate random fake data
-  imports:
-    - k6/x/faker
-  categories:
-    - data
 - module: github.com/szkiba/xk6-g0
   description: Write k6 tests in golang
   imports:
@@ -345,7 +346,7 @@
   categories:
     - misc
 - module: github.com/szkiba/xk6-output-plugin
-  description: Write k6 output extension as a dynamically loadable plugin using your favorite programming language
+  description: Dynamic output extension using your favorite programming language
   outputs:
     - plugin
   categories:
@@ -378,7 +379,7 @@
   categories:
     - data
 - module: github.com/thmshmm/xk6-opentelemetry
-  description: Generate OpenTelemetry signals from within your test scripts
+  description: Generate OpenTelemetry signals from k6 tests
   imports:
     - k6/x/opentelemetry
   categories:

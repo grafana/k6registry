@@ -231,7 +231,7 @@ var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
 	"github.com/szkiba/xk6-chai":                               {},
 	"github.com/szkiba/xk6-csv":                                {},
 	"github.com/szkiba/xk6-dotenv":                             {},
-	"github.com/szkiba/xk6-faker":                              {},
+	"github.com/grafana/xk6-faker":                             {},
 	"github.com/szkiba/xk6-g0":                                 {},
 	"github.com/szkiba/xk6-mock":                               {},
 	"github.com/szkiba/xk6-output-plugin":                      {},
