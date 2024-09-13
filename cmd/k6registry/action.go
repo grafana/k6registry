@@ -16,7 +16,12 @@ import (
 func emitOutput() error {
 	out := getenv("INPUT_OUT", "")
 	if len(out) == 0 {
-		return nil
+		api := getenv("INPUT_API", "")
+		if len(api) == 0 {
+			return nil
+		}
+
+		out = filepath.Join(api, "registry.json")
 	}
 
 	ref := getenv("INPUT_REF", "")
