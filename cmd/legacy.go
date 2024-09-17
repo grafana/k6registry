@@ -204,6 +204,7 @@ var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
 	"github.com/grafana/xk6-kubernetes":               {categories: []k6registry.Category{k6registry.CategoryKubernetes}},
 	"github.com/grafana/xk6-loki":                     {},
 	"github.com/grafana/xk6-notification":             {},
+	"github.com/grafana/xk6-output-opentelemetry":     {},
 	"github.com/grafana/xk6-output-influxdb":          {outputs: "xk6-influxdb"},
 	"github.com/grafana/xk6-output-kafka":             {outputs: "xk6-kafka"},
 	"github.com/grafana/xk6-output-timescaledb":       {},

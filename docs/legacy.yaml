@@ -201,6 +201,14 @@
   categories:
     - reporting
     - messaging
+- module: github.com/grafana/xk6-output-opentelemetry
+  description: Export k6 results in OpenTelemetry format
+  tier: official
+  outputs:
+    - opentelemetry
+  categories:
+    - reporting
+    - observability
 - module: github.com/grafana/xk6-output-timescaledb
   description: Export k6 results to TimescaleDB
   tier: official
