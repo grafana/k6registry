@@ -71,6 +71,8 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 			registry[idx].Categories = append(registry[idx].Categories, k6registry.CategoryMisc)
 		}
 
+		ext := ext
+
 		repo, tags, err := loadRepository(ctx, &ext)
 		if err != nil {
 			return nil, err
