@@ -71,11 +71,9 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 			registry[idx].Categories = append(registry[idx].Categories, k6registry.CategoryMisc)
 		}
 
-		if ext.Repo != nil {
-			continue
-		}
+		ext := ext
 
-		repo, tags, err := loadRepository(ctx, ext.Module)
+		repo, tags, err := loadRepository(ctx, &ext)
 		if err != nil {
 			return nil, err
 		}
@@ -105,8 +103,13 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 	return registry, nil
 }
 
-func loadRepository(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
-	slog.Debug("Loading repository", "module", module)
+func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry.Repository, []string, error) {
+	if ext.Versions != nil {
+		return ext.Repo, ext.Versions, nil
+	}
+
+	module := ext.Module
+
 	if strings.HasPrefix(module, k6Module) || strings.HasPrefix(module, ghModulePrefix) {
 		repo, tags, err := loadGitHub(ctx, module)
 		if err != nil {
@@ -150,6 +153,8 @@ func filterVersions(tags []string) []string {
 }
 
 func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
+	slog.Debug("Loading GitHub repository", "module", module)
+
 	client, err := contextGitHubClient(ctx)
 	if err != nil {
 		return nil, nil, err
@@ -217,6 +222,8 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []s
 }
 
 func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
+	slog.Debug("Loading GitLab repository", "module", module)
+
 	client, err := gitlab.NewClient("")
 	if err != nil {
 		return nil, nil, err
