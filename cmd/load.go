@@ -6,9 +6,12 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"path/filepath"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/google/go-github/v62/github"
 	"github.com/grafana/k6registry"
 	"github.com/xanzy/go-gitlab"
@@ -109,6 +112,15 @@ func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry
 	}
 
 	module := ext.Module
+
+	if ext.Repo != nil && len(ext.Repo.CloneURL) > 0 {
+		versions, err := loadGit(ctx, module, ext.Repo.CloneURL)
+		if err != nil {
+			return nil, nil, err
+		}
+
+		return ext.Repo, versions, nil
+	}
 
 	if strings.HasPrefix(module, k6Module) || strings.HasPrefix(module, ghModulePrefix) {
 		repo, tags, err := loadGitHub(ctx, module)
@@ -279,6 +291,48 @@ func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []s
 	}
 
 	return repo, tags, nil
+}
+
+func loadGit(ctx context.Context, module string, cloneURL string) ([]string, error) {
+	base, err := modulesDir(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	dir := filepath.Join(base, module)
+
+	if err := updateWorkdir(ctx, dir, cloneURL); err != nil {
+		return nil, err
+	}
+
+	repo, err := git.PlainOpen(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	iter, err := repo.Tags()
+	if err != nil {
+		return nil, err
+	}
+
+	const tagPrefix = "refs/tags/"
+
+	versions := make([]string, 0)
+
+	err = iter.ForEach(func(ref *plumbing.Reference) error {
+		tag := strings.TrimPrefix(ref.Name().String(), tagPrefix)
+
+		if _, err := semver.NewVersion(tag); err == nil {
+			versions = append(versions, tag)
+		}
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return versions, nil
 }
 
 const (

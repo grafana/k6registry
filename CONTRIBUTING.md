@@ -62,9 +62,15 @@ mdcode update README.md
 ```
 
 [example.yaml]: docs/example.yaml
-[registry.schema.yaml]: docs/example.schema.yaml
 [registry.md]: docs/registry.md
 [README.md]: README.md
+
+## custom - Update custom example
+
+```bash
+go run ./cmd/k6registry --lint -o docs/custom.json docs/custom.yaml
+go run ./cmd/k6registry --lint --catalog -o docs/custom-catalog.json docs/custom.yaml
+```
 
 ## readme - Update README.md
 
