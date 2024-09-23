@@ -1,0 +1,25 @@
+- module: codeberg.org/szkiba/xk6-codename
+  description: Generate random, pronounceable codenames
+  imports:
+    - k6/x/codename
+  categories:
+    - misc
+  versions:
+    - v0.1.0
+  repo:
+    name: xk6-codename
+    owner: szkiba
+    url: https://codeberg.org/szkiba/xk6-codename
+    clone_url: https://codeberg.org/szkiba/xk6-codename.git
+
+- module: bitbucket.org/szkiba/xk6-sqids
+  description: Generate short unique identifiers from numbers
+  imports:
+    - k6/x/sqids
+  categories:
+    - misc
+  repo:
+    name: xk6-sqids
+    owner: szkiba
+    url: https://bitbucket.org/szkiba/xk6-sqids
+    clone_url: git@bitbucket.org:szkiba/xk6-sqids.git
