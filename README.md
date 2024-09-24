@@ -479,6 +479,7 @@ lint   |    no   | `false` | enable built-in linter
 compact|    no   | `false` | compact instead of pretty-printed output
 catalog|    no   | `false` | generate catalog instead of registry
 ref    |    no   |         | reference output URL for change detection
+origin |    no   |         | external registry URL for default values
 
 In GitHub action mode, the change can be indicated by comparing the output to a reference output. The reference output URL can be passed in the `ref` action parameter. The `changed` output variable will be `true` or `false` depending on whether the output has changed or not compared to the reference output.
 
@@ -534,17 +535,18 @@ k6registry [flags] [source-file]
 ### Flags
 
 ```
-  -o, --out string     write output to file instead of stdout
-      --api string     write outputs to directory instead of stdout
-      --test strings   test api path(s) (example: /registry.json,/catalog.json)
-  -q, --quiet          no output, only validation
-      --loose          skip JSON schema validation
-      --lint           enable built-in linter
-  -c, --compact        compact instead of pretty-printed output
-      --catalog        generate catalog instead of registry
-  -v, --verbose        verbose logging
-  -V, --version        print version
-  -h, --help           help for k6registry
+  -o, --out string      write output to file instead of stdout
+      --api string      write outputs to directory instead of stdout
+      --origin string   external registry URL for default values
+      --test strings    test api path(s) (example: /registry.json,/catalog.json)
+  -q, --quiet           no output, only validation
+      --loose           skip JSON schema validation
+      --lint            enable built-in linter
+  -c, --compact         compact instead of pretty-printed output
+      --catalog         generate catalog instead of registry
+  -v, --verbose         verbose logging
+  -V, --version         print version
+  -h, --help            help for k6registry
 ```
 
 <!-- #endregion cli -->

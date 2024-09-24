@@ -27,6 +27,7 @@ type options struct {
 	lint    bool
 	api     string
 	test    []string
+	origin  string
 }
 
 // New creates new cobra command for exec command.
@@ -70,6 +71,7 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
 	flags.StringVar(&opts.api, "api", "", "write outputs to directory instead of stdout")
+	flags.StringVar(&opts.origin, "origin", "", "external registry URL for default values")
 	flags.StringSliceVar(&opts.test, "test", []string{}, "test api path(s) (example: /registry.json,/catalog.json)")
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
@@ -136,7 +138,7 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		output = file
 	}
 
-	registry, err := load(ctx, input, opts.loose, opts.lint)
+	registry, err := load(ctx, input, opts.loose, opts.lint, opts.origin)
 	if err != nil {
 		return err
 	}

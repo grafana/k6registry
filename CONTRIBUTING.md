@@ -68,8 +68,9 @@ mdcode update README.md
 ## custom - Update custom example
 
 ```bash
-go run ./cmd/k6registry --lint -o docs/custom.json docs/custom.yaml
-go run ./cmd/k6registry --lint --catalog -o docs/custom-catalog.json docs/custom.yaml
+export ORIGIN=https://registry.k6.io/registry.json
+go run ./cmd/k6registry --lint -o docs/custom.json --origin $ORIGIN docs/custom.yaml
+go run ./cmd/k6registry --lint --catalog -o docs/custom-catalog.json  --origin $ORIGIN docs/custom.yaml
 ```
 
 ## readme - Update README.md
