@@ -65,3 +65,17 @@ func RegistryToCatalog(reg Registry) Catalog {
 
 	return catalog
 }
+
+// ModuleReference returns true if only the "Module" property has value.
+func (ext *Extension) ModuleReference() bool {
+	return len(ext.Module) > 0 &&
+		len(ext.Description) == 0 &&
+		len(ext.Imports) == 0 &&
+		len(ext.Outputs) == 0 &&
+		len(ext.Versions) == 0 &&
+		len(ext.Categories) == 0 &&
+		len(ext.Products) == 0 &&
+		len(ext.Tier) == 0 &&
+		ext.Repo == nil &&
+		ext.Compliance == nil
+}

@@ -43,6 +43,10 @@ inputs:
     description: generate catalog instead of registry
     required: false
 
+  origin:
+    description: external registry URL for default values
+    required: false
+
   ref:
     description: reference output URL for change detection
     required: false

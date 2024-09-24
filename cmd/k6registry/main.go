@@ -113,6 +113,10 @@ func getArgs() []string {
 		args = append(args, "--test", paths)
 	}
 
+	if origin := getenv("INPUT_ORIGIN", ""); len(origin) != 0 {
+		args = append(args, "--origin", origin)
+	}
+
 	args = append(args, getenv("INPUT_IN", ""))
 
 	return args

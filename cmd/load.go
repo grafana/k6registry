@@ -31,7 +31,7 @@ func k6AsExtension() k6registry.Extension {
 	}
 }
 
-func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.Registry, error) {
+func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 	var (
 		raw []byte
 		err error
@@ -58,10 +58,40 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 		return nil, err
 	}
 
-	registry = append(registry, k6AsExtension())
+	k6 := false
+
+	for idx := range registry {
+		if registry[idx].Module == k6Module {
+			k6 = true
+			break
+		}
+	}
+
+	if !k6 {
+		registry = append(registry, k6AsExtension())
+	}
+
+	return registry, nil
+}
+
+func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin string) (k6registry.Registry, error) {
+	registry, err := loadSource(in, loose)
+	if err != nil {
+		return nil, err
+	}
+
+	orig, err := loadOrigin(ctx, origin)
+	if err != nil {
+		return nil, err
+	}
 
 	for idx, ext := range registry {
 		slog.Debug("Process extension", "module", ext.Module)
+
+		if fromOrigin(&registry[idx], orig, origin) {
+			continue
+		}
+
 		if len(ext.Tier) == 0 {
 			registry[idx].Tier = k6registry.TierCommunity
 		}
@@ -87,7 +117,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool) (k6registry.
 			registry[idx].Versions = filterVersions(tags)
 		}
 
-		if lint && ext.Module != k6Module {
+		if lint && ext.Module != k6Module && ext.Compliance == nil && ext.Repo != nil {
 			compliance, err := checkCompliance(ctx, ext.Module, repo.CloneURL, repo.Timestamp)
 			if err != nil {
 				return nil, err
