@@ -71,6 +71,10 @@ func fromOrigin(ext *k6registry.Extension, origin map[string]k6registry.Extensio
 		ext.Versions = oext.Versions
 	}
 
+	if len(ext.Constraints) == 0 {
+		ext.Constraints = oext.Constraints
+	}
+
 	if len(ext.Description) == 0 {
 		ext.Description = oext.Description
 	}

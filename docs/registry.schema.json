@@ -63,6 +63,7 @@
         },
         "description": {
           "type": "string",
+          "default": "",
           "description": "Brief description of the extension.\n",
           "examples": [
             "This is a very cool extension, it displays the message 'Hello World!'"
@@ -79,6 +80,18 @@
               "v0.1.0",
               "v0.2.0",
               "v0.2.1"
+            ]
+          ]
+        },
+        "constraints": {
+          "type": "string",
+          "pattern": "[vxX*|,&\\^0-9.+-><=, ~]+",
+          "default": "",
+          "description": "Version constraints.\n\nVersion constraints are primarily used to filter automatically detected versions.\nIt can also be used to filter the versions property imported from the origin registry.\n",
+          "examples": [
+            [
+              ">=v0.4.0",
+              ">v0.50.0"
             ]
           ]
         },

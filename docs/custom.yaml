@@ -25,13 +25,9 @@
     clone_url: git@bitbucket.org:szkiba/xk6-sqids.git
 
 - module: github.com/grafana/xk6-faker
-  versions:
-    - v0.4.0
+  constraints: ">=v0.4.0"
 
 - module: github.com/grafana/xk6-sql
 
 - module: go.k6.io/k6
-  versions:
-    - v0.53.0
-    - v0.52.0
-    - v0.51.0
+  constraints: ">=v0.50.0"

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -41,12 +42,19 @@ func writeData(filename string, data []byte) error {
 }
 
 func writeJSON(filename string, source interface{}) error {
-	data, err := json.MarshalIndent(source, "", "  ")
+	var buff bytes.Buffer
+
+	encoder := json.NewEncoder(&buff)
+
+	encoder.SetIndent("", "  ")
+	encoder.SetEscapeHTML(false)
+
+	err := encoder.Encode(source)
 	if err != nil {
 		return err
 	}
 
-	return writeData(filename, data)
+	return writeData(filename, buff.Bytes())
 }
 
 func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {

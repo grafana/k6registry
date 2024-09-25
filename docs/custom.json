@@ -58,10 +58,7 @@
     "categories": [
       "data"
     ],
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
+    "constraints": ">=v0.4.0",
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
@@ -94,10 +91,6 @@
     "categories": [
       "data"
     ],
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
     "description": "Load-test SQL Servers",
     "imports": [
       "k6/x/sql"
@@ -114,7 +107,7 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 108,
+      "stars": 109,
       "timestamp": 1725979901,
       "topics": [
         "k6",
@@ -139,6 +132,7 @@
     "categories": [
       "misc"
     ],
+    "constraints": ">=v0.50.0",
     "description": "A modern load testing tool, using Go and JavaScript",
     "imports": [
       "k6"
@@ -171,7 +165,8 @@
     "versions": [
       "v0.53.0",
       "v0.52.0",
-      "v0.51.0"
+      "v0.51.0",
+      "v0.50.0"
     ]
   }
 ]
