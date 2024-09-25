@@ -70,9 +70,18 @@ type Extension struct {
 	//
 	Compliance *Compliance `json:"compliance,omitempty" yaml:"compliance,omitempty" mapstructure:"compliance,omitempty"`
 
+	// Version constraints.
+	//
+	// Version constraints are primarily used to filter automatically detected
+	// versions.
+	// It can also be used to filter the versions property imported from the origin
+	// registry.
+	//
+	Constraints string `json:"constraints,omitempty" yaml:"constraints,omitempty" mapstructure:"constraints,omitempty"`
+
 	// Brief description of the extension.
 	//
-	Description string `json:"description" yaml:"description" mapstructure:"description"`
+	Description string `json:"description,omitempty" yaml:"description,omitempty" mapstructure:"description,omitempty"`
 
 	// List of JavaScript import paths registered by the extension.
 	//

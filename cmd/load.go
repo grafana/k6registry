@@ -74,6 +74,42 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 	return registry, nil
 }
 
+func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool) error {
+	if len(ext.Tier) == 0 {
+		ext.Tier = k6registry.TierCommunity
+	}
+
+	if len(ext.Products) == 0 {
+		ext.Products = append(ext.Products, k6registry.ProductOSS)
+	}
+
+	if len(ext.Categories) == 0 {
+		ext.Categories = append(ext.Categories, k6registry.CategoryMisc)
+	}
+
+	repo, tags, err := loadRepository(ctx, ext)
+	if err != nil {
+		return err
+	}
+
+	ext.Repo = repo
+
+	if len(ext.Versions) == 0 {
+		ext.Versions = tagsToVersions(tags)
+	}
+
+	if lint && ext.Module != k6Module && ext.Compliance == nil && ext.Repo != nil {
+		compliance, err := checkCompliance(ctx, ext.Module, repo.CloneURL, repo.Timestamp)
+		if err != nil {
+			return err
+		}
+
+		ext.Compliance = &k6registry.Compliance{Grade: k6registry.Grade(compliance.Grade), Level: compliance.Level}
+	}
+
+	return nil
+}
+
 func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin string) (k6registry.Registry, error) {
 	registry, err := loadSource(in, loose)
 	if err != nil {
@@ -85,45 +121,25 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin strin
 		return nil, err
 	}
 
-	for idx, ext := range registry {
+	for idx := range registry {
+		ext := &registry[idx]
+
 		slog.Debug("Process extension", "module", ext.Module)
 
-		if fromOrigin(&registry[idx], orig, origin) {
-			continue
+		if !fromOrigin(ext, orig, origin) {
+			err := loadOne(ctx, ext, lint)
+			if err != nil {
+				return nil, err
+			}
 		}
 
-		if len(ext.Tier) == 0 {
-			registry[idx].Tier = k6registry.TierCommunity
-		}
-
-		if len(ext.Products) == 0 {
-			registry[idx].Products = append(registry[idx].Products, k6registry.ProductOSS)
-		}
-
-		if len(ext.Categories) == 0 {
-			registry[idx].Categories = append(registry[idx].Categories, k6registry.CategoryMisc)
-		}
-
-		ext := ext
-
-		repo, tags, err := loadRepository(ctx, &ext)
-		if err != nil {
-			return nil, err
-		}
-
-		registry[idx].Repo = repo
-
-		if len(registry[idx].Versions) == 0 {
-			registry[idx].Versions = filterVersions(tags)
-		}
-
-		if lint && ext.Module != k6Module && ext.Compliance == nil && ext.Repo != nil {
-			compliance, err := checkCompliance(ctx, ext.Module, repo.CloneURL, repo.Timestamp)
+		if len(ext.Constraints) > 0 {
+			constraints, err := semver.NewConstraint(ext.Constraints)
 			if err != nil {
 				return nil, err
 			}
 
-			registry[idx].Compliance = &k6registry.Compliance{Grade: k6registry.Grade(compliance.Grade), Level: compliance.Level}
+			ext.Versions = filterVersions(ext.Versions, constraints)
 		}
 	}
 
@@ -180,15 +196,33 @@ func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry
 	return nil, nil, fmt.Errorf("%w: %s", errUnsupportedModule, module)
 }
 
-func filterVersions(tags []string) []string {
+func tagsToVersions(tags []string) []string {
 	versions := make([]string, 0, len(tags))
 
 	for _, tag := range tags {
-		if _, err := semver.NewVersion(tag); err != nil {
+		_, err := semver.NewVersion(tag)
+		if err != nil {
 			continue
 		}
 
 		versions = append(versions, tag)
+	}
+
+	return versions
+}
+
+func filterVersions(tags []string, constraints *semver.Constraints) []string {
+	versions := make([]string, 0, len(tags))
+
+	for _, tag := range tags {
+		version, err := semver.NewVersion(tag)
+		if err != nil {
+			continue
+		}
+
+		if constraints.Check(version) {
+			versions = append(versions, tag)
+		}
 	}
 
 	return versions

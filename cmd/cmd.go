@@ -165,6 +165,8 @@ func writeOutput(registry k6registry.Registry, output io.Writer, opts *options) 
 		encoder.SetIndent("", "  ")
 	}
 
+	encoder.SetEscapeHTML(false)
+
 	var source interface{} = registry
 
 	if opts.catalog {

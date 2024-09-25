@@ -87,7 +87,7 @@ func legacyConvert(ctx context.Context) error {
 
 		tmp := *ext
 		tmp.Repo = repo
-		tmp.Versions = filterVersions(tags)
+		tmp.Versions = tagsToVersions(tags)
 
 		if ok, _ := lintExtension(tmp); ok {
 			reg = append(reg, ext)
