@@ -92,8 +92,8 @@ func getArgs() []string {
 		args = append(args, "--compact")
 	}
 
-	if getenv("INPUT_CATALOG", "false") == "true" {
-		args = append(args, "--catalog")
+	if catalog := getenv("INPUT_CATALOG", ""); len(catalog) != 0 {
+		args = append(args, "--catalog", catalog)
 	}
 
 	if api := getenv("INPUT_API", ""); len(api) != 0 {

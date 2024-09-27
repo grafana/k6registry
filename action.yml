@@ -40,7 +40,7 @@ inputs:
     required: false
 
   catalog:
-    description: generate catalog instead of registry
+    description: generate catalog to the specified file
     required: false
 
   origin:

@@ -58,6 +58,10 @@
     "categories": [
       "data"
     ],
+    "compliance": {
+      "grade": "A",
+      "level": 100
+    },
     "constraints": ">=v0.4.0",
     "description": "Generate random fake data",
     "imports": [
@@ -75,7 +79,7 @@
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 54,
+      "stars": 55,
       "timestamp": 1725533453,
       "topics": [
         "xk6"
@@ -91,6 +95,10 @@
     "categories": [
       "data"
     ],
+    "compliance": {
+      "grade": "A",
+      "level": 100
+    },
     "description": "Load-test SQL Servers",
     "imports": [
       "k6/x/sql"
@@ -107,7 +115,7 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 109,
+      "stars": 110,
       "timestamp": 1725979901,
       "topics": [
         "k6",
