@@ -23,7 +23,7 @@
       "name": "xk6-banner",
       "owner": "szkiba",
       "public": true,
-      "timestamp": 1724312566,
+      "timestamp": 1725896396,
       "topics": [
         "xk6"
       ],
@@ -45,6 +45,7 @@
     "module": "go.k6.io/k6",
     "products": [
       "cloud",
+      "synthetic",
       "oss"
     ],
     "repo": {
@@ -68,6 +69,7 @@
     },
     "tier": "official",
     "versions": [
+      "v0.54.0",
       "v0.53.0",
       "v0.52.0",
       "v0.51.0",

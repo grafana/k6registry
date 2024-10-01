@@ -89,7 +89,7 @@ Registry generated from the source above.
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 330,
+      "stars": 343,
       "timestamp": 1719907965,
       "topics": [
         "xk6",
@@ -161,8 +161,8 @@ Registry generated from the source above.
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 107,
-      "timestamp": 1725628398,
+      "stars": 110,
+      "timestamp": 1725979901,
       "topics": [
         "k6",
         "sql",
@@ -172,6 +172,7 @@ Registry generated from the source above.
     },
     "tier": "official",
     "versions": [
+      "v0.4.1",
       "v0.4.0",
       "v0.3.0",
       "v0.2.1",
@@ -205,8 +206,8 @@ Registry generated from the source above.
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 91,
-      "timestamp": 1725571356,
+      "stars": 93,
+      "timestamp": 1727763654,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -264,7 +265,7 @@ Registry generated from the source above.
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 50,
+      "stars": 55,
       "timestamp": 1725533453,
       "topics": [
         "xk6"
@@ -307,7 +308,7 @@ Registry generated from the source above.
       "name": "xk6-banner",
       "owner": "szkiba",
       "public": true,
-      "timestamp": 1724312566,
+      "timestamp": 1725896396,
       "topics": [
         "xk6"
       ],
@@ -329,6 +330,7 @@ Registry generated from the source above.
     "module": "go.k6.io/k6",
     "products": [
       "cloud",
+      "synthetic",
       "oss"
     ],
     "repo": {
@@ -352,6 +354,7 @@ Registry generated from the source above.
     },
     "tier": "official",
     "versions": [
+      "v0.54.0",
       "v0.53.0",
       "v0.52.0",
       "v0.51.0",
@@ -614,7 +617,9 @@ docs/example-api
 │   ├── cloud-catalog.json
 │   ├── cloud.json
 │   ├── oss-catalog.json
-│   └── oss.json
+│   ├── oss.json
+│   ├── synthetic-catalog.json
+│   └── synthetic.json
 └── tier
     ├── community-catalog.json
     ├── community.json

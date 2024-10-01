@@ -25,6 +25,7 @@ func k6AsExtension() k6registry.Extension {
 		Tier:        k6registry.TierOfficial,
 		Products: []k6registry.Product{
 			k6registry.ProductCloud,
+			k6registry.ProductSynthetic,
 			k6registry.ProductOSS,
 		},
 		Imports: []string{k6ImportPath},

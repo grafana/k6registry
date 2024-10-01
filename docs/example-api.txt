@@ -52,7 +52,9 @@ docs/example-api
 │   ├── cloud-catalog.json
 │   ├── cloud.json
 │   ├── oss-catalog.json
-│   └── oss.json
+│   ├── oss.json
+│   ├── synthetic-catalog.json
+│   └── synthetic.json
 └── tier
     ├── community-catalog.json
     ├── community.json

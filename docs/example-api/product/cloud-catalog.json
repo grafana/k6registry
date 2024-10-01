@@ -10,6 +10,7 @@
     "module": "go.k6.io/k6",
     "products": [
       "cloud",
+      "synthetic",
       "oss"
     ],
     "repo": {
@@ -33,6 +34,7 @@
     },
     "tier": "official",
     "versions": [
+      "v0.54.0",
       "v0.53.0",
       "v0.52.0",
       "v0.51.0",
@@ -150,8 +152,8 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 107,
-      "timestamp": 1725628398,
+      "stars": 110,
+      "timestamp": 1725979901,
       "topics": [
         "k6",
         "sql",
@@ -161,6 +163,7 @@
     },
     "tier": "official",
     "versions": [
+      "v0.4.1",
       "v0.4.0",
       "v0.3.0",
       "v0.2.1",

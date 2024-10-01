@@ -66,6 +66,13 @@ type Extension struct {
 	//
 	Categories []Category `json:"categories,omitempty" yaml:"categories,omitempty" mapstructure:"categories,omitempty"`
 
+	// Flag indicating the need for cgo.
+	//
+	// The `cgo` property value `true` indicates that cgo must be enabled to build the
+	// extension.
+	//
+	Cgo bool `json:"cgo,omitempty" yaml:"cgo,omitempty" mapstructure:"cgo,omitempty"`
+
 	// The result of the extension's k6 compliance checks.
 	//
 	Compliance *Compliance `json:"compliance,omitempty" yaml:"compliance,omitempty" mapstructure:"compliance,omitempty"`
@@ -127,6 +134,7 @@ type Extension struct {
 	//
 	//   - oss: Extensions are available in k6 OSS
 	//   - cloud: Extensions are available in Grafana Cloud k6
+	//   - synthetic: Extensions are available in Grafana Synthetic Monitoring
 	//
 	// If the property is missing or empty in the source of the registry, it means
 	// that the extension is only available in the k6 OSS product.
@@ -188,6 +196,7 @@ type Product string
 
 const ProductCloud Product = "cloud"
 const ProductOSS Product = "oss"
+const ProductSynthetic Product = "synthetic"
 
 // k6 Extension Registry.
 //

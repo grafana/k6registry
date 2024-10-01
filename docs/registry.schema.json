@@ -83,6 +83,11 @@
             ]
           ]
         },
+        "cgo": {
+          "type": "boolean",
+          "default": false,
+          "description": "Flag indicating the need for cgo.\n\nThe `cgo` property value `true` indicates that cgo must be enabled to build the extension.\n"
+        },
         "constraints": {
           "type": "string",
           "pattern": "[vxX*|,&\\^0-9.+-><=, ~]+",
@@ -113,10 +118,11 @@
           "items": {
             "$ref": "#/$defs/product"
           },
-          "description": "Products in which the extension can be used.\n\nSome extensions are not available in all k6 products.\nThis may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.\n\nPossible values:\n\n  - oss: Extensions are available in k6 OSS\n  - cloud: Extensions are available in Grafana Cloud k6\n\nIf the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.\nIn this case, the registry will be filled in accordingly during generation.\n",
+          "description": "Products in which the extension can be used.\n\nSome extensions are not available in all k6 products.\nThis may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.\n\nPossible values:\n\n  - oss: Extensions are available in k6 OSS\n  - cloud: Extensions are available in Grafana Cloud k6\n  - synthetic: Extensions are available in Grafana Synthetic Monitoring\n\nIf the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.\nIn this case, the registry will be filled in accordingly during generation.\n",
           "examples": [
             [
               "cloud",
+              "synthetic",
               "oss"
             ],
             [
@@ -332,12 +338,14 @@
       "type": "string",
       "enum": [
         "oss",
-        "cloud"
+        "cloud",
+        "synthetic"
       ],
-      "description": "Products in which the extension can be used.\n\nSome extensions are not available in all k6 products.\nThis may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.\n\nPossible values:\n\n  - oss: Extensions are available in k6 OSS\n  - cloud: Extensions are available in Grafana Cloud k6\n\nIf it is missing from the registry source, it will be set with the default `[\"community\"]` value during generation.\n",
+      "description": "Products in which the extension can be used.\n\nSome extensions are not available in all k6 products.\nThis may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.\n\nPossible values:\n\n  - oss: Extensions are available in k6 OSS\n  - cloud: Extensions are available in Grafana Cloud k6\n  - synthetic: Extensions are available in Grafana Synthetic Monitoring\n\nIf it is missing from the registry source, it will be set with the default `[\"community\"]` value during generation.\n",
       "examples": [
         [
           "cloud",
+          "synthetic",
           "oss"
         ],
         [
