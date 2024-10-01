@@ -142,6 +142,10 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin strin
 
 			ext.Versions = filterVersions(ext.Versions, constraints)
 		}
+
+		if err := sortVersions(ext.Versions); err != nil {
+			return nil, err
+		}
 	}
 
 	if lint {

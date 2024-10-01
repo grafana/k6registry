@@ -1,6 +1,10 @@
 package cmd
 
-import "github.com/Masterminds/semver/v3"
+import (
+	"sort"
+
+	"github.com/Masterminds/semver/v3"
+)
 
 func tagsToVersions(tags []string) []string {
 	versions := make([]string, 0, len(tags))
@@ -32,4 +36,30 @@ func filterVersions(tags []string, constraints *semver.Constraints) []string {
 	}
 
 	return versions
+}
+
+func sortVersions(versions []string) error {
+	type version struct {
+		source string
+		parsed *semver.Version
+	}
+
+	all := make([]*version, 0, len(versions))
+
+	for _, source := range versions {
+		parsed, err := semver.NewVersion(source)
+		if err != nil {
+			return err
+		}
+
+		all = append(all, &version{source: source, parsed: parsed})
+	}
+
+	sort.Slice(all, func(i, j int) bool { return all[i].parsed.Compare(all[j].parsed) > 0 })
+
+	for idx := range all {
+		versions[idx] = all[idx].source
+	}
+
+	return nil
 }
