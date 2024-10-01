@@ -142,6 +142,10 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin strin
 
 			ext.Versions = filterVersions(ext.Versions, constraints)
 		}
+
+		if err := sortVersions(ext.Versions); err != nil {
+			return nil, err
+		}
 	}
 
 	if lint {
@@ -195,38 +199,6 @@ func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry
 	}
 
 	return nil, nil, fmt.Errorf("%w: %s", errUnsupportedModule, module)
-}
-
-func tagsToVersions(tags []string) []string {
-	versions := make([]string, 0, len(tags))
-
-	for _, tag := range tags {
-		_, err := semver.NewVersion(tag)
-		if err != nil {
-			continue
-		}
-
-		versions = append(versions, tag)
-	}
-
-	return versions
-}
-
-func filterVersions(tags []string, constraints *semver.Constraints) []string {
-	versions := make([]string, 0, len(tags))
-
-	for _, tag := range tags {
-		version, err := semver.NewVersion(tag)
-		if err != nil {
-			continue
-		}
-
-		if constraints.Check(version) {
-			versions = append(versions, tag)
-		}
-	}
-
-	return versions
 }
 
 func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
