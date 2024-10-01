@@ -22,8 +22,8 @@
     "name": "xk6-disruptor",
     "owner": "grafana",
     "public": true,
-    "stars": 91,
-    "timestamp": 1725571356,
+    "stars": 93,
+    "timestamp": 1727763654,
     "topics": [
       "chaos-engineering",
       "fault-injection",
