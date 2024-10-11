@@ -73,17 +73,19 @@ func validateWithLinter(registry k6registry.Registry) error {
 }
 
 func hasTopic(ext k6registry.Extension) bool {
-	found := false
-
 	for _, topic := range ext.Repo.Topics {
 		if topic == "xk6" {
-			found = true
-
-			break
+			return true
 		}
 	}
 
-	return found
+	for _, product := range ext.Products {
+		if product == k6registry.ProductOSS { // for oss, topic is required
+			return false
+		}
+	}
+
+	return true // for non oss, topic isn't required
 }
 
 func lintExtension(ext k6registry.Extension) (bool, []string) {
