@@ -5,7 +5,7 @@ go 1.22.4
 require (
 	github.com/Masterminds/semver/v3 v3.3.0
 	github.com/adrg/xdg v0.5.0
-	github.com/cli/go-gh/v2 v2.10.0
+	github.com/cli/go-gh/v2 v2.11.0
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/google/go-github/v62 v62.0.0
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
