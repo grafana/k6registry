@@ -8,10 +8,14 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/go-git/go-git/v5"
 	"github.com/grafana/k6lint"
 )
+
+// complianceCacheTTL is a TTL for compliance cahhe, 1 week
+const complianceCacheTTL = 60 * 60 * 24 * 7
 
 //nolint:forbidigo
 func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6lint.Compliance, bool, error) {
@@ -36,7 +40,9 @@ func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6l
 		return nil, false, err
 	}
 
-	if comp.Timestamp >= timestamp {
+	age := float64(time.Now().Unix()) - comp.Timestamp
+
+	if comp.Timestamp >= timestamp && age <= complianceCacheTTL {
 		return &comp, true, nil
 	}
 
