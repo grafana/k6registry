@@ -65,6 +65,8 @@ func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {
 	return writeJSON(filepath.Join(target, "catalog.json"), k6registry.RegistryToCatalog(registry))
 }
 
+const gradesvg = `<svg xmlns="http://www.w3.org/2000/svg" width="17" height="20"><clipPath id="B"><rect width="17" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#B)"><path fill="%s" d="M0 0h17v20H0z"/><path fill="url(#A)" d="M0 0h17v20H0z"/></g><g text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text x="85" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="70">%s</text><text x="85" y="140" transform="scale(.1)" fill="#fff" textLength="70">%s</text></g></svg>` //nolint:lll
+
 func writeAPIGroupModule(registry k6registry.Registry, target string) error {
 	base := filepath.Join(target, "module")
 
@@ -72,12 +74,21 @@ func writeAPIGroupModule(registry k6registry.Registry, target string) error {
 		dir := filepath.Join(base, ext.Module)
 
 		if ext.Compliance != nil {
-			b, err := badge.RenderBytes("k6 registry", string(ext.Compliance.Grade), badgecolor(ext.Compliance.Grade))
+			sgrade := string(ext.Compliance.Grade)
+
+			b, err := badge.RenderBytes("k6 registry", sgrade, badgecolor(ext.Compliance.Grade))
 			if err != nil {
 				return err
 			}
 
 			err = writeData(filepath.Join(dir, "badge.svg"), b)
+			if err != nil {
+				return err
+			}
+
+			grade := fmt.Sprintf(gradesvg, badgecolor(ext.Compliance.Grade), sgrade, sgrade)
+
+			err = writeData(filepath.Join(dir, "grade.svg"), []byte(grade))
 			if err != nil {
 				return err
 			}
