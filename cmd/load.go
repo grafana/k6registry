@@ -105,7 +105,19 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool) error {
 			return err
 		}
 
-		ext.Compliance = &k6registry.Compliance{Grade: k6registry.Grade(compliance.Grade), Level: compliance.Level}
+		var issues []string
+
+		for _, check := range compliance.Checks {
+			if !check.Passed {
+				issues = append(issues, string(check.ID))
+			}
+		}
+
+		ext.Compliance = &k6registry.Compliance{
+			Grade:  k6registry.Grade(compliance.Grade),
+			Level:  compliance.Level,
+			Issues: issues,
+		}
 	}
 
 	return nil

@@ -157,7 +157,9 @@ func checkCompliance(ctx context.Context, module string, cloneURL string, tstamp
 		return nil, err
 	}
 
-	compliance.Checks = nil
+	for idx := range compliance.Checks {
+		compliance.Checks[idx].Details = ""
+	}
 
 	err = saveCompliance(ctx, module, compliance)
 	if err != nil {
