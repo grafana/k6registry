@@ -35,6 +35,13 @@ type Compliance struct {
 	//
 	Grade Grade `json:"grade" yaml:"grade" mapstructure:"grade"`
 
+	// A list of compliance check IDs that failed.
+	//
+	// The `issues`` property is primarily used for debugging. It contains the
+	// (implementation-dependent) identifiers of those compliance checks that failed.
+	//
+	Issues []string `json:"issues,omitempty" yaml:"issues,omitempty" mapstructure:"issues,omitempty"`
+
 	// Compliance expressed as a percentage.
 	//
 	// The `level` property contains a percentage of how well the extension complies
