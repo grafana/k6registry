@@ -125,7 +125,13 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 	return nil
 }
 
-func checkCompliance(ctx context.Context, module string, cloneURL string, tstamp float64) (*k6lint.Compliance, error) {
+func checkCompliance(
+	ctx context.Context,
+	module string,
+	official bool,
+	cloneURL string,
+	tstamp float64,
+) (*k6lint.Compliance, error) {
 	com, found, err := loadCompliance(ctx, module, tstamp)
 	if found {
 		slog.Debug("Compliance from cache", "module", module)
@@ -151,7 +157,8 @@ func checkCompliance(ctx context.Context, module string, cloneURL string, tstamp
 	slog.Debug("Check compliance", "module", module)
 
 	compliance, err := k6lint.Lint(ctx, dir, &k6lint.Options{
-		Passed: []k6lint.Checker{k6lint.CheckerLicense, k6lint.CheckerVersions, k6lint.CheckerGit},
+		Passed:   []k6lint.Checker{k6lint.CheckerLicense, k6lint.CheckerVersions, k6lint.CheckerGit},
+		Official: official,
 	})
 	if err != nil {
 		return nil, err

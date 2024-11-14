@@ -10,7 +10,7 @@ require (
 	github.com/google/go-github/v62 v62.0.0
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/grafana/clireadme v0.1.0
-	github.com/grafana/k6lint v0.2.0
+	github.com/grafana/k6lint v0.3.1
 	github.com/narqo/go-badge v0.0.0-20230821190521-c9a75c019a59
 	github.com/samber/slog-logrus/v2 v2.5.0
 	github.com/sirupsen/logrus v1.9.3
@@ -71,7 +71,7 @@ require (
 	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/exp v0.0.0-20221006183845-316c7553db56 // indirect
 	golang.org/x/image v0.18.0 // indirect
-	golang.org/x/mod v0.21.0 // indirect
+	golang.org/x/mod v0.22.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/oauth2 v0.6.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
