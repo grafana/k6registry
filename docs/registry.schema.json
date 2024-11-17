@@ -397,6 +397,197 @@
           "protocol"
         ]
       ]
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Extension registry metrics.",
+      "properties": {
+        "registry_extension_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "The total number of extensions."
+        },
+        "registry_tier_official_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'official' tier."
+        },
+        "registry_tier_unofficial_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of unofficial extensions."
+        },
+        "registry_tier_partner_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'partner' tier."
+        },
+        "registry_tier_community_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extension in the community' tier."
+        },
+        "registry_type_javascript_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of JavaScript extension."
+        },
+        "registry_type_output_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of Output extension."
+        },
+        "registry_product_cloud_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions available in Grafana Cloud k6."
+        },
+        "registry_product_oss_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions available in Grafana k6."
+        },
+        "registry_product_synthetic_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions available in Synthetic Monitoring."
+        },
+        "registry_grade_a_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of A-grade extensions."
+        },
+        "registry_grade_b_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of B-grade extensions."
+        },
+        "registry_grade_c_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of C-grade extensions."
+        },
+        "registry_grade_d_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of D-grade extensions."
+        },
+        "registry_grade_e_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of E-grade extensions."
+        },
+        "registry_grade_f_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of F-grade extensions."
+        },
+        "registry_cgo_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions requiring cgo."
+        },
+        "registry_category_authentication_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'authentication' category."
+        },
+        "registry_category_browser_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'browser' category."
+        },
+        "registry_category_data_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'data' category."
+        },
+        "registry_category_kubernetes_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'kubernetes' category."
+        },
+        "registry_category_messaging_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'messaging' category."
+        },
+        "registry_category_misc_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'misc' category."
+        },
+        "registry_category_observability_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'observability' category."
+        },
+        "registry_category_protocol_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'protocol' category."
+        },
+        "registry_category_reporting_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions in the 'reporting' category."
+        },
+        "registry_issue_module_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without valid go.mod."
+        },
+        "registry_issue_replace_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions with replace directive in go.mod."
+        },
+        "registry_issue_readme_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without readme file."
+        },
+        "registry_issue_examples_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without examples directory."
+        },
+        "registry_issue_license_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without suitable OSS license."
+        },
+        "registry_issue_git_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without  git workdir."
+        },
+        "registry_issue_versions_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without semantic versioning git tags."
+        },
+        "registry_issue_build_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions not buildable with the latest k6 version."
+        },
+        "registry_issue_smoke_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without smoke test script."
+        },
+        "registry_issue_types_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without API declaration file."
+        },
+        "registry_issue_codeowners_count": {
+          "type": "integer",
+          "default": 0,
+          "description": "Number of extensions without CODEOWNERS file."
+        }
+      }
     }
   }
 }

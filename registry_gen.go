@@ -199,6 +199,120 @@ const GradeE Grade = "E"
 const GradeF Grade = "F"
 const GradeG Grade = "G"
 
+// Extension registry metrics.
+type Metrics struct {
+	// Number of extensions in the 'authentication' category.
+	RegistryCategoryAuthenticationCount int `json:"registry_category_authentication_count,omitempty" yaml:"registry_category_authentication_count,omitempty" mapstructure:"registry_category_authentication_count,omitempty"`
+
+	// Number of extensions in the 'browser' category.
+	RegistryCategoryBrowserCount int `json:"registry_category_browser_count,omitempty" yaml:"registry_category_browser_count,omitempty" mapstructure:"registry_category_browser_count,omitempty"`
+
+	// Number of extensions in the 'data' category.
+	RegistryCategoryDataCount int `json:"registry_category_data_count,omitempty" yaml:"registry_category_data_count,omitempty" mapstructure:"registry_category_data_count,omitempty"`
+
+	// Number of extensions in the 'kubernetes' category.
+	RegistryCategoryKubernetesCount int `json:"registry_category_kubernetes_count,omitempty" yaml:"registry_category_kubernetes_count,omitempty" mapstructure:"registry_category_kubernetes_count,omitempty"`
+
+	// Number of extensions in the 'messaging' category.
+	RegistryCategoryMessagingCount int `json:"registry_category_messaging_count,omitempty" yaml:"registry_category_messaging_count,omitempty" mapstructure:"registry_category_messaging_count,omitempty"`
+
+	// Number of extensions in the 'misc' category.
+	RegistryCategoryMiscCount int `json:"registry_category_misc_count,omitempty" yaml:"registry_category_misc_count,omitempty" mapstructure:"registry_category_misc_count,omitempty"`
+
+	// Number of extensions in the 'observability' category.
+	RegistryCategoryObservabilityCount int `json:"registry_category_observability_count,omitempty" yaml:"registry_category_observability_count,omitempty" mapstructure:"registry_category_observability_count,omitempty"`
+
+	// Number of extensions in the 'protocol' category.
+	RegistryCategoryProtocolCount int `json:"registry_category_protocol_count,omitempty" yaml:"registry_category_protocol_count,omitempty" mapstructure:"registry_category_protocol_count,omitempty"`
+
+	// Number of extensions in the 'reporting' category.
+	RegistryCategoryReportingCount int `json:"registry_category_reporting_count,omitempty" yaml:"registry_category_reporting_count,omitempty" mapstructure:"registry_category_reporting_count,omitempty"`
+
+	// Number of extensions requiring cgo.
+	RegistryCgoCount int `json:"registry_cgo_count,omitempty" yaml:"registry_cgo_count,omitempty" mapstructure:"registry_cgo_count,omitempty"`
+
+	// The total number of extensions.
+	RegistryExtensionCount int `json:"registry_extension_count,omitempty" yaml:"registry_extension_count,omitempty" mapstructure:"registry_extension_count,omitempty"`
+
+	// Number of A-grade extensions.
+	RegistryGradeACount int `json:"registry_grade_a_count,omitempty" yaml:"registry_grade_a_count,omitempty" mapstructure:"registry_grade_a_count,omitempty"`
+
+	// Number of B-grade extensions.
+	RegistryGradeBCount int `json:"registry_grade_b_count,omitempty" yaml:"registry_grade_b_count,omitempty" mapstructure:"registry_grade_b_count,omitempty"`
+
+	// Number of C-grade extensions.
+	RegistryGradeCCount int `json:"registry_grade_c_count,omitempty" yaml:"registry_grade_c_count,omitempty" mapstructure:"registry_grade_c_count,omitempty"`
+
+	// Number of D-grade extensions.
+	RegistryGradeDCount int `json:"registry_grade_d_count,omitempty" yaml:"registry_grade_d_count,omitempty" mapstructure:"registry_grade_d_count,omitempty"`
+
+	// Number of E-grade extensions.
+	RegistryGradeECount int `json:"registry_grade_e_count,omitempty" yaml:"registry_grade_e_count,omitempty" mapstructure:"registry_grade_e_count,omitempty"`
+
+	// Number of F-grade extensions.
+	RegistryGradeFCount int `json:"registry_grade_f_count,omitempty" yaml:"registry_grade_f_count,omitempty" mapstructure:"registry_grade_f_count,omitempty"`
+
+	// Number of extensions not buildable with the latest k6 version.
+	RegistryIssueBuildCount int `json:"registry_issue_build_count,omitempty" yaml:"registry_issue_build_count,omitempty" mapstructure:"registry_issue_build_count,omitempty"`
+
+	// Number of extensions without CODEOWNERS file.
+	RegistryIssueCodeownersCount int `json:"registry_issue_codeowners_count,omitempty" yaml:"registry_issue_codeowners_count,omitempty" mapstructure:"registry_issue_codeowners_count,omitempty"`
+
+	// Number of extensions without examples directory.
+	RegistryIssueExamplesCount int `json:"registry_issue_examples_count,omitempty" yaml:"registry_issue_examples_count,omitempty" mapstructure:"registry_issue_examples_count,omitempty"`
+
+	// Number of extensions without  git workdir.
+	RegistryIssueGitCount int `json:"registry_issue_git_count,omitempty" yaml:"registry_issue_git_count,omitempty" mapstructure:"registry_issue_git_count,omitempty"`
+
+	// Number of extensions without suitable OSS license.
+	RegistryIssueLicenseCount int `json:"registry_issue_license_count,omitempty" yaml:"registry_issue_license_count,omitempty" mapstructure:"registry_issue_license_count,omitempty"`
+
+	// Number of extensions without valid go.mod.
+	RegistryIssueModuleCount int `json:"registry_issue_module_count,omitempty" yaml:"registry_issue_module_count,omitempty" mapstructure:"registry_issue_module_count,omitempty"`
+
+	// Number of extensions without readme file.
+	RegistryIssueReadmeCount int `json:"registry_issue_readme_count,omitempty" yaml:"registry_issue_readme_count,omitempty" mapstructure:"registry_issue_readme_count,omitempty"`
+
+	// Number of extensions with replace directive in go.mod.
+	RegistryIssueReplaceCount int `json:"registry_issue_replace_count,omitempty" yaml:"registry_issue_replace_count,omitempty" mapstructure:"registry_issue_replace_count,omitempty"`
+
+	// Number of extensions without smoke test script.
+	RegistryIssueSmokeCount int `json:"registry_issue_smoke_count,omitempty" yaml:"registry_issue_smoke_count,omitempty" mapstructure:"registry_issue_smoke_count,omitempty"`
+
+	// Number of extensions without API declaration file.
+	RegistryIssueTypesCount int `json:"registry_issue_types_count,omitempty" yaml:"registry_issue_types_count,omitempty" mapstructure:"registry_issue_types_count,omitempty"`
+
+	// Number of extensions without semantic versioning git tags.
+	RegistryIssueVersionsCount int `json:"registry_issue_versions_count,omitempty" yaml:"registry_issue_versions_count,omitempty" mapstructure:"registry_issue_versions_count,omitempty"`
+
+	// Number of extensions available in Grafana Cloud k6.
+	RegistryProductCloudCount int `json:"registry_product_cloud_count,omitempty" yaml:"registry_product_cloud_count,omitempty" mapstructure:"registry_product_cloud_count,omitempty"`
+
+	// Number of extensions available in Grafana k6.
+	RegistryProductOSSCount int `json:"registry_product_oss_count,omitempty" yaml:"registry_product_oss_count,omitempty" mapstructure:"registry_product_oss_count,omitempty"`
+
+	// Number of extensions available in Synthetic Monitoring.
+	RegistryProductSyntheticCount int `json:"registry_product_synthetic_count,omitempty" yaml:"registry_product_synthetic_count,omitempty" mapstructure:"registry_product_synthetic_count,omitempty"`
+
+	// Number of extension in the community' tier.
+	RegistryTierCommunityCount int `json:"registry_tier_community_count,omitempty" yaml:"registry_tier_community_count,omitempty" mapstructure:"registry_tier_community_count,omitempty"`
+
+	// Number of extensions in the 'official' tier.
+	RegistryTierOfficialCount int `json:"registry_tier_official_count,omitempty" yaml:"registry_tier_official_count,omitempty" mapstructure:"registry_tier_official_count,omitempty"`
+
+	// Number of extensions in the 'partner' tier.
+	RegistryTierPartnerCount int `json:"registry_tier_partner_count,omitempty" yaml:"registry_tier_partner_count,omitempty" mapstructure:"registry_tier_partner_count,omitempty"`
+
+	// Number of unofficial extensions.
+	RegistryTierUnofficialCount int `json:"registry_tier_unofficial_count,omitempty" yaml:"registry_tier_unofficial_count,omitempty" mapstructure:"registry_tier_unofficial_count,omitempty"`
+
+	// Number of JavaScript extension.
+	RegistryTypeJavaScriptCount int `json:"registry_type_javascript_count,omitempty" yaml:"registry_type_javascript_count,omitempty" mapstructure:"registry_type_javascript_count,omitempty"`
+
+	// Number of Output extension.
+	RegistryTypeOutputCount int `json:"registry_type_output_count,omitempty" yaml:"registry_type_output_count,omitempty" mapstructure:"registry_type_output_count,omitempty"`
+}
+
 type Product string
 
 const ProductCloud Product = "cloud"
