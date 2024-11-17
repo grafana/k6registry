@@ -352,9 +352,9 @@ func badgecolor(grade k6registry.Grade) badge.Color {
 	case k6registry.GradeC:
 		return "yellowgreen"
 	case k6registry.GradeD:
-		return "orange"
-	case k6registry.GradeE:
 		return "yellow"
+	case k6registry.GradeE:
+		return "orange"
 	case k6registry.GradeF:
 		return "red"
 	default:
