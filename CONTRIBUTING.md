@@ -127,17 +127,6 @@ goreleaser build --snapshot --clean --single-target -o k6registry
 
 [snapshot]: <#snapshot---creating-an-executable-binary-with-a-snapshot-version>
 
-### docker - Build docker image
-
-Building a Docker image. Before building the image, it is advisable to perform a snapshot build using goreleaser. To build the image, it is advisable to use the same `Docker.goreleaser` file that `goreleaser` uses during release.
-
-Requires
-: snapshot
-
-```bash
-docker build -t k6registry -f Dockerfile.goreleaser .
-```
-
 ### clean - Delete the build directory
 
 ```bash

@@ -29,6 +29,7 @@ type options struct {
 	api     string
 	test    []string
 	origin  string
+	ref     string
 }
 
 // New creates new cobra command for exec command.
@@ -73,6 +74,7 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
 	flags.StringVar(&opts.api, "api", "", "write outputs to directory instead of stdout")
 	flags.StringVar(&opts.origin, "origin", "", "external registry URL for default values")
+	flags.StringVar(&opts.ref, "ref", "", "reference output URL for change detection")
 	flags.StringSliceVar(&opts.test, "test", []string{}, "test api path(s) (example: /registry.json,/catalog.json)")
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
@@ -146,8 +148,12 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		return err
 	}
 
+	return postRun(ctx, registry, output, opts)
+}
+
+func postRun(ctx context.Context, registry k6registry.Registry, output io.Writer, opts *options) error {
 	if len(opts.api) != 0 {
-		if err = writeAPI(registry, opts.api); err != nil {
+		if err := writeAPI(registry, opts.api); err != nil {
 			return err
 		}
 
@@ -160,11 +166,17 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		}
 	}
 
-	if opts.quiet {
-		return nil
+	if !opts.quiet {
+		if err := writeOutput(registry, output, opts.compact, false); err != nil {
+			return err
+		}
 	}
 
-	return writeOutput(registry, output, opts.compact, false)
+	if isGitHubAction() && len(opts.out) > 0 && len(opts.ref) > 0 {
+		return emitOutput(ctx, opts.out, opts.ref)
+	}
+
+	return nil
 }
 
 //nolint:forbidigo
