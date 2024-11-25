@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"bytes"
@@ -9,27 +9,16 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 //nolint:forbidigo
-func emitOutput() error {
-	out := getenv("INPUT_OUT", "")
-	if len(out) == 0 {
-		api := getenv("INPUT_API", "")
-		if len(api) == 0 {
-			return nil
-		}
+func isGitHubAction() bool {
+	return os.Getenv("GITHUB_ACTIONS") == "true"
+}
 
-		out = filepath.Join(api, "registry.json")
-	}
-
-	ref := getenv("INPUT_REF", "")
-	if len(ref) == 0 {
-		return nil
-	}
-
-	ghOutput := getenv("GITHUB_OUTPUT", "")
+//nolint:forbidigo
+func emitOutput(ctx context.Context, out string, ref string) error {
+	ghOutput := os.Getenv("GITHUB_OUTPUT")
 	if len(ghOutput) == 0 {
 		return nil
 	}
@@ -39,7 +28,7 @@ func emitOutput() error {
 		return err
 	}
 
-	changed := isChanged(ref, out)
+	changed := isChanged(ctx, ref, out)
 
 	slog.Debug("Detect change", "changed", changed, "ref", ref)
 
@@ -52,10 +41,10 @@ func emitOutput() error {
 }
 
 //nolint:forbidigo
-func isChanged(refURL string, localFile string) bool {
+func isChanged(ctx context.Context, refURL string, localFile string) bool {
 	client := &http.Client{Timeout: httpTimeout}
 
-	req, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, refURL, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, refURL, nil)
 	if err != nil {
 		return true
 	}
@@ -79,5 +68,3 @@ func isChanged(refURL string, localFile string) bool {
 
 	return !bytes.Equal(refData, localData)
 }
-
-const httpTimeout = 10 * time.Second
