@@ -148,10 +148,25 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		return err
 	}
 
-	return postRun(ctx, registry, output, opts)
+	if err := postRun(registry, output, opts); err != nil {
+		return err
+	}
+
+	if isGitHubAction() {
+		fname := opts.out
+		if len(fname) == 0 && len(opts.api) != 0 {
+			fname = filepath.Join(opts.api, "registry.json")
+		}
+
+		if len(fname) > 0 && len(opts.ref) > 0 {
+			return emitOutput(ctx, fname, opts.ref)
+		}
+	}
+
+	return nil
 }
 
-func postRun(ctx context.Context, registry k6registry.Registry, output io.Writer, opts *options) error {
+func postRun(registry k6registry.Registry, output io.Writer, opts *options) error {
 	if len(opts.api) != 0 {
 		if err := writeAPI(registry, opts.api); err != nil {
 			return err
@@ -166,17 +181,11 @@ func postRun(ctx context.Context, registry k6registry.Registry, output io.Writer
 		}
 	}
 
-	if !opts.quiet {
-		if err := writeOutput(registry, output, opts.compact, false); err != nil {
-			return err
-		}
+	if opts.quiet {
+		return nil
 	}
 
-	if isGitHubAction() && len(opts.out) > 0 && len(opts.ref) > 0 {
-		return emitOutput(ctx, opts.out, opts.ref)
-	}
-
-	return nil
+	return writeOutput(registry, output, opts.compact, false)
 }
 
 //nolint:forbidigo
