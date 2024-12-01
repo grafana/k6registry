@@ -79,8 +79,8 @@ github.com/grafana/clireadme v0.1.0 h1:KYEYSnYdSzmHf3bufaK6fQZ5j4dzvM/T+G6Ba+qNn
 github.com/grafana/clireadme v0.1.0/go.mod h1:Wy4KIG2ZBGMYAYyF9l7qAy+yoJVasqk/txsRgoRI3gc=
 github.com/grafana/k6foundry v0.3.0 h1:C+6dPbsOv7Uq4hEhBFNuYqmTdE9jQ0VqhXqBDtMkVTE=
 github.com/grafana/k6foundry v0.3.0/go.mod h1:/NtBSQQgXup5SVbfInl0Q8zKVx08xgvXIZ0xncqexEs=
-github.com/grafana/k6lint v0.3.1 h1:PgbAXqcullhmTKpU6uTmijivy4aShr0b2J2T1UblGOU=
-github.com/grafana/k6lint v0.3.1/go.mod h1:rUkpZz8dx0Rxcy6e0tTzARIuQ4PbhG4/2YsGY8hhyzI=
+github.com/grafana/k6lint v0.3.2 h1:2L2suKpHkyXirD0sogRDCdFHbgShMlE1Yb9a8n6jwuc=
+github.com/grafana/k6lint v0.3.2/go.mod h1:DvF20OOZaeHeP9f6+El3iQVGS2iPaSFsIIJkEdl5sVA=
 github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542 h1:2VTzZjLZBgl62/EtslCrtky5vbi9dd7HrQPQIx6wqiw=
 github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542/go.mod h1:Ow0tF8D4Kplbc8s8sSb3V2oUCygFHVp8gC3Dn6U4MNI=
 github.com/hashicorp/go-cleanhttp v0.5.2 h1:035FKYIWjmULyFRBKPs8TBQoi0x6d9G4xc9neXJWAZQ=
