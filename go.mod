@@ -9,7 +9,7 @@ require (
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/google/go-github/v62 v62.0.0
 	github.com/grafana/clireadme v0.1.0
-	github.com/grafana/k6lint v0.3.1
+	github.com/grafana/k6lint v0.3.2
 	github.com/narqo/go-badge v0.0.0-20230821190521-c9a75c019a59
 	github.com/samber/slog-logrus/v2 v2.5.0
 	github.com/sirupsen/logrus v1.9.3
