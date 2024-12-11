@@ -43,6 +43,7 @@ After modifying registry schema ([registry.schema.json]), the [registry_gen.go] 
 ```bash
 curl -s -o docs/registry.schema.json https://raw.githubusercontent.com/grafana/k6-extension-registry/main/registry.schema.json
 go-jsonschema --capitalization URL --capitalization JavaScript --capitalization OSS -p k6registry --only-models -o registry_gen.go docs/registry.schema.json
+bash metrics_gen.sh
 ```
 
 [registry.schema.json]: docs/registry.schema.json
