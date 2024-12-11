@@ -1,14 +1,25 @@
 package k6registry
 
-import "strings"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"strings"
+	"time"
+)
 
-// CalculateMetrics calculates registry metrics.
+// CalculateMetrics calculates registry metrics for all extensions.
 func CalculateMetrics(reg Registry) *Metrics {
+	return CalculateMetricsCond(reg, func(_ Extension) bool { return true })
+}
+
+// CalculateMetricsCond calculates registry metrics for subset of extensions.
+func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics {
 	const k6Module = "go.k6.io/k6"
 	m := new(Metrics)
 
 	for _, ext := range reg {
-		if ext.Module == k6Module {
+		if ext.Module == k6Module || !predicate(ext) {
 			continue
 		}
 
@@ -155,4 +166,33 @@ func (m *Metrics) issue(issue string) {
 		m.RegistryIssueCodeownersCount++
 	default:
 	}
+}
+
+// MarshalPrometheus marshals metrics in Prometheus text format.
+func (m *Metrics) MarshalPrometheus() ([]byte, error) {
+	data, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+
+	var dict map[string]int
+
+	if err := json.Unmarshal(data, &dict); err != nil {
+		return nil, err
+	}
+
+	var buff bytes.Buffer
+
+	now := time.Now().UnixMilli()
+
+	for name, value := range dict {
+		if help, hasHelp := metricsHelps[name]; hasHelp {
+			fmt.Fprintf(&buff, "# HELP %s %s\n", name, help)
+		}
+
+		fmt.Fprintf(&buff, "# TYPE %s counter\n", name)
+		fmt.Fprintf(&buff, "%s %d %d\n", name, value, now)
+	}
+
+	return buff.Bytes(), nil
 }

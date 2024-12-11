@@ -3,8 +3,11 @@
     "data"
   ],
   "compliance": {
-    "grade": "A",
-    "level": 100
+    "grade": "B",
+    "issues": [
+      "smoke"
+    ],
+    "level": 93
   },
   "description": "Generate random fake data",
   "imports": [
@@ -22,8 +25,8 @@
     "name": "xk6-faker",
     "owner": "grafana",
     "public": true,
-    "stars": 55,
-    "timestamp": 1725533453,
+    "stars": 63,
+    "timestamp": 1733730893,
     "topics": [
       "xk6"
     ],

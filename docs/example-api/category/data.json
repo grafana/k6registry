@@ -4,8 +4,11 @@
       "data"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "B",
+      "issues": [
+        "smoke"
+      ],
+      "level": 93
     },
     "description": "Load test SQL Servers",
     "imports": [
@@ -18,14 +21,14 @@
     ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
-      "description": "k6 extension to load test RDBMSs (PostgreSQL, MySQL, MS SQL and SQLite3)",
-      "homepage": "https://github.com/grafana/xk6-sql",
+      "description": "Use SQL databases from k6 tests.",
+      "homepage": "http://sql.x.k6.io",
       "license": "Apache-2.0",
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 110,
-      "timestamp": 1725979901,
+      "stars": 120,
+      "timestamp": 1733736611,
       "topics": [
         "k6",
         "sql",
@@ -35,6 +38,7 @@
     },
     "tier": "official",
     "versions": [
+      "v1.0.0",
       "v0.4.1",
       "v0.4.0",
       "v0.3.0",
@@ -50,8 +54,11 @@
       "data"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "B",
+      "issues": [
+        "smoke"
+      ],
+      "level": 93
     },
     "description": "Generate random fake data",
     "imports": [
@@ -69,8 +76,8 @@
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 55,
-      "timestamp": 1725533453,
+      "stars": 63,
+      "timestamp": 1733730893,
       "topics": [
         "xk6"
       ],

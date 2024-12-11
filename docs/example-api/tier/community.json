@@ -4,8 +4,12 @@
       "misc"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "C",
+      "issues": [
+        "smoke",
+        "types"
+      ],
+      "level": 87
     },
     "description": "Print ASCII art banner from k6 test",
     "imports": [
@@ -69,6 +73,7 @@
     },
     "tier": "official",
     "versions": [
+      "v0.55.0",
       "v0.54.0",
       "v0.53.0",
       "v0.52.0",

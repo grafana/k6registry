@@ -70,8 +70,8 @@ Registry generated from the source above.
       "observability"
     ],
     "compliance": {
-      "grade": "C",
-      "level": 80
+      "grade": "A",
+      "level": 100
     },
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
@@ -89,8 +89,8 @@ Registry generated from the source above.
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 343,
-      "timestamp": 1719907965,
+      "stars": 367,
+      "timestamp": 1731922735,
       "topics": [
         "xk6",
         "xk6-official",
@@ -141,8 +141,11 @@ Registry generated from the source above.
       "data"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "B",
+      "issues": [
+        "smoke"
+      ],
+      "level": 93
     },
     "description": "Load test SQL Servers",
     "imports": [
@@ -155,14 +158,14 @@ Registry generated from the source above.
     ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
-      "description": "k6 extension to load test RDBMSs (PostgreSQL, MySQL, MS SQL and SQLite3)",
-      "homepage": "https://github.com/grafana/xk6-sql",
+      "description": "Use SQL databases from k6 tests.",
+      "homepage": "http://sql.x.k6.io",
       "license": "Apache-2.0",
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 110,
-      "timestamp": 1725979901,
+      "stars": 120,
+      "timestamp": 1733736611,
       "topics": [
         "k6",
         "sql",
@@ -172,6 +175,7 @@ Registry generated from the source above.
     },
     "tier": "official",
     "versions": [
+      "v1.0.0",
       "v0.4.1",
       "v0.4.0",
       "v0.3.0",
@@ -188,7 +192,12 @@ Registry generated from the source above.
     ],
     "compliance": {
       "grade": "C",
-      "level": 80
+      "issues": [
+        "smoke",
+        "examples",
+        "types"
+      ],
+      "level": 81
     },
     "description": "Inject faults to test",
     "imports": [
@@ -206,8 +215,8 @@ Registry generated from the source above.
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 93,
-      "timestamp": 1727763654,
+      "stars": 97,
+      "timestamp": 1733824028,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -219,6 +228,8 @@ Registry generated from the source above.
     },
     "tier": "official",
     "versions": [
+      "v0.3.13",
+      "v0.3.12",
       "v0.3.11",
       "v0.3.10",
       "v0.3.9",
@@ -246,8 +257,11 @@ Registry generated from the source above.
       "data"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "B",
+      "issues": [
+        "smoke"
+      ],
+      "level": 93
     },
     "description": "Generate random fake data",
     "imports": [
@@ -265,8 +279,8 @@ Registry generated from the source above.
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 55,
-      "timestamp": 1725533453,
+      "stars": 63,
+      "timestamp": 1733730893,
       "topics": [
         "xk6"
       ],
@@ -289,8 +303,12 @@ Registry generated from the source above.
       "misc"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "C",
+      "issues": [
+        "smoke",
+        "types"
+      ],
+      "level": 87
     },
     "description": "Print ASCII art banner from k6 test",
     "imports": [
@@ -354,6 +372,7 @@ Registry generated from the source above.
     },
     "tier": "official",
     "versions": [
+      "v0.55.0",
       "v0.54.0",
       "v0.53.0",
       "v0.52.0",
@@ -533,6 +552,8 @@ By using the `--api` flag, files are created with relative paths in a base direc
 ```ascii file=docs/example-api.txt
 docs/example-api
 ├── catalog.json
+├── metrics.json
+├── metrics.txt
 ├── registry.json
 ├── category
 │   ├── authentication.json
@@ -563,21 +584,26 @@ docs/example-api
 │   │   └── grafana
 │   │       ├── xk6-dashboard
 │   │       │   ├── badge.svg
-│   │       │   └── extension.json
+│   │       │   ├── extension.json
+│   │       │   └── grade.svg
 │   │       ├── xk6-disruptor
 │   │       │   ├── badge.svg
-│   │       │   └── extension.json
+│   │       │   ├── extension.json
+│   │       │   └── grade.svg
 │   │       ├── xk6-faker
 │   │       │   ├── badge.svg
-│   │       │   └── extension.json
+│   │       │   ├── extension.json
+│   │       │   └── grade.svg
 │   │       └── xk6-sql
 │   │           ├── badge.svg
-│   │           └── extension.json
+│   │           ├── extension.json
+│   │           └── grade.svg
 │   ├── gitlab.com
 │   │   └── szkiba
 │   │       └── xk6-banner
 │   │           ├── badge.svg
-│   │           └── extension.json
+│   │           ├── extension.json
+│   │           └── grade.svg
 │   └── go.k6.io
 │       └── k6
 │           └── extension.json
@@ -591,10 +617,16 @@ docs/example-api
 └── tier
     ├── community-catalog.json
     ├── community.json
+    ├── community-metrics.json
+    ├── community-metrics.txt
     ├── official-catalog.json
     ├── official.json
+    ├── official-metrics.json
+    ├── official-metrics.txt
     ├── partner-catalog.json
     ├── partner.json
+    ├── partner-metrics.json
+    ├── partner-metrics.txt
     └── at-least
         ├── community-catalog.json
         ├── community.json
