@@ -3,8 +3,12 @@
     "misc"
   ],
   "compliance": {
-    "grade": "A",
-    "level": 100
+    "grade": "C",
+    "issues": [
+      "smoke",
+      "types"
+    ],
+    "level": 87
   },
   "description": "Print ASCII art banner from k6 test",
   "imports": [

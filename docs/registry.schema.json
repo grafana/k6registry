@@ -587,7 +587,8 @@
           "default": 0,
           "description": "Number of extensions without CODEOWNERS file."
         }
-      }
+      },
+      "example": "{\n  \"registry_category_authentication_count\": 2,\n  \"registry_category_browser_count\": 1,\n  \"registry_category_data_count\": 23,\n  \"registry_category_kubernetes_count\": 2,\n  \"registry_category_messaging_count\": 11,\n  \"registry_category_misc_count\": 16,\n  \"registry_category_observability_count\": 12,\n  \"registry_category_protocol_count\": 10,\n  \"registry_category_reporting_count\": 13,\n  \"registry_cgo_count\": 1,\n  \"registry_extension_count\": 72,\n  \"registry_grade_a_count\": 19,\n  \"registry_grade_b_count\": 4,\n  \"registry_grade_c_count\": 44,\n  \"registry_grade_d_count\": 4,\n  \"registry_grade_e_count\": 1,\n  \"registry_issue_build_count\": 5,\n  \"registry_issue_codeowners_count\": 5,\n  \"registry_issue_examples_count\": 16,\n  \"registry_issue_replace_count\": 2,\n  \"registry_issue_smoke_count\": 51,\n  \"registry_issue_types_count\": 44,\n  \"registry_product_cloud_count\": 4,\n  \"registry_product_oss_count\": 71,\n  \"registry_product_synthetic_count\": 2,\n  \"registry_tier_community_count\": 54,\n  \"registry_tier_official_count\": 18,\n  \"registry_tier_unofficial_count\": 6,\n  \"registry_type_javascript_count\": 57,\n  \"registry_type_output_count\": 16\n}\n"
     }
   }
 }

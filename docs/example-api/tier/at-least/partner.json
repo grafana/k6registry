@@ -5,8 +5,8 @@
       "observability"
     ],
     "compliance": {
-      "grade": "C",
-      "level": 80
+      "grade": "A",
+      "level": 100
     },
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
@@ -24,8 +24,8 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 343,
-      "timestamp": 1719907965,
+      "stars": 367,
+      "timestamp": 1731922735,
       "topics": [
         "xk6",
         "xk6-official",
@@ -76,8 +76,11 @@
       "data"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "B",
+      "issues": [
+        "smoke"
+      ],
+      "level": 93
     },
     "description": "Load test SQL Servers",
     "imports": [
@@ -90,14 +93,14 @@
     ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
-      "description": "k6 extension to load test RDBMSs (PostgreSQL, MySQL, MS SQL and SQLite3)",
-      "homepage": "https://github.com/grafana/xk6-sql",
+      "description": "Use SQL databases from k6 tests.",
+      "homepage": "http://sql.x.k6.io",
       "license": "Apache-2.0",
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 110,
-      "timestamp": 1725979901,
+      "stars": 120,
+      "timestamp": 1733736611,
       "topics": [
         "k6",
         "sql",
@@ -107,6 +110,7 @@
     },
     "tier": "official",
     "versions": [
+      "v1.0.0",
       "v0.4.1",
       "v0.4.0",
       "v0.3.0",
@@ -123,7 +127,12 @@
     ],
     "compliance": {
       "grade": "C",
-      "level": 80
+      "issues": [
+        "smoke",
+        "examples",
+        "types"
+      ],
+      "level": 81
     },
     "description": "Inject faults to test",
     "imports": [
@@ -141,8 +150,8 @@
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 93,
-      "timestamp": 1727763654,
+      "stars": 97,
+      "timestamp": 1733824028,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -154,6 +163,8 @@
     },
     "tier": "official",
     "versions": [
+      "v0.3.13",
+      "v0.3.12",
       "v0.3.11",
       "v0.3.10",
       "v0.3.9",
@@ -181,8 +192,11 @@
       "data"
     ],
     "compliance": {
-      "grade": "A",
-      "level": 100
+      "grade": "B",
+      "issues": [
+        "smoke"
+      ],
+      "level": 93
     },
     "description": "Generate random fake data",
     "imports": [
@@ -200,8 +214,8 @@
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 55,
-      "timestamp": 1725533453,
+      "stars": 63,
+      "timestamp": 1733730893,
       "topics": [
         "xk6"
       ],
@@ -254,6 +268,7 @@
     },
     "tier": "official",
     "versions": [
+      "v0.55.0",
       "v0.54.0",
       "v0.53.0",
       "v0.52.0",

@@ -4,8 +4,8 @@
     "observability"
   ],
   "compliance": {
-    "grade": "C",
-    "level": 80
+    "grade": "A",
+    "level": 100
   },
   "description": "Web-based metrics dashboard for k6",
   "module": "github.com/grafana/xk6-dashboard",
@@ -23,8 +23,8 @@
     "name": "xk6-dashboard",
     "owner": "grafana",
     "public": true,
-    "stars": 343,
-    "timestamp": 1719907965,
+    "stars": 367,
+    "timestamp": 1731922735,
     "topics": [
       "xk6",
       "xk6-official",

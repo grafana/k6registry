@@ -5,7 +5,12 @@
     ],
     "compliance": {
       "grade": "C",
-      "level": 80
+      "issues": [
+        "smoke",
+        "examples",
+        "types"
+      ],
+      "level": 81
     },
     "description": "Inject faults to test",
     "imports": [
@@ -23,8 +28,8 @@
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 93,
-      "timestamp": 1727763654,
+      "stars": 97,
+      "timestamp": 1733824028,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -36,6 +41,8 @@
     },
     "tier": "official",
     "versions": [
+      "v0.3.13",
+      "v0.3.12",
       "v0.3.11",
       "v0.3.10",
       "v0.3.9",
