@@ -402,193 +402,193 @@
       "type": "object",
       "description": "Extension registry metrics.",
       "properties": {
-        "registry_extension_count": {
+        "extension_count": {
           "type": "integer",
           "default": 0,
           "description": "The total number of extensions."
         },
-        "registry_tier_official_count": {
+        "tier_official_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'official' tier."
         },
-        "registry_tier_unofficial_count": {
+        "tier_unofficial_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of unofficial extensions."
         },
-        "registry_tier_partner_count": {
+        "tier_partner_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'partner' tier."
         },
-        "registry_tier_community_count": {
+        "tier_community_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extension in the community' tier."
         },
-        "registry_type_javascript_count": {
+        "type_javascript_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of JavaScript extension."
         },
-        "registry_type_output_count": {
+        "type_output_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of Output extension."
         },
-        "registry_product_cloud_count": {
+        "product_cloud_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions available in Grafana Cloud k6."
         },
-        "registry_product_oss_count": {
+        "product_oss_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions available in Grafana k6."
         },
-        "registry_product_synthetic_count": {
+        "product_synthetic_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions available in Synthetic Monitoring."
         },
-        "registry_grade_a_count": {
+        "grade_a_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of A-grade extensions."
         },
-        "registry_grade_b_count": {
+        "grade_b_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of B-grade extensions."
         },
-        "registry_grade_c_count": {
+        "grade_c_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of C-grade extensions."
         },
-        "registry_grade_d_count": {
+        "grade_d_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of D-grade extensions."
         },
-        "registry_grade_e_count": {
+        "grade_e_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of E-grade extensions."
         },
-        "registry_grade_f_count": {
+        "grade_f_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of F-grade extensions."
         },
-        "registry_cgo_count": {
+        "cgo_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions requiring cgo."
         },
-        "registry_category_authentication_count": {
+        "category_authentication_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'authentication' category."
         },
-        "registry_category_browser_count": {
+        "category_browser_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'browser' category."
         },
-        "registry_category_data_count": {
+        "category_data_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'data' category."
         },
-        "registry_category_kubernetes_count": {
+        "category_kubernetes_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'kubernetes' category."
         },
-        "registry_category_messaging_count": {
+        "category_messaging_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'messaging' category."
         },
-        "registry_category_misc_count": {
+        "category_misc_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'misc' category."
         },
-        "registry_category_observability_count": {
+        "category_observability_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'observability' category."
         },
-        "registry_category_protocol_count": {
+        "category_protocol_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'protocol' category."
         },
-        "registry_category_reporting_count": {
+        "category_reporting_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions in the 'reporting' category."
         },
-        "registry_issue_module_count": {
+        "issue_module_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without valid go.mod."
         },
-        "registry_issue_replace_count": {
+        "issue_replace_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions with replace directive in go.mod."
         },
-        "registry_issue_readme_count": {
+        "issue_readme_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without readme file."
         },
-        "registry_issue_examples_count": {
+        "issue_examples_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without examples directory."
         },
-        "registry_issue_license_count": {
+        "issue_license_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without suitable OSS license."
         },
-        "registry_issue_git_count": {
+        "issue_git_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without  git workdir."
         },
-        "registry_issue_versions_count": {
+        "issue_versions_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without semantic versioning git tags."
         },
-        "registry_issue_build_count": {
+        "issue_build_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions not buildable with the latest k6 version."
         },
-        "registry_issue_smoke_count": {
+        "issue_smoke_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without smoke test script."
         },
-        "registry_issue_types_count": {
+        "issue_types_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without API declaration file."
         },
-        "registry_issue_codeowners_count": {
+        "issue_codeowners_count": {
           "type": "integer",
           "default": 0,
           "description": "Number of extensions without CODEOWNERS file."
         }
       },
-      "example": "{\n  \"registry_category_authentication_count\": 2,\n  \"registry_category_browser_count\": 1,\n  \"registry_category_data_count\": 23,\n  \"registry_category_kubernetes_count\": 2,\n  \"registry_category_messaging_count\": 11,\n  \"registry_category_misc_count\": 16,\n  \"registry_category_observability_count\": 12,\n  \"registry_category_protocol_count\": 10,\n  \"registry_category_reporting_count\": 13,\n  \"registry_cgo_count\": 1,\n  \"registry_extension_count\": 72,\n  \"registry_grade_a_count\": 19,\n  \"registry_grade_b_count\": 4,\n  \"registry_grade_c_count\": 44,\n  \"registry_grade_d_count\": 4,\n  \"registry_grade_e_count\": 1,\n  \"registry_issue_build_count\": 5,\n  \"registry_issue_codeowners_count\": 5,\n  \"registry_issue_examples_count\": 16,\n  \"registry_issue_replace_count\": 2,\n  \"registry_issue_smoke_count\": 51,\n  \"registry_issue_types_count\": 44,\n  \"registry_product_cloud_count\": 4,\n  \"registry_product_oss_count\": 71,\n  \"registry_product_synthetic_count\": 2,\n  \"registry_tier_community_count\": 54,\n  \"registry_tier_official_count\": 18,\n  \"registry_tier_unofficial_count\": 6,\n  \"registry_type_javascript_count\": 57,\n  \"registry_type_output_count\": 16\n}\n"
+      "example": "{\n  \"category_authentication_count\": 2,\n  \"category_browser_count\": 1,\n  \"category_data_count\": 23,\n  \"category_kubernetes_count\": 2,\n  \"category_messaging_count\": 11,\n  \"category_misc_count\": 16,\n  \"category_observability_count\": 12,\n  \"category_protocol_count\": 10,\n  \"category_reporting_count\": 13,\n  \"cgo_count\": 1,\n  \"extension_count\": 72,\n  \"grade_a_count\": 19,\n  \"grade_b_count\": 4,\n  \"grade_c_count\": 44,\n  \"grade_d_count\": 4,\n  \"grade_e_count\": 1,\n  \"issue_build_count\": 5,\n  \"issue_codeowners_count\": 5,\n  \"issue_examples_count\": 16,\n  \"issue_replace_count\": 2,\n  \"issue_smoke_count\": 51,\n  \"issue_types_count\": 44,\n  \"product_cloud_count\": 4,\n  \"product_oss_count\": 71,\n  \"product_synthetic_count\": 2,\n  \"tier_community_count\": 54,\n  \"tier_official_count\": 18,\n  \"tier_unofficial_count\": 6,\n  \"type_javascript_count\": 57,\n  \"type_output_count\": 16\n}\n"
     }
   }
 }

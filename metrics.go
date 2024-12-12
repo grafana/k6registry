@@ -1,9 +1,9 @@
 package k6registry
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"strings"
 	"time"
 )
@@ -23,7 +23,7 @@ func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics
 			continue
 		}
 
-		m.RegistryExtensionCount++
+		m.ExtensionCount++
 
 		m.tier(ext.Tier)
 
@@ -36,19 +36,19 @@ func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics
 		}
 
 		if len(ext.Products) == 0 {
-			m.RegistryProductOSSCount++
+			m.ProductOSSCount++
 		}
 
 		if len(ext.Imports) > 0 {
-			m.RegistryTypeJavaScriptCount++
+			m.TypeJavaScriptCount++
 		}
 
 		if len(ext.Outputs) > 0 {
-			m.RegistryTypeOutputCount++
+			m.TypeOutputCount++
 		}
 
 		if strings.HasPrefix(ext.Module, "github.com/grafana/") && ext.Tier != TierOfficial {
-			m.RegistryTierUnofficialCount++
+			m.TierUnofficialCount++
 		}
 
 		for _, cat := range ext.Categories {
@@ -56,7 +56,7 @@ func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics
 		}
 
 		if len(ext.Categories) == 0 {
-			m.RegistryCategoryMiscCount++
+			m.CategoryMiscCount++
 		}
 
 		for _, issue := range ext.Compliance.Issues {
@@ -64,7 +64,7 @@ func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics
 		}
 
 		if ext.Cgo {
-			m.RegistryCgoCount++
+			m.CgoCount++
 		}
 	}
 
@@ -74,30 +74,30 @@ func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics
 func (m *Metrics) tier(tier Tier) {
 	switch tier {
 	case TierOfficial:
-		m.RegistryTierOfficialCount++
+		m.TierOfficialCount++
 	case TierPartner:
-		m.RegistryTierPartnerCount++
+		m.TierPartnerCount++
 	case TierCommunity:
 		fallthrough
 	default:
-		m.RegistryTierCommunityCount++
+		m.TierCommunityCount++
 	}
 }
 
 func (m *Metrics) grade(grade Grade) {
 	switch grade {
 	case GradeA:
-		m.RegistryGradeACount++
+		m.GradeACount++
 	case GradeB:
-		m.RegistryGradeBCount++
+		m.GradeBCount++
 	case GradeC:
-		m.RegistryGradeCCount++
+		m.GradeCCount++
 	case GradeD:
-		m.RegistryGradeDCount++
+		m.GradeDCount++
 	case GradeE:
-		m.RegistryGradeECount++
+		m.GradeECount++
 	case GradeF:
-		m.RegistryGradeFCount++
+		m.GradeFCount++
 	default:
 	}
 }
@@ -105,94 +105,94 @@ func (m *Metrics) grade(grade Grade) {
 func (m *Metrics) product(product Product) {
 	switch product {
 	case ProductCloud:
-		m.RegistryProductCloudCount++
+		m.ProductCloudCount++
 	case ProductSynthetic:
-		m.RegistryProductSyntheticCount++
+		m.ProductSyntheticCount++
 	case ProductOSS:
 		fallthrough
 	default:
-		m.RegistryProductOSSCount++
+		m.ProductOSSCount++
 	}
 }
 
 func (m *Metrics) category(category Category) {
 	switch category {
 	case CategoryAuthentication:
-		m.RegistryCategoryAuthenticationCount++
+		m.CategoryAuthenticationCount++
 	case CategoryBrowser:
-		m.RegistryCategoryBrowserCount++
+		m.CategoryBrowserCount++
 	case CategoryData:
-		m.RegistryCategoryDataCount++
+		m.CategoryDataCount++
 	case CategoryKubernetes:
-		m.RegistryCategoryKubernetesCount++
+		m.CategoryKubernetesCount++
 	case CategoryMessaging:
-		m.RegistryCategoryMessagingCount++
+		m.CategoryMessagingCount++
 	case CategoryObservability:
-		m.RegistryCategoryObservabilityCount++
+		m.CategoryObservabilityCount++
 	case CategoryProtocol:
-		m.RegistryCategoryProtocolCount++
+		m.CategoryProtocolCount++
 	case CategoryReporting:
-		m.RegistryCategoryReportingCount++
+		m.CategoryReportingCount++
 	case CategoryMisc:
 		fallthrough
 	default:
-		m.RegistryCategoryMiscCount++
+		m.CategoryMiscCount++
 	}
 }
 
 func (m *Metrics) issue(issue string) {
 	switch issue {
 	case "module":
-		m.RegistryIssueModuleCount++
+		m.IssueModuleCount++
 	case "replace":
-		m.RegistryIssueReplaceCount++
+		m.IssueReplaceCount++
 	case "readme":
-		m.RegistryIssueReadmeCount++
+		m.IssueReadmeCount++
 	case "examples":
-		m.RegistryIssueExamplesCount++
+		m.IssueExamplesCount++
 	case "license":
-		m.RegistryIssueLicenseCount++
+		m.IssueLicenseCount++
 	case "git":
-		m.RegistryIssueGitCount++
+		m.IssueGitCount++
 	case "versions":
-		m.RegistryIssueVersionsCount++
+		m.IssueVersionsCount++
 	case "build":
-		m.RegistryIssueBuildCount++
+		m.IssueBuildCount++
 	case "smoke":
-		m.RegistryIssueSmokeCount++
+		m.IssueSmokeCount++
 	case "types":
-		m.RegistryIssueTypesCount++
+		m.IssueTypesCount++
 	case "codeowners":
-		m.RegistryIssueCodeownersCount++
+		m.IssueCodeownersCount++
 	default:
 	}
 }
 
-// MarshalPrometheus marshals metrics in Prometheus text format.
-func (m *Metrics) MarshalPrometheus() ([]byte, error) {
+// WritePrometheus marshals metrics in Prometheus text format.
+func (m *Metrics) WritePrometheus(out io.Writer, namePrefix string, helpPrefix string) error {
 	data, err := json.Marshal(m)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	var dict map[string]int
 
 	if err := json.Unmarshal(data, &dict); err != nil {
-		return nil, err
+		return err
 	}
-
-	var buff bytes.Buffer
 
 	now := time.Now().UnixMilli()
 
 	for name, value := range dict {
+		fullname := namePrefix + name
+
 		if help, hasHelp := metricsHelps[name]; hasHelp {
-			fmt.Fprintf(&buff, "# HELP %s %s\n", name, help)
+			fmt.Fprintf(out, "# HELP %s %s\n", fullname, helpPrefix+help)
 		}
 
-		fmt.Fprintf(&buff, "# TYPE %s counter\n", name)
-		fmt.Fprintf(&buff, "%s %d %d\n", name, value, now)
+		fmt.Fprintf(out, "# TYPE %s counter\n", fullname)
+		fmt.Fprintf(out, "%s %d %d\n\n", fullname, value, now)
 	}
 
-	return buff.Bytes(), nil
+	return nil
 }
