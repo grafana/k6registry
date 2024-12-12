@@ -66,50 +66,41 @@ func writeAPIGroupGlobal(registry k6registry.Registry, target string) error {
 		return err
 	}
 
-	if err := writeMetrics(registry, target, "", func(_ k6registry.Extension) bool { return true }); err != nil {
+	return writeMetrics(registry, target)
+}
+
+const promPrefix = "registry_"
+
+func writeMetrics(registry k6registry.Registry, target string) error {
+	metrics := k6registry.CalculateMetrics(registry)
+
+	if err := writeJSON(filepath.Join(target, "metrics.json"), metrics); err != nil {
+		return err
+	}
+
+	var buff bytes.Buffer
+
+	if err := metrics.WritePrometheus(&buff, promPrefix, ""); err != nil {
 		return err
 	}
 
 	for _, tier := range k6registry.Tiers {
-		err := writeMetrics(registry, filepath.Join(target, "tier"), string(tier)+"-",
-			func(ext k6registry.Extension) bool {
-				return ext.Tier == tier
-			})
-		if err != nil {
+		stier := string(tier)
+
+		metrics := k6registry.CalculateMetricsCond(registry, func(ext k6registry.Extension) bool {
+			return ext.Tier == tier
+		})
+
+		if err := writeJSON(filepath.Join(target, "tier", stier+"-metrics.json"), metrics); err != nil {
+			return err
+		}
+
+		if err := metrics.WritePrometheus(&buff, promPrefix+"tier_"+stier+"_", "Tier "+stier+": "); err != nil {
 			return err
 		}
 	}
 
-	return nil
-}
-
-func writeMetrics(
-	registry k6registry.Registry,
-	target string,
-	prefix string,
-	cond func(k6registry.Extension) bool,
-) error {
-	metrics := k6registry.CalculateMetricsCond(registry, cond)
-
-	basename := "metrics"
-
-	if len(prefix) > 0 {
-		basename = prefix + basename
-	}
-
-	basename = filepath.Join(target, basename)
-
-	err := writeJSON(basename+".json", metrics)
-	if err != nil {
-		return err
-	}
-
-	data, err := metrics.MarshalPrometheus()
-	if err != nil {
-		return err
-	}
-
-	return os.WriteFile(basename+".txt", data, permFile) //nolint:forbidigo
+	return writeData(filepath.Join(target, "metrics.txt"), buff.Bytes())
 }
 
 const gradesvg = `<svg xmlns="http://www.w3.org/2000/svg" width="17" height="20"><clipPath id="B"><rect width="17" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#B)"><path fill="%s" d="M0 0h17v20H0z"/><path fill="url(#A)" d="M0 0h17v20H0z"/></g><g text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text x="85" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="70">%s</text><text x="85" y="140" transform="scale(.1)" fill="#fff" textLength="70">%s</text></g></svg>` //nolint:lll
