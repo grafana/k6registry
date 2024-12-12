@@ -280,7 +280,7 @@ Registry generated from the source above.
       "owner": "grafana",
       "public": true,
       "stars": 63,
-      "timestamp": 1733730893,
+      "timestamp": 1733979175,
       "topics": [
         "xk6"
       ],
@@ -618,15 +618,12 @@ docs/example-api
     ├── community-catalog.json
     ├── community.json
     ├── community-metrics.json
-    ├── community-metrics.txt
     ├── official-catalog.json
     ├── official.json
     ├── official-metrics.json
-    ├── official-metrics.txt
     ├── partner-catalog.json
     ├── partner.json
     ├── partner-metrics.json
-    ├── partner-metrics.txt
     └── at-least
         ├── community-catalog.json
         ├── community.json
