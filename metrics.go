@@ -187,11 +187,11 @@ func (m *Metrics) WritePrometheus(out io.Writer, namePrefix string, helpPrefix s
 		fullname := namePrefix + name
 
 		if help, hasHelp := metricsHelps[name]; hasHelp {
-			fmt.Fprintf(out, "# HELP %s %s\n", fullname, helpPrefix+help)
+			fmt.Fprintf(out, "# HELP %s %s\n", fullname, helpPrefix+help) //nolint:errcheck
 		}
 
-		fmt.Fprintf(out, "# TYPE %s counter\n", fullname)
-		fmt.Fprintf(out, "%s %d %d\n\n", fullname, value, now)
+		fmt.Fprintf(out, "# TYPE %s counter\n", fullname)      //nolint:errcheck
+		fmt.Fprintf(out, "%s %d %d\n\n", fullname, value, now) //nolint:errcheck
 	}
 
 	return nil
