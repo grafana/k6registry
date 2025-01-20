@@ -5,7 +5,7 @@ go 1.23.4
 require (
 	github.com/Masterminds/semver/v3 v3.3.1
 	github.com/adrg/xdg v0.5.3
-	github.com/cli/go-gh/v2 v2.11.1
+	github.com/cli/go-gh/v2 v2.11.2
 	github.com/go-git/go-git/v5 v5.13.1
 	github.com/google/go-github/v62 v62.0.0
 	github.com/grafana/clireadme v0.1.0
