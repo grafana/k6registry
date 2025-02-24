@@ -33,7 +33,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^k6/x/"
+            "pattern": "^k6$|^k6/x/"
           },
           "description": "List of JavaScript import paths registered by the extension.\n\nCurrently, paths must start with the prefix `k6/x/`.\n\nThe extensions used by k6 scripts are automatically detected based on the values specified here, therefore it is important that the values used here are consistent with the values registered by the extension at runtime.\n",
           "examples": [
