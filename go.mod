@@ -16,7 +16,7 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/xeipuuv/gojsonschema v1.2.0
 	gitlab.com/gitlab-org/api/client-go v0.123.0
-	golang.org/x/term v0.29.0
+	golang.org/x/term v0.30.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -72,7 +72,7 @@ require (
 	golang.org/x/mod v0.22.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/oauth2 v0.25.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/time v0.9.0 // indirect
 	gonum.org/v1/gonum v0.8.2 // indirect
