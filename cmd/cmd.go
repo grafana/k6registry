@@ -19,17 +19,18 @@ import (
 var help string
 
 type options struct {
-	out     string
-	compact bool
-	catalog string
-	quiet   bool
-	verbose bool
-	loose   bool
-	lint    bool
-	api     string
-	test    []string
-	origin  string
-	ref     string
+	out         string
+	compact     bool
+	catalog     string
+	quiet       bool
+	verbose     bool
+	loose       bool
+	lint        bool
+	api         string
+	test        []string
+	origin      string
+	ref         string
+	prereleases bool
 }
 
 // New creates new cobra command for exec command.
@@ -82,6 +83,7 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
 	flags.StringVar(&opts.catalog, "catalog", "", "generate catalog to the specified file")
 	flags.BoolVarP(&opts.verbose, "verbose", "v", false, "verbose logging")
+	flags.BoolVar(&opts.prereleases, "prereleases", false, "allow prerelease versions")
 	root.MarkFlagsMutuallyExclusive("compact", "quiet")
 	root.MarkFlagsMutuallyExclusive("api", "out")
 	root.MarkFlagsMutuallyExclusive("api", "catalog")
@@ -143,7 +145,7 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		output = file
 	}
 
-	registry, err := load(ctx, input, opts.loose, opts.lint, opts.origin)
+	registry, err := load(ctx, input, opts.loose, opts.lint, opts.prereleases, opts.origin)
 	if err != nil {
 		return err
 	}
