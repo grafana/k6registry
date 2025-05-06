@@ -23,6 +23,7 @@ type legacyExtension struct {
 	Categories  []string `json:"categories"`
 }
 
+//nolint:funlen
 func legacyConvert(ctx context.Context) error {
 	client, err := contextGitHubClient(ctx)
 	if err != nil {
@@ -94,7 +95,7 @@ func legacyConvert(ctx context.Context) error {
 		}
 	}
 
-	encoder := yaml.NewEncoder(os.Stdout) //nolint:forbidigo
+	encoder := yaml.NewEncoder(os.Stdout)
 
 	if err := encoder.Encode(reg); err != nil {
 		return err

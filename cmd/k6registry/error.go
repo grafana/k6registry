@@ -13,7 +13,7 @@ type formatableError = interface {
 }
 
 func formatError(err error) string {
-	width, color := formatOptions(int(os.Stderr.Fd())) //nolint:forbidigo
+	width, color := formatOptions(int(os.Stderr.Fd()))
 
 	var perr formatableError
 	if errors.As(err, &perr) {
@@ -28,7 +28,7 @@ func formatOptions(fd int) (int, bool) {
 	width := 0
 
 	if term.IsTerminal(fd) {
-		if os.Getenv("NO_COLOR") != "true" { //nolint:forbidigo
+		if os.Getenv("NO_COLOR") != "true" {
 			color = true
 		}
 

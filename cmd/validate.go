@@ -124,8 +124,7 @@ func lintExtension(ext k6registry.Extension) (bool, []string) {
 
 var errInvalidRegistry = errors.New("invalid registry")
 
-// source: https://spdx.org/licenses/
-// both FSF Free and OSI Approved licenses
+// both FSF Free and OSI Approved licenses (source: https://spdx.org/licenses/).
 var validLicenses = map[string]struct{}{ //nolint:gochecknoglobals
 	"AFL-1.1":           {},
 	"AFL-1.2":           {},

@@ -45,7 +45,7 @@ func newContext(ctx context.Context, appname string) (context.Context, error) {
 		return nil, err
 	}
 
-	err = os.MkdirAll(cacheDir, permDir) //nolint:forbidigo
+	err = os.MkdirAll(cacheDir, permDir)
 	if err != nil {
 		return nil, err
 	}
@@ -55,6 +55,10 @@ func newContext(ctx context.Context, appname string) (context.Context, error) {
 	return context.WithValue(ctx, githubClientKey{}, github.NewClient(htc)), nil
 }
 
+const cacheTTL = 2 * time.Hour
+
+var errMissingAuthToken = errors.New("missing authentication token")
+
 func newHTTPClient() (*http.Client, error) {
 	var opts api.ClientOptions
 
@@ -62,7 +66,7 @@ func newHTTPClient() (*http.Client, error) {
 
 	opts.AuthToken, _ = auth.TokenForHost(opts.Host)
 	if opts.AuthToken == "" {
-		return nil, fmt.Errorf("authentication token not found for host %s", opts.Host)
+		return nil, fmt.Errorf("%w: host %s", errMissingAuthToken, opts.Host)
 	}
 
 	if cfg, _ := config.Read(nil); cfg != nil {
@@ -70,7 +74,7 @@ func newHTTPClient() (*http.Client, error) {
 	}
 
 	opts.EnableCache = true
-	opts.CacheTTL = 2 * time.Hour
+	opts.CacheTTL = cacheTTL
 
 	return api.NewHTTPClient(opts)
 }
@@ -88,7 +92,6 @@ func contextCacheDir(ctx context.Context) (string, error) {
 	return "", fmt.Errorf("%w: missing cache dir", errInvalidContext)
 }
 
-//nolint:forbidigo
 func cacheSubDir(ctx context.Context, subdir string) (string, error) {
 	base, err := contextCacheDir(ctx)
 	if err != nil {

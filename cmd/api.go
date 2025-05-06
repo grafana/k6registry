@@ -30,7 +30,6 @@ func writeAPI(registry k6registry.Registry, target string) error {
 	return nil
 }
 
-//nolint:forbidigo
 func writeData(filename string, data []byte) error {
 	dir := filepath.Dir(filename)
 
@@ -187,9 +186,7 @@ func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
 	return nil
 }
 
-func writeAPISubsetTier(registry k6registry.Registry, target string) error {
-	base := filepath.Join(target, "tier")
-
+func byTier(registry k6registry.Registry) map[k6registry.Tier]k6registry.Registry {
 	tiers := make(map[k6registry.Tier]k6registry.Registry, len(k6registry.Tiers))
 
 	var k6ext *k6registry.Extension
@@ -225,6 +222,14 @@ func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 		reg = append(reg, *k6ext)
 		tiers[tier] = reg
 	}
+
+	return tiers
+}
+
+func writeAPISubsetTier(registry k6registry.Registry, target string) error {
+	base := filepath.Join(target, "tier")
+
+	tiers := byTier(registry)
 
 	for tier, reg := range tiers {
 		prefix := string(tier)
@@ -395,6 +400,8 @@ func badgecolor(grade k6registry.Grade) badge.Color {
 		return "orange"
 	case k6registry.GradeF:
 		return "red"
+	case k6registry.GradeG:
+		fallthrough
 	default:
 		return "blue"
 	}
@@ -421,7 +428,6 @@ func testAPI(paths []string, dir string) error {
 	return nil
 }
 
-//nolint:forbidigo
 func testFile(filename string) error {
 	data, err := os.ReadFile(filepath.Clean(filename))
 	if err != nil {
