@@ -26,7 +26,6 @@ func initLogging() *slog.LevelVar {
 	return levelVar
 }
 
-//nolint:forbidigo
 func main() {
 	log.SetFlags(0)
 	log.Writer()

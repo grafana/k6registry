@@ -40,6 +40,7 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 
 	if loose {
 		slog.Debug("Read source")
+
 		raw, err = io.ReadAll(in)
 	} else {
 		slog.Debug("Validate source")
@@ -64,6 +65,7 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 	for idx := range registry {
 		if registry[idx].Module == k6Module {
 			k6 = true
+
 			break
 		}
 	}
@@ -215,6 +217,17 @@ func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry
 	return nil, nil, fmt.Errorf("%w: %s", errUnsupportedModule, module)
 }
 
+func moduleToOwnerAndName(module string) (string, string) {
+	if module == k6Module {
+		return "grafana", "k6"
+	}
+
+	const maxParts = 4
+	parts := strings.SplitN(module, "/", maxParts)
+
+	return parts[1], parts[2]
+}
+
 func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
 	slog.Debug("Loading GitHub repository", "module", module)
 
@@ -223,17 +236,7 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []s
 		return nil, nil, err
 	}
 
-	var owner, name string
-
-	if module == k6Module {
-		owner = "grafana"
-		name = "k6"
-	} else {
-		parts := strings.SplitN(module, "/", 4)
-
-		owner = parts[1]
-		name = parts[2]
-	}
+	owner, name := moduleToOwnerAndName(module)
 
 	repo := new(k6registry.Repository)
 
@@ -270,7 +273,9 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []s
 
 	repo.CloneURL = rep.GetCloneURL()
 
-	repoTags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: 100})
+	const maxTags = 100
+
+	repoTags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: maxTags})
 	if err != nil {
 		return nil, nil, err
 	}
@@ -327,9 +332,11 @@ func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []s
 		}
 	}
 
+	const maxTags = 50
+
 	rels, _, err := client.Releases.ListReleases(pid,
 		&gitlab.ListReleasesOptions{
-			ListOptions: gitlab.ListOptions{PerPage: 50},
+			ListOptions: gitlab.ListOptions{PerPage: maxTags},
 		})
 	if err != nil {
 		return nil, nil, err

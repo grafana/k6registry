@@ -14,10 +14,9 @@ import (
 	"github.com/grafana/k6lint"
 )
 
-// complianceCacheTTL is a TTL for compliance cahhe, 1 week
+// complianceCacheTTL is a TTL for compliance cahhe, 1 week.
 const complianceCacheTTL = 60 * 60 * 24 * 7
 
-//nolint:forbidigo
 func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6lint.Compliance, bool, error) {
 	base, err := checksDir(ctx)
 	if err != nil {
@@ -31,6 +30,7 @@ func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6l
 		if errors.Is(err, fs.ErrNotExist) {
 			return nil, false, nil
 		}
+
 		return nil, false, err
 	}
 
@@ -49,7 +49,6 @@ func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6l
 	return nil, false, nil
 }
 
-//nolint:forbidigo
 func saveCompliance(ctx context.Context, module string, comp *k6lint.Compliance) error {
 	base, err := checksDir(ctx)
 	if err != nil {
@@ -70,7 +69,6 @@ func saveCompliance(ctx context.Context, module string, comp *k6lint.Compliance)
 	return os.WriteFile(filename, data, permFile)
 }
 
-//nolint:forbidigo
 func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 	_, err := os.Stat(dir)
 	notfound := err != nil && errors.Is(err, os.ErrNotExist)
@@ -83,6 +81,7 @@ func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
 		slog.Debug("Clone", "url", cloneURL)
 
 		_, err = git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
+
 		return err
 	}
 

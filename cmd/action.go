@@ -11,12 +11,10 @@ import (
 	"path/filepath"
 )
 
-//nolint:forbidigo
 func isGitHubAction() bool {
 	return os.Getenv("GITHUB_ACTIONS") == "true"
 }
 
-//nolint:forbidigo
 func emitOutput(ctx context.Context, out string, ref string) error {
 	ghOutput := os.Getenv("GITHUB_OUTPUT")
 	if len(ghOutput) == 0 {
@@ -40,7 +38,6 @@ func emitOutput(ctx context.Context, out string, ref string) error {
 	return file.Close()
 }
 
-//nolint:forbidigo
 func isChanged(ctx context.Context, refURL string, localFile string) bool {
 	client := &http.Client{Timeout: httpTimeout}
 

@@ -1,16 +1,20 @@
 project_name: k6registry
 version: 2
+
 before:
   hooks:
     - go mod tidy
+
 dist: build/dist
 builds:
-  - env:
-      - CGO_ENABLED=0
-    goos: ["linux", "windows"]
+  - goos: ["linux", "windows", "darwin"]
     goarch: ["amd64", "arm64"]
+    flags: ["-trimpath"]
+    env: ["CGO_ENABLED=0"]
     ldflags:
-      - "-s -w -X main.version={{.Version}} -X main.appname={{.ProjectName}}"
+      - "-s -w"
+      - "-X main.version={{.Version}}"
+      - "-X main.appname={{.ProjectName}}"
     dir: cmd/k6registry
 source:
   enabled: true
@@ -28,12 +32,3 @@ checksum:
 
 snapshot:
   name_template: "{{ incpatch .Version }}-next+{{.ShortCommit}}{{if .IsGitDirty}}.dirty{{else}}{{end}}"
-
-changelog:
-  sort: asc
-  abbrev: -1
-  filters:
-    exclude:
-      - "^chore:"
-      - "^docs:"
-      - "^test:"

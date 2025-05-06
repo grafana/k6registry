@@ -95,7 +95,7 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	return root, nil
 }
 
-//nolint:forbidigo
+//nolint:funlen
 func run(ctx context.Context, args []string, opts *options) (result error) {
 	if len(opts.api) != 0 {
 		if err := os.MkdirAll(opts.api, permDir); err != nil {
@@ -188,7 +188,6 @@ func postRun(registry k6registry.Registry, output io.Writer, opts *options) erro
 	return writeOutput(registry, output, opts.compact, false)
 }
 
-//nolint:forbidigo
 func writeCatalog(registry k6registry.Registry, filename string, compact bool) (result error) {
 	file, err := os.Create(filepath.Clean(filename))
 	if err != nil {

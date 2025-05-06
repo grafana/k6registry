@@ -12,7 +12,7 @@ var Schema []byte
 
 //nolint:gochecknoglobals
 var (
-	// Categories contains possible values for Category
+	// Categories contains possible values for Category.
 	Categories = []Category{
 		CategoryAuthentication,
 		CategoryBrowser,
@@ -25,17 +25,19 @@ var (
 		CategoryReporting,
 	}
 
-	// Products contains possible values for Product
+	// Products contains possible values for Product.
 	Products = []Product{ProductCloud, ProductOSS, ProductSynthetic}
 
-	// Grades contains possible values for Grade
+	// Grades contains possible values for Grade.
 	Grades = []Grade{GradeA, GradeB, GradeC, GradeD, GradeE, GradeF}
 
-	// Tiers contains possible values for Tier
+	// Tiers contains possible values for Tier.
 	Tiers = []Tier{TierOfficial, TierPartner, TierCommunity}
 )
 
 // Level returns level of support (less is better).
+//
+//nolint:mnd
 func (t Tier) Level() int {
 	switch t {
 	case TierOfficial:

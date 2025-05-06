@@ -13,9 +13,56 @@ func CalculateMetrics(reg Registry) *Metrics {
 	return CalculateMetricsCond(reg, func(_ Extension) bool { return true })
 }
 
+func calculateMetricsOne(ext Extension, m *Metrics) {
+	m.ExtensionCount++
+
+	m.tier(ext.Tier)
+
+	if ext.Compliance != nil {
+		m.grade(ext.Compliance.Grade)
+	}
+
+	for _, prod := range ext.Products {
+		m.product(prod)
+	}
+
+	if len(ext.Products) == 0 {
+		m.ProductOSSCount++
+	}
+
+	if len(ext.Imports) > 0 {
+		m.TypeJavaScriptCount++
+	}
+
+	if len(ext.Outputs) > 0 {
+		m.TypeOutputCount++
+	}
+
+	if strings.HasPrefix(ext.Module, "github.com/grafana/") && ext.Tier != TierOfficial {
+		m.TierUnofficialCount++
+	}
+
+	for _, cat := range ext.Categories {
+		m.category(cat)
+	}
+
+	if len(ext.Categories) == 0 {
+		m.CategoryMiscCount++
+	}
+
+	for _, issue := range ext.Compliance.Issues {
+		m.issue(issue)
+	}
+
+	if ext.Cgo {
+		m.CgoCount++
+	}
+}
+
 // CalculateMetricsCond calculates registry metrics for subset of extensions.
 func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics {
 	const k6Module = "go.k6.io/k6"
+
 	m := new(Metrics)
 
 	for _, ext := range reg {
@@ -23,49 +70,7 @@ func CalculateMetricsCond(reg Registry, predicate func(Extension) bool) *Metrics
 			continue
 		}
 
-		m.ExtensionCount++
-
-		m.tier(ext.Tier)
-
-		if ext.Compliance != nil {
-			m.grade(ext.Compliance.Grade)
-		}
-
-		for _, prod := range ext.Products {
-			m.product(prod)
-		}
-
-		if len(ext.Products) == 0 {
-			m.ProductOSSCount++
-		}
-
-		if len(ext.Imports) > 0 {
-			m.TypeJavaScriptCount++
-		}
-
-		if len(ext.Outputs) > 0 {
-			m.TypeOutputCount++
-		}
-
-		if strings.HasPrefix(ext.Module, "github.com/grafana/") && ext.Tier != TierOfficial {
-			m.TierUnofficialCount++
-		}
-
-		for _, cat := range ext.Categories {
-			m.category(cat)
-		}
-
-		if len(ext.Categories) == 0 {
-			m.CategoryMiscCount++
-		}
-
-		for _, issue := range ext.Compliance.Issues {
-			m.issue(issue)
-		}
-
-		if ext.Cgo {
-			m.CgoCount++
-		}
+		calculateMetricsOne(ext, m)
 	}
 
 	return m
@@ -98,6 +103,7 @@ func (m *Metrics) grade(grade Grade) {
 		m.GradeECount++
 	case GradeF:
 		m.GradeFCount++
+	case GradeG:
 	default:
 	}
 }
