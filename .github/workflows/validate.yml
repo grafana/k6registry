@@ -1,0 +1,24 @@
+name: Validate
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions: {}
+
+jobs:
+  validate:
+    name: Validate
+    uses: grafana/xk6/.github/workflows/tooling-validate.yml@zizmor
+    secrets:
+      codecov-token: ${{secrets.CODECOV_TOKEN}}
+    with:
+      go-version: ${{vars.GO_VERSION}}
+      go-versions: ${{vars.GO_VERSIONS}}
+      golangci-lint-version: ${{vars.GOLANGCI_LINT_VERSION}}
+      goreleaser-version: ${{vars.GORELEASER_VERSION}}
+      platforms: ${{vars.PLATFORMS}}
+      k6-versions: ${{vars.K6_VERSIONS}}
