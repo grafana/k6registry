@@ -9,10 +9,11 @@ permissions: {}
 jobs:
   release:
     name: Release
-    uses: grafana/xk6/.github/workflows/tooling-release.yml@zizmor
+    uses: grafana/xk6/.github/workflows/tooling-release.yml@v0.19.2
     permissions:
       contents: write
       packages: write
+      id-token: write
     with:
       go-version: ${{vars.GO_VERSION}}
       goreleaser-version: ${{vars.GORELEASER_VERSION}}
