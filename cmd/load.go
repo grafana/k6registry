@@ -127,7 +127,14 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool) error {
 	return nil
 }
 
-func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin string) (k6registry.Registry, error) {
+func load(
+	ctx context.Context,
+	in io.Reader,
+	loose bool,
+	lint bool,
+	prereleases bool,
+	origin string,
+) (k6registry.Registry, error) {
 	registry, err := loadSource(in, loose)
 	if err != nil {
 		return nil, err
@@ -156,7 +163,7 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin strin
 				return nil, err
 			}
 
-			ext.Versions = filterVersions(ext.Versions, constraints)
+			ext.Versions = filterVersions(ext.Versions, constraints, prereleases)
 		}
 
 		if err := sortVersions(ext.Versions); err != nil {
