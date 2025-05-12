@@ -21,13 +21,18 @@ func tagsToVersions(tags []string) []string {
 	return versions
 }
 
-func filterVersions(tags []string, constraints *semver.Constraints) []string {
+func filterVersions(tags []string, constraints *semver.Constraints, prereleases bool) []string {
 	versions := make([]string, 0, len(tags))
 
 	for _, tag := range tags {
 		version, err := semver.NewVersion(tag)
 		if err != nil {
 			continue
+		}
+
+		// if the version is a prerelease and prereleases are allowed, check against the base version
+		if version.Prerelease() != "" && prereleases {
+			version = semver.New(version.Major(), version.Minor(), version.Patch(), "", "")
 		}
 
 		if constraints.Check(version) {
