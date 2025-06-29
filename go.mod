@@ -3,7 +3,7 @@ module github.com/grafana/k6registry
 go 1.24.0
 
 require (
-	github.com/Masterminds/semver/v3 v3.3.1
+	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/adrg/xdg v0.5.3
 	github.com/cli/go-gh/v2 v2.12.1
 	github.com/go-git/go-git/v5 v5.16.2
