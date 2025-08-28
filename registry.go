@@ -7,7 +7,7 @@ import (
 
 // Schema contains JSON schema for Grafana k6 Extension Registry JSON.
 //
-//go:embed docs/registry.schema.json
+//go:embed registry.schema.json
 var Schema []byte
 
 //nolint:gochecknoglobals
