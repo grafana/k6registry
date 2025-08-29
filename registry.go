@@ -12,18 +12,6 @@ var Schema []byte
 
 //nolint:gochecknoglobals
 var (
-	// Categories contains possible values for Category.
-	Categories = []Category{
-		CategoryAuthentication,
-		CategoryBrowser,
-		CategoryData,
-		CategoryKubernetes,
-		CategoryMessaging,
-		CategoryMisc,
-		CategoryObservability,
-		CategoryProtocol,
-		CategoryReporting,
-	}
 
 	// Products contains possible values for Product.
 	Products = []Product{ProductCloud, ProductOSS, ProductSynthetic}

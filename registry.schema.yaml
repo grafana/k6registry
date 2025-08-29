@@ -131,17 +131,6 @@ $defs:
         examples:
           - "community"
           - "official"
-      categories:
-        type: array
-        items:
-          $ref: "#/$defs/category"
-        description: |
-          The categories to which the extension belongs.
-
-          If the property is missing or empty in the registry source, the default value is `["misc"]`.
-        examples:
-          - ["data", "reporting"]
-          - ["observability", "protocol"]
       compliance:
         $ref: "#/$defs/compliance"
         description: |
@@ -340,25 +329,6 @@ $defs:
     examples:
       - "community"
       - "official"
-  category:
-    type: string
-    enum:
-      - authentication
-      - browser
-      - data
-      - kubernetes
-      - messaging
-      - misc
-      - observability
-      - protocol
-      - reporting
-    description: |
-      The categories to which the extension belongs.
-
-      If it is missing from the registry source, it will be set with the default `["misc"]` value during generation.
-    examples:
-      - ["data", "reporting"]
-      - ["observability", "protocol"]
   metrics:
     type: object
     description: Extension registry metrics.
@@ -411,42 +381,6 @@ $defs:
         type: integer
         default: 0
         description: Number of extensions requiring cgo.
-      category_authentication_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'authentication' category.
-      category_browser_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'browser' category.
-      category_data_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'data' category.
-      category_kubernetes_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'kubernetes' category.
-      category_messaging_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'messaging' category.
-      category_misc_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'misc' category.
-      category_observability_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'observability' category.
-      category_protocol_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'protocol' category.
-      category_reporting_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'reporting' category.
       issue_module_count:
         type: integer
         default: 0
@@ -493,15 +427,6 @@ $defs:
         description: Number of extensions without CODEOWNERS file.
     example: |
       {
-        "category_authentication_count": 2,
-        "category_browser_count": 1,
-        "category_data_count": 23,
-        "category_kubernetes_count": 2,
-        "category_messaging_count": 11,
-        "category_misc_count": 16,
-        "category_observability_count": 12,
-        "category_protocol_count": 10,
-        "category_reporting_count": 13,
         "cgo_count": 1,
         "extension_count": 72,
         "grade_a_count": 19,

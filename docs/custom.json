@@ -1,8 +1,5 @@
 [
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -24,9 +21,6 @@
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -49,9 +43,6 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -83,9 +74,6 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -125,9 +113,6 @@
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "constraints": ">=v0.50.0",
     "description": "A modern load testing tool, using Go and JavaScript",
     "imports": [

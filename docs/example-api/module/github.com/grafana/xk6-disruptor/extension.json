@@ -1,7 +1,4 @@
 {
-  "categories": [
-    "kubernetes"
-  ],
   "compliance": {
     "grade": "C",
     "issues": [

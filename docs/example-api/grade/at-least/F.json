@@ -1,9 +1,5 @@
 [
   {
-    "categories": [
-      "reporting",
-      "observability"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -75,9 +71,6 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -123,9 +116,6 @@
     ]
   },
   {
-    "categories": [
-      "kubernetes"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [
@@ -189,9 +179,6 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -234,9 +221,6 @@
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [

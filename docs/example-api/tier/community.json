@@ -1,8 +1,5 @@
 [
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [
@@ -36,9 +33,6 @@
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "imports": [
       "k6"

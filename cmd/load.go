@@ -77,10 +77,6 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool) error {
 		ext.Tier = k6registry.TierCommunity
 	}
 
-	if len(ext.Categories) == 0 {
-		ext.Categories = append(ext.Categories, k6registry.CategoryMisc)
-	}
-
 	repo, tags, err := loadRepository(ctx, ext)
 	if err != nil {
 		return err

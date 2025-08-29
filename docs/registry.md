@@ -52,7 +52,6 @@ The `tier` property refers to the maintainer of the extension.
 Possible values:
 
   - **official**: Extensions owned, maintained, and designated by Grafana as "official"
-  - **partner**: Extensions written, maintained, validated, and published by third-party companies against their own projects.
   - **community**: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.
 
 Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default. There are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only. The `official` tier value is needed so that officially supported extensions can be distinguished from them.
@@ -67,59 +66,30 @@ If it is missing from the registry source, it will be set with the default `comm
   outputs:
     - dashboard
   tier: official
-  categories:
-    - reporting
-    - observability
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
   tier: official
-  categories:
-    - data
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
   tier: official
-  categories:
-    - kubernetes
 
 - module: github.com/grafana/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
   tier: official
-  categories:
-    - data
 
 - module: gitlab.com/szkiba/xk6-banner
   description: Print ASCII art banner from k6 test
   imports:
     - k6/x/banner
-  categories:
-    - misc
 ```
-
-### Categories
-
-The `categories` property contains the categories to which the extension belongs.
-
-If the property is missing or empty in the registry source, the default value is "misc".
-
-Possible values:
-
-  - **authentication**
-  - **browser**
-  - **data**
-  - **kubernetes**
-  - **messaging**
-  - **misc**
-  - **observability**
-  - **protocol**
-  - **reporting**
 
 ### Compliance Checks
 

@@ -1,9 +1,5 @@
 {
   "dashboard": {
-    "categories": [
-      "reporting",
-      "observability"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -69,9 +65,6 @@
     ]
   },
   "k6": {
-    "categories": [
-      "misc"
-    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "imports": [
       "k6"
@@ -193,9 +186,6 @@
     ]
   },
   "k6/x/banner": {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [
@@ -229,9 +219,6 @@
     ]
   },
   "k6/x/disruptor": {
-    "categories": [
-      "kubernetes"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [
@@ -292,9 +279,6 @@
     ]
   },
   "k6/x/faker": {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "B",
       "issues": [
@@ -335,9 +319,6 @@
     ]
   },
   "k6/x/sql": {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "B",
       "issues": [

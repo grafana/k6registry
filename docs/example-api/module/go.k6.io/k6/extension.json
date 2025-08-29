@@ -1,7 +1,4 @@
 {
-  "categories": [
-    "misc"
-  ],
   "description": "A modern load testing tool, using Go and JavaScript",
   "imports": [
     "k6"

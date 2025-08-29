@@ -20,40 +20,29 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
   outputs:
     - dashboard
   tier: official
-  categories:
-    - reporting
-    - observability
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
   tier: official
-  categories:
-    - data
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
   tier: official
-  categories:
-    - kubernetes
 
 - module: github.com/grafana/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
   tier: official
-  categories:
-    - data
 
 - module: gitlab.com/szkiba/xk6-banner
   description: Print ASCII art banner from k6 test
   imports:
     - k6/x/banner
-  categories:
-    - misc
 ```
 
 <details>
@@ -64,10 +53,6 @@ Registry generated from the source above.
 ```json file=docs/example.json
 [
   {
-    "categories": [
-      "reporting",
-      "observability"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -133,9 +118,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "B",
       "issues": [
@@ -179,9 +161,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "categories": [
-      "kubernetes"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [
@@ -242,9 +221,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "B",
       "issues": [
@@ -285,9 +261,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [
@@ -321,9 +294,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "imports": [
       "k6"
@@ -524,7 +494,7 @@ By using the `--api` flag, files are created with relative paths in a base direc
 - in the `module` directory, a directory with the same name as the path of the extension module
    - `badge.svg` badge generated based on the compliance grade
    - `extension.json` extension data in a separate file
-- the subdirectories of the base directory contain subsets of the registry broken down according to different properties (`tier`, `category`, `grade`)
+- the subdirectories of the base directory contain subsets of the registry broken down according to different properties (`tier`, `grade`)
 
 ```ascii file=docs/example-api.txt
 docs/example-api
@@ -532,16 +502,6 @@ docs/example-api
 ├── metrics.json
 ├── metrics.txt
 ├── registry.json
-├── category
-│   ├── authentication.json
-│   ├── browser.json
-│   ├── data.json
-│   ├── kubernetes.json
-│   ├── messaging.json
-│   ├── misc.json
-│   ├── observability.json
-│   ├── protocol.json
-│   └── reporting.json
 ├── grade
 │   ├── A.json
 │   ├── B.json

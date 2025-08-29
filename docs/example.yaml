@@ -3,37 +3,27 @@
   outputs:
     - dashboard
   tier: official
-  categories:
-    - reporting
-    - observability
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
   tier: official
-  categories:
-    - data
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
   tier: official
-  categories:
-    - kubernetes
 
 - module: github.com/grafana/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
   tier: official
-  categories:
-    - data
 
 - module: gitlab.com/szkiba/xk6-banner
   description: Print ASCII art banner from k6 test
   imports:
     - k6/x/banner
-  categories:
-    - misc
+

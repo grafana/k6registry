@@ -1,8 +1,5 @@
 {
   "k6": {
-    "categories": [
-      "misc"
-    ],
     "description": "A modern load testing tool, using Go and JavaScript",
     "imports": [
       "k6"
@@ -133,9 +130,6 @@
     ]
   },
   "k6/x/banner": {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [

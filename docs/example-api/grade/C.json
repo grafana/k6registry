@@ -1,8 +1,5 @@
 [
   {
-    "categories": [
-      "kubernetes"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [
@@ -66,9 +63,6 @@
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "C",
       "issues": [

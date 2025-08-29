@@ -34,14 +34,6 @@ func calculateMetricsOne(ext Extension, m *Metrics) {
 		m.TierCommunityCount++
 	}
 
-	for _, cat := range ext.Categories {
-		m.category(cat)
-	}
-
-	if len(ext.Categories) == 0 {
-		m.CategoryMiscCount++
-	}
-
 	for _, issue := range ext.Compliance.Issues {
 		m.issue(issue)
 	}
@@ -106,31 +98,6 @@ func (m *Metrics) product(product Product) {
 		fallthrough
 	default:
 		m.ProductOSSCount++
-	}
-}
-
-func (m *Metrics) category(category Category) {
-	switch category {
-	case CategoryAuthentication:
-		m.CategoryAuthenticationCount++
-	case CategoryBrowser:
-		m.CategoryBrowserCount++
-	case CategoryData:
-		m.CategoryDataCount++
-	case CategoryKubernetes:
-		m.CategoryKubernetesCount++
-	case CategoryMessaging:
-		m.CategoryMessagingCount++
-	case CategoryObservability:
-		m.CategoryObservabilityCount++
-	case CategoryProtocol:
-		m.CategoryProtocolCount++
-	case CategoryReporting:
-		m.CategoryReportingCount++
-	case CategoryMisc:
-		fallthrough
-	default:
-		m.CategoryMiscCount++
 	}
 }
 

@@ -3,16 +3,6 @@ docs/example-api
 ├── metrics.json
 ├── metrics.txt
 ├── registry.json
-├── category
-│   ├── authentication.json
-│   ├── browser.json
-│   ├── data.json
-│   ├── kubernetes.json
-│   ├── messaging.json
-│   ├── misc.json
-│   ├── observability.json
-│   ├── protocol.json
-│   └── reporting.json
 ├── grade
 │   ├── A.json
 │   ├── B.json
