@@ -15,9 +15,6 @@
     "k6/x/banner"
   ],
   "module": "gitlab.com/szkiba/xk6-banner",
-  "products": [
-    "oss"
-  ],
   "repo": {
     "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
     "description": "Print ASCII art banner from k6 test.",

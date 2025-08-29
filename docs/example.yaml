@@ -12,7 +12,6 @@
   imports:
     - k6/x/sql
   tier: official
-  products: ["cloud", "oss"]
   categories:
     - data
 

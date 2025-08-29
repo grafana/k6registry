@@ -55,13 +55,6 @@ docs/example-api
 │   └── go.k6.io
 │       └── k6
 │           └── extension.json
-├── product
-│   ├── cloud-catalog.json
-│   ├── cloud.json
-│   ├── oss-catalog.json
-│   ├── oss.json
-│   ├── synthetic-catalog.json
-│   └── synthetic.json
 └── tier
     ├── community-catalog.json
     ├── community.json

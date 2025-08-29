@@ -13,9 +13,6 @@
     "outputs": [
       "dashboard"
     ],
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-dashboard.git",
       "description": "A k6 extension that makes k6 metrics available on a web-based dashboard.",
@@ -24,17 +21,23 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 367,
-      "timestamp": 1731922735,
+      "stars": 440,
+      "timestamp": 1756221711,
       "topics": [
         "xk6",
-        "xk6-official",
         "xk6-output-dashboard"
       ],
       "url": "https://github.com/grafana/xk6-dashboard"
     },
     "tier": "official",
     "versions": [
+      "v0.7.12",
+      "v0.7.11",
+      "v0.7.10",
+      "v0.7.9",
+      "v0.7.8",
+      "v0.7.7",
+      "v0.7.6",
       "v0.7.5",
       "v0.7.4",
       "v0.7.3",
@@ -76,21 +79,14 @@
       "data"
     ],
     "compliance": {
-      "grade": "B",
-      "issues": [
-        "smoke"
-      ],
-      "level": 93
+      "grade": "A",
+      "level": 100
     },
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "products": [
-      "cloud",
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "Use SQL databases from k6 tests.",
@@ -99,8 +95,8 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 120,
-      "timestamp": 1733736611,
+      "stars": 163,
+      "timestamp": 1756100216,
       "topics": [
         "k6",
         "sql",
@@ -110,6 +106,11 @@
     },
     "tier": "official",
     "versions": [
+      "v1.0.5",
+      "v1.0.4",
+      "v1.0.3",
+      "v1.0.2",
+      "v1.0.1",
       "v1.0.0",
       "v0.4.1",
       "v0.4.0",
@@ -139,19 +140,16 @@
       "k6/x/disruptor"
     ],
     "module": "github.com/grafana/xk6-disruptor",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-disruptor.git",
       "description": "Extension for injecting faults into k6 tests",
-      "homepage": "https://k6.io/docs/javascript-api/xk6-disruptor/",
+      "homepage": "https://grafana.com/docs/k6/latest/testing-guides/injecting-faults-with-xk6-disruptor/",
       "license": "AGPL-3.0",
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 97,
-      "timestamp": 1733824028,
+      "stars": 112,
+      "timestamp": 1756052749,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -163,6 +161,9 @@
     },
     "tier": "official",
     "versions": [
+      "v0.3.16",
+      "v0.3.15",
+      "v0.3.14",
       "v0.3.13",
       "v0.3.12",
       "v0.3.11",
@@ -192,20 +193,14 @@
       "data"
     ],
     "compliance": {
-      "grade": "B",
-      "issues": [
-        "smoke"
-      ],
-      "level": 93
+      "grade": "A",
+      "level": 100
     },
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
     ],
     "module": "github.com/grafana/xk6-faker",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
@@ -214,8 +209,8 @@
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 63,
-      "timestamp": 1733979175,
+      "stars": 105,
+      "timestamp": 1756099448,
       "topics": [
         "xk6"
       ],
@@ -223,7 +218,12 @@
     },
     "tier": "official",
     "versions": [
+      "v0.4.4",
+      "v0.4.3",
+      "v0.4.2",
+      "v0.4.1",
       "v0.4.0",
+      "v0.3.2",
       "v0.3.1",
       "v0.3.0",
       "v0.3.0-alpha.1",
@@ -250,9 +250,6 @@
       "k6/x/banner"
     ],
     "module": "gitlab.com/szkiba/xk6-banner",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
       "description": "Print ASCII art banner from k6 test.",
@@ -281,14 +278,9 @@
       "k6"
     ],
     "module": "go.k6.io/k6",
-    "products": [
-      "cloud",
-      "synthetic",
-      "oss"
-    ],
     "repo": {
-      "description": "A modern load testing tool, using Go and JavaScript - https://k6.io",
-      "homepage": "https://github.com/grafana/k6",
+      "description": "A modern load testing tool, using Go and JavaScript",
+      "homepage": "https://grafana.com/oss/k6/",
       "license": "AGPL-3.0",
       "name": "k6",
       "owner": "grafana",
@@ -299,6 +291,7 @@
         "golang",
         "hacktoberfest",
         "javascript",
+        "k6",
         "load-generator",
         "load-testing",
         "performance"
@@ -307,6 +300,20 @@
     },
     "tier": "official",
     "versions": [
+      "v1.2.3",
+      "v1.2.2",
+      "v1.2.1",
+      "v1.2.0",
+      "v1.1.0",
+      "v1.0.0",
+      "v1.0.0-rc2",
+      "v1.0.0-rc1",
+      "v0.59.0",
+      "v0.58.0",
+      "v0.57.0",
+      "v0.56.0",
+      "v0.55.2",
+      "v0.55.1",
       "v0.55.0",
       "v0.54.0",
       "v0.53.0",
@@ -392,13 +399,7 @@
       "v0.4.4",
       "v0.4.3",
       "v0.4.2",
-      "v0.4.1",
-      "v0.4.0",
-      "v0.3.0",
-      "v0.2.1",
-      "v0.2.0",
-      "v0.0.2",
-      "v0.0.1"
+      "v0.4.1"
     ]
   }
 ]

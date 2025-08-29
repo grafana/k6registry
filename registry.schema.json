@@ -113,26 +113,6 @@
             "official"
           ]
         },
-        "products": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/product"
-          },
-          "description": "Products in which the extension can be used.\n\nSome extensions are not available in all k6 products.\nThis may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.\n\nPossible values:\n\n  - oss: Extensions are available in k6 OSS\n  - cloud: Extensions are available in Grafana Cloud k6\n  - synthetic: Extensions are available in Grafana Synthetic Monitoring\n\nIf the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.\nIn this case, the registry will be filled in accordingly during generation.\n",
-          "examples": [
-            [
-              "cloud",
-              "synthetic",
-              "oss"
-            ],
-            [
-              "cloud"
-            ],
-            [
-              "oss"
-            ]
-          ]
-        },
         "categories": {
           "type": "array",
           "items": {

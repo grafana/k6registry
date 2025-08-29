@@ -153,5 +153,5 @@ Requires
 ### legacy - Convert legacy registry
 
 ```bash
- go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","tier","products","imports","outputs","repo","categories"])|sort_by(.module)' > ./docs/legacy.yaml
+ go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","tier","imports","outputs","repo","categories"])|sort_by(.module)' > ./docs/legacy.yaml
 ```

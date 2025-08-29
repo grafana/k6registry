@@ -16,19 +16,16 @@
     "k6/x/disruptor"
   ],
   "module": "github.com/grafana/xk6-disruptor",
-  "products": [
-    "oss"
-  ],
   "repo": {
     "clone_url": "https://github.com/grafana/xk6-disruptor.git",
     "description": "Extension for injecting faults into k6 tests",
-    "homepage": "https://k6.io/docs/javascript-api/xk6-disruptor/",
+    "homepage": "https://grafana.com/docs/k6/latest/testing-guides/injecting-faults-with-xk6-disruptor/",
     "license": "AGPL-3.0",
     "name": "xk6-disruptor",
     "owner": "grafana",
     "public": true,
-    "stars": 97,
-    "timestamp": 1733824028,
+    "stars": 112,
+    "timestamp": 1756052749,
     "topics": [
       "chaos-engineering",
       "fault-injection",
@@ -40,6 +37,9 @@
   },
   "tier": "official",
   "versions": [
+    "v0.3.16",
+    "v0.3.15",
+    "v0.3.14",
     "v0.3.13",
     "v0.3.12",
     "v0.3.11",

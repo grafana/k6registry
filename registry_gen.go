@@ -131,24 +131,6 @@ type Extension struct {
 	//
 	Outputs []string `json:"outputs,omitempty" yaml:"outputs,omitempty" mapstructure:"outputs,omitempty"`
 
-	// Products in which the extension can be used.
-	//
-	// Some extensions are not available in all k6 products.
-	// This may be for a technological or business reason, or the functionality of the
-	// extension may not make sense in the given product.
-	//
-	// Possible values:
-	//
-	//   - oss: Extensions are available in k6 OSS
-	//   - cloud: Extensions are available in Grafana Cloud k6
-	//   - synthetic: Extensions are available in Grafana Synthetic Monitoring
-	//
-	// If the property is missing or empty in the source of the registry, it means
-	// that the extension is only available in the k6 OSS product.
-	// In this case, the registry will be filled in accordingly during generation.
-	//
-	Products []Product `json:"products,omitempty" yaml:"products,omitempty" mapstructure:"products,omitempty"`
-
 	// Repository metadata.
 	//
 	// Metadata provided by the extension's git repository manager. Repository

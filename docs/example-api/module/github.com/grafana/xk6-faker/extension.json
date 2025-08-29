@@ -3,20 +3,14 @@
     "data"
   ],
   "compliance": {
-    "grade": "B",
-    "issues": [
-      "smoke"
-    ],
-    "level": 93
+    "grade": "A",
+    "level": 100
   },
   "description": "Generate random fake data",
   "imports": [
     "k6/x/faker"
   ],
   "module": "github.com/grafana/xk6-faker",
-  "products": [
-    "oss"
-  ],
   "repo": {
     "clone_url": "https://github.com/grafana/xk6-faker.git",
     "description": "Random fake data generator for k6.",
@@ -25,8 +19,8 @@
     "name": "xk6-faker",
     "owner": "grafana",
     "public": true,
-    "stars": 63,
-    "timestamp": 1733979175,
+    "stars": 105,
+    "timestamp": 1756099448,
     "topics": [
       "xk6"
     ],
@@ -34,7 +28,12 @@
   },
   "tier": "official",
   "versions": [
+    "v0.4.4",
+    "v0.4.3",
+    "v0.4.2",
+    "v0.4.1",
     "v0.4.0",
+    "v0.3.2",
     "v0.3.1",
     "v0.3.0",
     "v0.3.0-alpha.1",

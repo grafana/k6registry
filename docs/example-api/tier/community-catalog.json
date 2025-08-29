@@ -8,14 +8,9 @@
       "k6"
     ],
     "module": "go.k6.io/k6",
-    "products": [
-      "cloud",
-      "synthetic",
-      "oss"
-    ],
     "repo": {
-      "description": "A modern load testing tool, using Go and JavaScript - https://k6.io",
-      "homepage": "https://github.com/grafana/k6",
+      "description": "A modern load testing tool, using Go and JavaScript",
+      "homepage": "https://grafana.com/oss/k6/",
       "license": "AGPL-3.0",
       "name": "k6",
       "owner": "grafana",
@@ -26,6 +21,7 @@
         "golang",
         "hacktoberfest",
         "javascript",
+        "k6",
         "load-generator",
         "load-testing",
         "performance"
@@ -34,6 +30,20 @@
     },
     "tier": "official",
     "versions": [
+      "v1.2.3",
+      "v1.2.2",
+      "v1.2.1",
+      "v1.2.0",
+      "v1.1.0",
+      "v1.0.0",
+      "v1.0.0-rc2",
+      "v1.0.0-rc1",
+      "v0.59.0",
+      "v0.58.0",
+      "v0.57.0",
+      "v0.56.0",
+      "v0.55.2",
+      "v0.55.1",
       "v0.55.0",
       "v0.54.0",
       "v0.53.0",
@@ -119,13 +129,7 @@
       "v0.4.4",
       "v0.4.3",
       "v0.4.2",
-      "v0.4.1",
-      "v0.4.0",
-      "v0.3.0",
-      "v0.2.1",
-      "v0.2.0",
-      "v0.0.2",
-      "v0.0.1"
+      "v0.4.1"
     ]
   },
   "k6/x/banner": {
@@ -145,9 +149,6 @@
       "k6/x/banner"
     ],
     "module": "gitlab.com/szkiba/xk6-banner",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
       "description": "Print ASCII art banner from k6 test.",

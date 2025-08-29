@@ -29,7 +29,6 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
   imports:
     - k6/x/sql
   tier: official
-  products: ["cloud", "oss"]
   categories:
     - data
 
@@ -77,9 +76,6 @@ Registry generated from the source above.
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
       "dashboard"
-    ],
-    "products": [
-      "oss"
     ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-dashboard.git",
@@ -152,10 +148,6 @@ Registry generated from the source above.
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "products": [
-      "cloud",
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "Use SQL databases from k6 tests.",
@@ -204,9 +196,6 @@ Registry generated from the source above.
       "k6/x/disruptor"
     ],
     "module": "github.com/grafana/xk6-disruptor",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-disruptor.git",
       "description": "Extension for injecting faults into k6 tests",
@@ -268,9 +257,6 @@ Registry generated from the source above.
       "k6/x/faker"
     ],
     "module": "github.com/grafana/xk6-faker",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
@@ -315,9 +301,6 @@ Registry generated from the source above.
       "k6/x/banner"
     ],
     "module": "gitlab.com/szkiba/xk6-banner",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
       "description": "Print ASCII art banner from k6 test.",
@@ -346,11 +329,6 @@ Registry generated from the source above.
       "k6"
     ],
     "module": "go.k6.io/k6",
-    "products": [
-      "cloud",
-      "synthetic",
-      "oss"
-    ],
     "repo": {
       "description": "A modern load testing tool, using Go and JavaScript - https://k6.io",
       "homepage": "https://github.com/grafana/k6",
@@ -516,7 +494,6 @@ The `--api` flag can be used to specify a directory to which the outputs will be
 
 The `--test` flag can be used to test registry and catalog files generated with the `--api` flag. The test is successful if the file is not empty, contains `k6` and at least one extension, and if all extensions meet the minimum requirements (e.g. it has versions).
 
-
 ```
 k6registry [flags] [source-file]
 ```
@@ -547,7 +524,7 @@ By using the `--api` flag, files are created with relative paths in a base direc
 - in the `module` directory, a directory with the same name as the path of the extension module
    - `badge.svg` badge generated based on the compliance grade
    - `extension.json` extension data in a separate file
-- the subdirectories of the base directory contain subsets of the registry broken down according to different properties (`tier`, `product`, `category`, `grade`)
+- the subdirectories of the base directory contain subsets of the registry broken down according to different properties (`tier`, `category`, `grade`)
 
 ```ascii file=docs/example-api.txt
 docs/example-api
@@ -607,13 +584,6 @@ docs/example-api
 │   └── go.k6.io
 │       └── k6
 │           └── extension.json
-├── product
-│   ├── cloud-catalog.json
-│   ├── cloud.json
-│   ├── oss-catalog.json
-│   ├── oss.json
-│   ├── synthetic-catalog.json
-│   └── synthetic.json
 └── tier
     ├── community-catalog.json
     ├── community.json

@@ -132,28 +132,6 @@ $defs:
         examples:
           - "community"
           - "official"
-      products:
-        type: array
-        items:
-          $ref: "#/$defs/product"
-        description: |
-          Products in which the extension can be used.
-
-          Some extensions are not available in all k6 products.
-          This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
-
-          Possible values:
-
-            - oss: Extensions are available in k6 OSS
-            - cloud: Extensions are available in Grafana Cloud k6
-            - synthetic: Extensions are available in Grafana Synthetic Monitoring
-
-          If the property is missing or empty in the source of the registry, it means that the extension is only available in the k6 OSS product.
-          In this case, the registry will be filled in accordingly during generation.
-        examples:
-          - ["cloud", "synthetic", "oss"]
-          - ["cloud"]
-          - ["oss"]
       categories:
         type: array
         items:
@@ -364,26 +342,6 @@ $defs:
     examples:
       - "community"
       - "official"
-  product:
-    type: string
-    enum: ["oss", "cloud", "synthetic"]
-    description: |
-      Products in which the extension can be used.
-
-      Some extensions are not available in all k6 products.
-      This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
-
-      Possible values:
-
-        - oss: Extensions are available in k6 OSS
-        - cloud: Extensions are available in Grafana Cloud k6
-        - synthetic: Extensions are available in Grafana Synthetic Monitoring
-
-      If it is missing from the registry source, it will be set with the default `["community"]` value during generation.
-    examples:
-      - ["cloud", "synthetic", "oss"]
-      - ["cloud"]
-      - ["oss"]
   category:
     type: string
     enum:
@@ -435,18 +393,6 @@ $defs:
         type: integer
         default: 0
         description: Number of Output extension.
-      product_cloud_count:
-        type: integer
-        default: 0
-        description: Number of extensions available in Grafana Cloud k6.
-      product_oss_count:
-        type: integer
-        default: 0
-        description: Number of extensions available in Grafana k6.
-      product_synthetic_count:
-        type: integer
-        default: 0
-        description: Number of extensions available in Synthetic Monitoring.
       grade_a_count:
         type: integer
         default: 0
@@ -579,9 +525,6 @@ $defs:
         "issue_replace_count": 2,
         "issue_smoke_count": 51,
         "issue_types_count": 44,
-        "product_cloud_count": 4,
-        "product_oss_count": 71,
-        "product_synthetic_count": 2,
         "tier_community_count": 54,
         "tier_official_count": 18,
         "tier_unofficial_count": 6,

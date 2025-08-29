@@ -22,14 +22,6 @@ func calculateMetricsOne(ext Extension, m *Metrics) {
 		m.grade(ext.Compliance.Grade)
 	}
 
-	for _, prod := range ext.Products {
-		m.product(prod)
-	}
-
-	if len(ext.Products) == 0 {
-		m.ProductOSSCount++
-	}
-
 	if len(ext.Imports) > 0 {
 		m.TypeJavaScriptCount++
 	}

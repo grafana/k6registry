@@ -91,10 +91,6 @@ func fromOrigin(ext *k6registry.Extension, origin map[string]k6registry.Extensio
 		ext.Categories = oext.Categories
 	}
 
-	if len(ext.Products) == 0 {
-		ext.Products = oext.Products
-	}
-
 	if len(ext.Imports) == 0 {
 		ext.Imports = oext.Imports
 	}

@@ -59,19 +59,6 @@ Extensions owned by the `grafana` GitHub organization are not officially support
 
 If it is missing from the registry source, it will be set with the default `community` value during generation.
 
-### Products
-
-The `products` property contains the names of the k6 products in which the extension is available.
-
-Some extensions are not available in all k6 products. This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
-
-Possible values:
-
-  - **oss**: Extensions are available in *k6 OSS*
-  - **cloud**: Extensions are available in *Grafana Cloud k6*
-
-If the property is missing or empty in the source of the registry, it means that the extension is only available in the *k6 OSS* product. In this case, the registry will be filled in accordingly during generation.
-
 ### Example registry
 
 ```yaml file=example.yaml
@@ -89,7 +76,6 @@ If the property is missing or empty in the source of the registry, it means that
   imports:
     - k6/x/sql
   tier: official
-  products: ["cloud", "oss"]
   categories:
     - data
 

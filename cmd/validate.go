@@ -79,12 +79,6 @@ func hasTopic(ext k6registry.Extension) bool {
 		}
 	}
 
-	for _, product := range ext.Products {
-		if product == k6registry.ProductOSS { // for oss, topic is required
-			return false
-		}
-	}
-
 	return true // for non oss, topic isn't required
 }
 

@@ -13,9 +13,6 @@
     "outputs": [
       "dashboard"
     ],
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-dashboard.git",
       "description": "A k6 extension that makes k6 metrics available on a web-based dashboard.",
@@ -80,11 +77,6 @@
       "k6"
     ],
     "module": "go.k6.io/k6",
-    "products": [
-      "cloud",
-      "synthetic",
-      "oss"
-    ],
     "repo": {
       "description": "A modern load testing tool, using Go and JavaScript - https://k6.io",
       "homepage": "https://github.com/grafana/k6",
@@ -217,9 +209,6 @@
       "k6/x/banner"
     ],
     "module": "gitlab.com/szkiba/xk6-banner",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://gitlab.com/szkiba/xk6-banner.git",
       "description": "Print ASCII art banner from k6 test.",
@@ -257,9 +246,6 @@
       "k6/x/disruptor"
     ],
     "module": "github.com/grafana/xk6-disruptor",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-disruptor.git",
       "description": "Extension for injecting faults into k6 tests",
@@ -321,9 +307,6 @@
       "k6/x/faker"
     ],
     "module": "github.com/grafana/xk6-faker",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
@@ -367,10 +350,6 @@
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "products": [
-      "cloud",
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "Use SQL databases from k6 tests.",
