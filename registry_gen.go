@@ -145,8 +145,6 @@ type Extension struct {
 	//
 	//   - official: Extensions owned, maintained, and designated by Grafana as
 	// "official"
-	//   - partner: Extensions written, maintained, validated, and published by
-	// third-party companies against their own projects.
 	//   - community: Extensions are listed on the Registry by individual maintainers,
 	// groups of maintainers, or other members of the k6 community.
 	//
@@ -282,12 +280,6 @@ type Metrics struct {
 	// Number of extensions in the 'official' tier.
 	TierOfficialCount int `json:"tier_official_count,omitempty" yaml:"tier_official_count,omitempty" mapstructure:"tier_official_count,omitempty"`
 
-	// Number of extensions in the 'partner' tier.
-	TierPartnerCount int `json:"tier_partner_count,omitempty" yaml:"tier_partner_count,omitempty" mapstructure:"tier_partner_count,omitempty"`
-
-	// Number of unofficial extensions.
-	TierUnofficialCount int `json:"tier_unofficial_count,omitempty" yaml:"tier_unofficial_count,omitempty" mapstructure:"tier_unofficial_count,omitempty"`
-
 	// Number of JavaScript extension.
 	TypeJavaScriptCount int `json:"type_javascript_count,omitempty" yaml:"type_javascript_count,omitempty" mapstructure:"type_javascript_count,omitempty"`
 
@@ -396,4 +388,3 @@ type Tier string
 
 const TierCommunity Tier = "community"
 const TierOfficial Tier = "official"
-const TierPartner Tier = "partner"

@@ -110,7 +110,7 @@ func legacyTierToTier(tiers []string) k6registry.Tier {
 		case "official":
 			return k6registry.TierOfficial
 		case "partner":
-			return k6registry.TierPartner
+			return k6registry.TierCommunity
 		default:
 			return ""
 		}

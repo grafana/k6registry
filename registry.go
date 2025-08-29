@@ -32,7 +32,7 @@ var (
 	Grades = []Grade{GradeA, GradeB, GradeC, GradeD, GradeE, GradeF}
 
 	// Tiers contains possible values for Tier.
-	Tiers = []Tier{TierOfficial, TierPartner, TierCommunity}
+	Tiers = []Tier{TierOfficial, TierCommunity}
 )
 
 // Level returns level of support (less is better).
@@ -42,10 +42,8 @@ func (t Tier) Level() int {
 	switch t {
 	case TierOfficial:
 		return 1
-	case TierPartner:
-		return 2
 	case TierCommunity:
-		return 3
+		return 2
 	}
 
 	return 0

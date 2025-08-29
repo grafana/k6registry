@@ -31,7 +31,7 @@ func calculateMetricsOne(ext Extension, m *Metrics) {
 	}
 
 	if strings.HasPrefix(ext.Module, "github.com/grafana/") && ext.Tier != TierOfficial {
-		m.TierUnofficialCount++
+		m.TierCommunityCount++
 	}
 
 	for _, cat := range ext.Categories {
@@ -72,10 +72,6 @@ func (m *Metrics) tier(tier Tier) {
 	switch tier {
 	case TierOfficial:
 		m.TierOfficialCount++
-	case TierPartner:
-		m.TierPartnerCount++
-	case TierCommunity:
-		fallthrough
 	default:
 		m.TierCommunityCount++
 	}

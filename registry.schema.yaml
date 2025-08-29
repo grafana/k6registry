@@ -121,7 +121,6 @@ $defs:
           Possible values:
 
             - official: Extensions owned, maintained, and designated by Grafana as "official"
-            - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.
             - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.
 
           Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.
@@ -321,7 +320,7 @@ $defs:
           - https://github.com/grafana/xk6-sql.git
   tier:
     type: string
-    enum: ["official", "partner", "community"]
+    enum: ["official", "community"]
     description: |
       Maintainer of the extension.
 
@@ -331,7 +330,6 @@ $defs:
       Possible values:
 
         - official: Extensions owned, maintained, and designated by Grafana as "official"
-        - partner: Extensions written, maintained, validated, and published by third-party companies against their own projects.
         - community: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.
 
       Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default.
@@ -373,14 +371,6 @@ $defs:
         type: integer
         default: 0
         description: Number of extensions in the 'official' tier.
-      tier_unofficial_count:
-        type: integer
-        default: 0
-        description: Number of unofficial extensions.
-      tier_partner_count:
-        type: integer
-        default: 0
-        description: Number of extensions in the 'partner' tier.
       tier_community_count:
         type: integer
         default: 0
@@ -527,7 +517,6 @@ $defs:
         "issue_types_count": 44,
         "tier_community_count": 54,
         "tier_official_count": 18,
-        "tier_unofficial_count": 6,
         "type_javascript_count": 57,
         "type_output_count": 16
       }

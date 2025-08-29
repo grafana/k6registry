@@ -1,140 +1,140 @@
-# HELP registry_category_observability_count Number of extensions in the 'observability' category.
-# TYPE registry_category_observability_count counter
-registry_category_observability_count 1 1756485382567
-
-# HELP registry_issue_smoke_count Number of extensions without smoke test script.
-# TYPE registry_issue_smoke_count counter
-registry_issue_smoke_count 2 1756485382567
-
-# HELP registry_issue_types_count Number of extensions without API declaration file.
-# TYPE registry_issue_types_count counter
-registry_issue_types_count 2 1756485382567
-
-# HELP registry_tier_community_count Number of extension in the community' tier.
-# TYPE registry_tier_community_count counter
-registry_tier_community_count 1 1756485382567
-
-# HELP registry_category_kubernetes_count Number of extensions in the 'kubernetes' category.
-# TYPE registry_category_kubernetes_count counter
-registry_category_kubernetes_count 1 1756485382567
-
-# HELP registry_category_misc_count Number of extensions in the 'misc' category.
-# TYPE registry_category_misc_count counter
-registry_category_misc_count 1 1756485382567
-
-# HELP registry_type_javascript_count Number of JavaScript extension.
-# TYPE registry_type_javascript_count counter
-registry_type_javascript_count 4 1756485382567
-
-# HELP registry_category_reporting_count Number of extensions in the 'reporting' category.
-# TYPE registry_category_reporting_count counter
-registry_category_reporting_count 1 1756485382567
-
-# HELP registry_extension_count The total number of extensions.
-# TYPE registry_extension_count counter
-registry_extension_count 5 1756485382567
+# HELP registry_grade_a_count Number of A-grade extensions.
+# TYPE registry_grade_a_count counter
+registry_grade_a_count 3 1756487343615
 
 # HELP registry_grade_c_count Number of C-grade extensions.
 # TYPE registry_grade_c_count counter
-registry_grade_c_count 2 1756485382567
-
-# HELP registry_tier_official_count Number of extensions in the 'official' tier.
-# TYPE registry_tier_official_count counter
-registry_tier_official_count 4 1756485382567
-
-# HELP registry_category_data_count Number of extensions in the 'data' category.
-# TYPE registry_category_data_count counter
-registry_category_data_count 2 1756485382567
-
-# HELP registry_grade_a_count Number of A-grade extensions.
-# TYPE registry_grade_a_count counter
-registry_grade_a_count 3 1756485382567
+registry_grade_c_count 2 1756487343615
 
 # HELP registry_issue_examples_count Number of extensions without examples directory.
 # TYPE registry_issue_examples_count counter
-registry_issue_examples_count 1 1756485382567
+registry_issue_examples_count 1 1756487343615
+
+# HELP registry_issue_smoke_count Number of extensions without smoke test script.
+# TYPE registry_issue_smoke_count counter
+registry_issue_smoke_count 2 1756487343615
+
+# HELP registry_issue_types_count Number of extensions without API declaration file.
+# TYPE registry_issue_types_count counter
+registry_issue_types_count 2 1756487343615
+
+# HELP registry_category_data_count Number of extensions in the 'data' category.
+# TYPE registry_category_data_count counter
+registry_category_data_count 2 1756487343615
+
+# HELP registry_category_kubernetes_count Number of extensions in the 'kubernetes' category.
+# TYPE registry_category_kubernetes_count counter
+registry_category_kubernetes_count 1 1756487343615
+
+# HELP registry_category_observability_count Number of extensions in the 'observability' category.
+# TYPE registry_category_observability_count counter
+registry_category_observability_count 1 1756487343615
+
+# HELP registry_category_reporting_count Number of extensions in the 'reporting' category.
+# TYPE registry_category_reporting_count counter
+registry_category_reporting_count 1 1756487343615
+
+# HELP registry_category_misc_count Number of extensions in the 'misc' category.
+# TYPE registry_category_misc_count counter
+registry_category_misc_count 1 1756487343615
+
+# HELP registry_extension_count The total number of extensions.
+# TYPE registry_extension_count counter
+registry_extension_count 5 1756487343615
+
+# HELP registry_tier_community_count Number of extension in the community' tier.
+# TYPE registry_tier_community_count counter
+registry_tier_community_count 1 1756487343615
+
+# HELP registry_tier_official_count Number of extensions in the 'official' tier.
+# TYPE registry_tier_official_count counter
+registry_tier_official_count 4 1756487343615
+
+# HELP registry_type_javascript_count Number of JavaScript extension.
+# TYPE registry_type_javascript_count counter
+registry_type_javascript_count 4 1756487343615
 
 # HELP registry_type_output_count Number of Output extension.
 # TYPE registry_type_output_count counter
-registry_type_output_count 1 1756485382567
-
-# HELP registry_tier_official_issue_types_count Tier official: Number of extensions without API declaration file.
-# TYPE registry_tier_official_issue_types_count counter
-registry_tier_official_issue_types_count 1 1756485382567
-
-# HELP registry_tier_official_type_javascript_count Tier official: Number of JavaScript extension.
-# TYPE registry_tier_official_type_javascript_count counter
-registry_tier_official_type_javascript_count 3 1756485382567
-
-# HELP registry_tier_official_category_kubernetes_count Tier official: Number of extensions in the 'kubernetes' category.
-# TYPE registry_tier_official_category_kubernetes_count counter
-registry_tier_official_category_kubernetes_count 1 1756485382567
-
-# HELP registry_tier_official_category_reporting_count Tier official: Number of extensions in the 'reporting' category.
-# TYPE registry_tier_official_category_reporting_count counter
-registry_tier_official_category_reporting_count 1 1756485382567
-
-# HELP registry_tier_official_extension_count Tier official: The total number of extensions.
-# TYPE registry_tier_official_extension_count counter
-registry_tier_official_extension_count 4 1756485382567
-
-# HELP registry_tier_official_issue_examples_count Tier official: Number of extensions without examples directory.
-# TYPE registry_tier_official_issue_examples_count counter
-registry_tier_official_issue_examples_count 1 1756485382567
-
-# HELP registry_tier_official_tier_official_count Tier official: Number of extensions in the 'official' tier.
-# TYPE registry_tier_official_tier_official_count counter
-registry_tier_official_tier_official_count 4 1756485382567
-
-# HELP registry_tier_official_type_output_count Tier official: Number of Output extension.
-# TYPE registry_tier_official_type_output_count counter
-registry_tier_official_type_output_count 1 1756485382567
-
-# HELP registry_tier_official_category_data_count Tier official: Number of extensions in the 'data' category.
-# TYPE registry_tier_official_category_data_count counter
-registry_tier_official_category_data_count 2 1756485382567
-
-# HELP registry_tier_official_category_observability_count Tier official: Number of extensions in the 'observability' category.
-# TYPE registry_tier_official_category_observability_count counter
-registry_tier_official_category_observability_count 1 1756485382567
+registry_type_output_count 1 1756487343615
 
 # HELP registry_tier_official_grade_a_count Tier official: Number of A-grade extensions.
 # TYPE registry_tier_official_grade_a_count counter
-registry_tier_official_grade_a_count 3 1756485382567
+registry_tier_official_grade_a_count 3 1756487343615
+
+# HELP registry_tier_official_tier_official_count Tier official: Number of extensions in the 'official' tier.
+# TYPE registry_tier_official_tier_official_count counter
+registry_tier_official_tier_official_count 4 1756487343615
+
+# HELP registry_tier_official_type_output_count Tier official: Number of Output extension.
+# TYPE registry_tier_official_type_output_count counter
+registry_tier_official_type_output_count 1 1756487343615
+
+# HELP registry_tier_official_category_data_count Tier official: Number of extensions in the 'data' category.
+# TYPE registry_tier_official_category_data_count counter
+registry_tier_official_category_data_count 2 1756487343615
+
+# HELP registry_tier_official_category_kubernetes_count Tier official: Number of extensions in the 'kubernetes' category.
+# TYPE registry_tier_official_category_kubernetes_count counter
+registry_tier_official_category_kubernetes_count 1 1756487343615
+
+# HELP registry_tier_official_category_observability_count Tier official: Number of extensions in the 'observability' category.
+# TYPE registry_tier_official_category_observability_count counter
+registry_tier_official_category_observability_count 1 1756487343615
 
 # HELP registry_tier_official_grade_c_count Tier official: Number of C-grade extensions.
 # TYPE registry_tier_official_grade_c_count counter
-registry_tier_official_grade_c_count 1 1756485382567
+registry_tier_official_grade_c_count 1 1756487343615
+
+# HELP registry_tier_official_issue_examples_count Tier official: Number of extensions without examples directory.
+# TYPE registry_tier_official_issue_examples_count counter
+registry_tier_official_issue_examples_count 1 1756487343615
 
 # HELP registry_tier_official_issue_smoke_count Tier official: Number of extensions without smoke test script.
 # TYPE registry_tier_official_issue_smoke_count counter
-registry_tier_official_issue_smoke_count 1 1756485382567
+registry_tier_official_issue_smoke_count 1 1756487343615
 
-# HELP registry_tier_community_category_misc_count Tier community: Number of extensions in the 'misc' category.
-# TYPE registry_tier_community_category_misc_count counter
-registry_tier_community_category_misc_count 1 1756485382567
+# HELP registry_tier_official_issue_types_count Tier official: Number of extensions without API declaration file.
+# TYPE registry_tier_official_issue_types_count counter
+registry_tier_official_issue_types_count 1 1756487343615
 
-# HELP registry_tier_community_extension_count Tier community: The total number of extensions.
-# TYPE registry_tier_community_extension_count counter
-registry_tier_community_extension_count 1 1756485382567
+# HELP registry_tier_official_type_javascript_count Tier official: Number of JavaScript extension.
+# TYPE registry_tier_official_type_javascript_count counter
+registry_tier_official_type_javascript_count 3 1756487343615
 
-# HELP registry_tier_community_grade_c_count Tier community: Number of C-grade extensions.
-# TYPE registry_tier_community_grade_c_count counter
-registry_tier_community_grade_c_count 1 1756485382567
+# HELP registry_tier_official_category_reporting_count Tier official: Number of extensions in the 'reporting' category.
+# TYPE registry_tier_official_category_reporting_count counter
+registry_tier_official_category_reporting_count 1 1756487343615
 
-# HELP registry_tier_community_issue_smoke_count Tier community: Number of extensions without smoke test script.
-# TYPE registry_tier_community_issue_smoke_count counter
-registry_tier_community_issue_smoke_count 1 1756485382567
-
-# HELP registry_tier_community_issue_types_count Tier community: Number of extensions without API declaration file.
-# TYPE registry_tier_community_issue_types_count counter
-registry_tier_community_issue_types_count 1 1756485382567
-
-# HELP registry_tier_community_tier_community_count Tier community: Number of extension in the community' tier.
-# TYPE registry_tier_community_tier_community_count counter
-registry_tier_community_tier_community_count 1 1756485382567
+# HELP registry_tier_official_extension_count Tier official: The total number of extensions.
+# TYPE registry_tier_official_extension_count counter
+registry_tier_official_extension_count 4 1756487343615
 
 # HELP registry_tier_community_type_javascript_count Tier community: Number of JavaScript extension.
 # TYPE registry_tier_community_type_javascript_count counter
-registry_tier_community_type_javascript_count 1 1756485382567
+registry_tier_community_type_javascript_count 1 1756487343615
+
+# HELP registry_tier_community_category_misc_count Tier community: Number of extensions in the 'misc' category.
+# TYPE registry_tier_community_category_misc_count counter
+registry_tier_community_category_misc_count 1 1756487343615
+
+# HELP registry_tier_community_extension_count Tier community: The total number of extensions.
+# TYPE registry_tier_community_extension_count counter
+registry_tier_community_extension_count 1 1756487343615
+
+# HELP registry_tier_community_grade_c_count Tier community: Number of C-grade extensions.
+# TYPE registry_tier_community_grade_c_count counter
+registry_tier_community_grade_c_count 1 1756487343615
+
+# HELP registry_tier_community_issue_smoke_count Tier community: Number of extensions without smoke test script.
+# TYPE registry_tier_community_issue_smoke_count counter
+registry_tier_community_issue_smoke_count 1 1756487343615
+
+# HELP registry_tier_community_issue_types_count Tier community: Number of extensions without API declaration file.
+# TYPE registry_tier_community_issue_types_count counter
+registry_tier_community_issue_types_count 1 1756487343615
+
+# HELP registry_tier_community_tier_community_count Tier community: Number of extension in the community' tier.
+# TYPE registry_tier_community_tier_community_count counter
+registry_tier_community_tier_community_count 1 1756487343615
 

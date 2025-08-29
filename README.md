@@ -591,16 +591,11 @@ docs/example-api
     ├── official-catalog.json
     ├── official.json
     ├── official-metrics.json
-    ├── partner-catalog.json
-    ├── partner.json
-    ├── partner-metrics.json
     └── at-least
         ├── community-catalog.json
         ├── community.json
         ├── official-catalog.json
         ├── official.json
-        ├── partner-catalog.json
-        └── partner.json
 ```
 
 The primary purpose of the `--api` flag is to support a custom *k6 extension registry* instance.
