@@ -22,14 +22,6 @@ func calculateMetricsOne(ext Extension, m *Metrics) {
 		m.grade(ext.Compliance.Grade)
 	}
 
-	for _, prod := range ext.Products {
-		m.product(prod)
-	}
-
-	if len(ext.Products) == 0 {
-		m.ProductOSSCount++
-	}
-
 	if len(ext.Imports) > 0 {
 		m.TypeJavaScriptCount++
 	}
@@ -39,15 +31,7 @@ func calculateMetricsOne(ext Extension, m *Metrics) {
 	}
 
 	if strings.HasPrefix(ext.Module, "github.com/grafana/") && ext.Tier != TierOfficial {
-		m.TierUnofficialCount++
-	}
-
-	for _, cat := range ext.Categories {
-		m.category(cat)
-	}
-
-	if len(ext.Categories) == 0 {
-		m.CategoryMiscCount++
+		m.TierCommunityCount++
 	}
 
 	for _, issue := range ext.Compliance.Issues {
@@ -80,10 +64,6 @@ func (m *Metrics) tier(tier Tier) {
 	switch tier {
 	case TierOfficial:
 		m.TierOfficialCount++
-	case TierPartner:
-		m.TierPartnerCount++
-	case TierCommunity:
-		fallthrough
 	default:
 		m.TierCommunityCount++
 	}
@@ -118,31 +98,6 @@ func (m *Metrics) product(product Product) {
 		fallthrough
 	default:
 		m.ProductOSSCount++
-	}
-}
-
-func (m *Metrics) category(category Category) {
-	switch category {
-	case CategoryAuthentication:
-		m.CategoryAuthenticationCount++
-	case CategoryBrowser:
-		m.CategoryBrowserCount++
-	case CategoryData:
-		m.CategoryDataCount++
-	case CategoryKubernetes:
-		m.CategoryKubernetesCount++
-	case CategoryMessaging:
-		m.CategoryMessagingCount++
-	case CategoryObservability:
-		m.CategoryObservabilityCount++
-	case CategoryProtocol:
-		m.CategoryProtocolCount++
-	case CategoryReporting:
-		m.CategoryReportingCount++
-	case CategoryMisc:
-		fallthrough
-	default:
-		m.CategoryMiscCount++
 	}
 }
 

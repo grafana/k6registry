@@ -1,8 +1,5 @@
 [
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -12,9 +9,6 @@
       "k6/x/codename"
     ],
     "module": "codeberg.org/szkiba/xk6-codename",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://codeberg.org/szkiba/xk6-codename.git",
       "name": "xk6-codename",
@@ -27,9 +21,6 @@
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -39,9 +30,6 @@
       "k6/x/sqids"
     ],
     "module": "bitbucket.org/szkiba/xk6-sqids",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "git@bitbucket.org:szkiba/xk6-sqids.git",
       "name": "xk6-sqids",
@@ -55,9 +43,6 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -68,9 +53,6 @@
       "k6/x/faker"
     ],
     "module": "github.com/grafana/xk6-faker",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
@@ -92,9 +74,6 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -104,9 +83,6 @@
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "k6 extension to load test RDBMSs (PostgreSQL, MySQL, MS SQL and SQLite3)",
@@ -137,19 +113,12 @@
     ]
   },
   {
-    "categories": [
-      "misc"
-    ],
     "constraints": ">=v0.50.0",
     "description": "A modern load testing tool, using Go and JavaScript",
     "imports": [
       "k6"
     ],
     "module": "go.k6.io/k6",
-    "products": [
-      "cloud",
-      "oss"
-    ],
     "repo": {
       "description": "A modern load testing tool, using Go and JavaScript - https://k6.io",
       "homepage": "https://github.com/grafana/k6",

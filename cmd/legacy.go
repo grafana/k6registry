@@ -60,7 +60,6 @@ func legacyConvert(ctx context.Context) error {
 		ext.Module = strings.TrimPrefix(legacyExt.URL, "https://")
 		ext.Description = legacyExt.Description
 		ext.Tier = legacyTierToTier(legacyExt.Tiers)
-		ext.Categories = legacyCategoriesToCategories(legacyExt.Categories)
 
 		for _, legacyType := range legacyExt.Type {
 			typ := strings.ToLower(legacyType)
@@ -110,27 +109,13 @@ func legacyTierToTier(tiers []string) k6registry.Tier {
 		case "official":
 			return k6registry.TierOfficial
 		case "partner":
-			return k6registry.TierPartner
+			return k6registry.TierCommunity
 		default:
 			return ""
 		}
 	}
 
 	return ""
-}
-
-func legacyCategoriesToCategories(legacyCats []string) []k6registry.Category {
-	if len(legacyCats) == 0 {
-		return nil
-	}
-
-	cats := make([]k6registry.Category, 0, len(legacyCats))
-
-	for _, cat := range legacyCats {
-		cats = append(cats, k6registry.Category(strings.ToLower(cat)))
-	}
-
-	return cats
 }
 
 func legacyPatch(ext *k6registry.Extension) {
@@ -155,10 +140,6 @@ func legacyPatch(ext *k6registry.Extension) {
 		ext.Module = override.module
 	}
 
-	if len(override.categories) != 0 {
-		ext.Categories = override.categories
-	}
-
 	for from, to := range phrases {
 		ext.Description = strings.ReplaceAll(ext.Description, from, to)
 	}
@@ -168,7 +149,6 @@ type extOverride struct {
 	imports    string
 	outputs    string
 	module     string
-	categories []k6registry.Category
 }
 
 var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
@@ -176,19 +156,19 @@ var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
 	"github.com/BarthV/xk6-es":                        {outputs: "xk6-es"},
 	"github.com/GhMartingit/xk6-mongo":                {},
 	"github.com/JorTurFer/xk6-input-prometheus":       {imports: "k6/x/prometheusread"},
-	"github.com/Juandavi1/xk6-prompt":                 {categories: []k6registry.Category{k6registry.CategoryMisc}},
+	"github.com/Juandavi1/xk6-prompt":                 {},
 	"github.com/LeonAdato/xk6-output-statsd":          {outputs: "output-statsd"},
 	"github.com/Maksimall89/xk6-output-clickhouse":    {},
 	"github.com/NAlexandrov/xk6-tcp":                  {},
-	"github.com/SYM01/xk6-proxy":                      {categories: []k6registry.Category{k6registry.CategoryProtocol}},
+	"github.com/SYM01/xk6-proxy":                      {},
 	"github.com/acuenca-facephi/xk6-read":             {},
 	"github.com/akiomik/xk6-nostr":                    {},
 	"github.com/anycable/xk6-cable":                   {},
 	"github.com/avitalique/xk6-file":                  {},
 	"github.com/deejiw/xk6-gcp":                       {},
 	"github.com/deejiw/xk6-interpret":                 {},
-	"github.com/distribworks/xk6-ethereum":            {categories: []k6registry.Category{k6registry.CategoryProtocol}},
-	"github.com/domsolutions/xk6-fasthttp":            {categories: []k6registry.Category{k6registry.CategoryProtocol}},
+	"github.com/distribworks/xk6-ethereum":            {},
+	"github.com/domsolutions/xk6-fasthttp":            {},
 	"github.com/dynatrace/xk6-output-dynatrace":       {outputs: "output-dynatrace"},
 	"github.com/elastic/xk6-output-elasticsearch":     {outputs: "output-elasticsearch"},
 	"github.com/fornfrey/xk6-celery":                  {},
@@ -200,9 +180,9 @@ var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
 	"github.com/grafana/xk6-client-prometheus-remote": {imports: "k6/x/remotewrite"},
 	"github.com/grafana/xk6-client-tracing":           {imports: "k6/x/tracing"},
 	"github.com/grafana/xk6-dashboard":                {},
-	"github.com/grafana/xk6-disruptor":                {categories: []k6registry.Category{k6registry.CategoryKubernetes}},
+	"github.com/grafana/xk6-disruptor":                {},
 	"github.com/grafana/xk6-exec":                     {},
-	"github.com/grafana/xk6-kubernetes":               {categories: []k6registry.Category{k6registry.CategoryKubernetes}},
+	"github.com/grafana/xk6-kubernetes":               {},
 	"github.com/grafana/xk6-loki":                     {},
 	"github.com/grafana/xk6-notification":             {},
 	"github.com/grafana/xk6-output-opentelemetry":     {},
@@ -213,9 +193,7 @@ var extOverrides = map[string]extOverride{ //nolint:gochecknoglobals
 	"github.com/grafana/xk6-ssh":                      {},
 	"github.com/goharbor/xk6-harbor":                  {},
 	"github.com/heww/xk6-harbor":                      {module: "github.com/goharbor/xk6-harbor"},
-	"github.com/kelseyaubrecht/xk6-webtransport": {
-		categories: []k6registry.Category{k6registry.CategoryMessaging, k6registry.CategoryProtocol},
-	},
+	"github.com/kelseyaubrecht/xk6-webtransport":      {},
 	"github.com/kubeshop/xk6-tracetest":                        {},
 	"github.com/leonyork/xk6-output-timestream":                {},
 	"github.com/maksimall89/xk6-telegram":                      {},

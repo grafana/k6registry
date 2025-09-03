@@ -1,23 +1,13 @@
 {
-  "categories": [
-    "data"
-  ],
   "compliance": {
-    "grade": "B",
-    "issues": [
-      "smoke"
-    ],
-    "level": 93
+    "grade": "A",
+    "level": 100
   },
   "description": "Load test SQL Servers",
   "imports": [
     "k6/x/sql"
   ],
   "module": "github.com/grafana/xk6-sql",
-  "products": [
-    "cloud",
-    "oss"
-  ],
   "repo": {
     "clone_url": "https://github.com/grafana/xk6-sql.git",
     "description": "Use SQL databases from k6 tests.",
@@ -26,8 +16,8 @@
     "name": "xk6-sql",
     "owner": "grafana",
     "public": true,
-    "stars": 120,
-    "timestamp": 1733736611,
+    "stars": 163,
+    "timestamp": 1756100216,
     "topics": [
       "k6",
       "sql",
@@ -37,6 +27,11 @@
   },
   "tier": "official",
   "versions": [
+    "v1.0.5",
+    "v1.0.4",
+    "v1.0.3",
+    "v1.0.2",
+    "v1.0.1",
     "v1.0.0",
     "v0.4.1",
     "v0.4.0",

@@ -23,11 +23,6 @@ func k6AsExtension() k6registry.Extension {
 		Module:      k6Module,
 		Description: k6Description,
 		Tier:        k6registry.TierOfficial,
-		Products: []k6registry.Product{
-			k6registry.ProductCloud,
-			k6registry.ProductSynthetic,
-			k6registry.ProductOSS,
-		},
 		Imports: []string{k6ImportPath},
 	}
 }
@@ -80,14 +75,6 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool) error {
 	if len(ext.Tier) == 0 {
 		ext.Tier = k6registry.TierCommunity
-	}
-
-	if len(ext.Products) == 0 {
-		ext.Products = append(ext.Products, k6registry.ProductOSS)
-	}
-
-	if len(ext.Categories) == 0 {
-		ext.Categories = append(ext.Categories, k6registry.CategoryMisc)
 	}
 
 	repo, tags, err := loadRepository(ctx, ext)

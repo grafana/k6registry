@@ -7,23 +7,11 @@ import (
 
 // Schema contains JSON schema for Grafana k6 Extension Registry JSON.
 //
-//go:embed docs/registry.schema.json
+//go:embed registry.schema.json
 var Schema []byte
 
 //nolint:gochecknoglobals
 var (
-	// Categories contains possible values for Category.
-	Categories = []Category{
-		CategoryAuthentication,
-		CategoryBrowser,
-		CategoryData,
-		CategoryKubernetes,
-		CategoryMessaging,
-		CategoryMisc,
-		CategoryObservability,
-		CategoryProtocol,
-		CategoryReporting,
-	}
 
 	// Products contains possible values for Product.
 	Products = []Product{ProductCloud, ProductOSS, ProductSynthetic}
@@ -32,7 +20,7 @@ var (
 	Grades = []Grade{GradeA, GradeB, GradeC, GradeD, GradeE, GradeF}
 
 	// Tiers contains possible values for Tier.
-	Tiers = []Tier{TierOfficial, TierPartner, TierCommunity}
+	Tiers = []Tier{TierOfficial, TierCommunity}
 )
 
 // Level returns level of support (less is better).
@@ -42,10 +30,8 @@ func (t Tier) Level() int {
 	switch t {
 	case TierOfficial:
 		return 1
-	case TierPartner:
-		return 2
 	case TierCommunity:
-		return 3
+		return 2
 	}
 
 	return 0

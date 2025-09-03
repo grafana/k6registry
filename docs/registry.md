@@ -52,25 +52,11 @@ The `tier` property refers to the maintainer of the extension.
 Possible values:
 
   - **official**: Extensions owned, maintained, and designated by Grafana as "official"
-  - **partner**: Extensions written, maintained, validated, and published by third-party companies against their own projects.
   - **community**: Extensions are listed on the Registry by individual maintainers, groups of maintainers, or other members of the k6 community.
 
 Extensions owned by the `grafana` GitHub organization are not officially supported by Grafana by default. There are several k6 extensions owned by the `grafana` GitHub organization, which were created for experimental or example purposes only. The `official` tier value is needed so that officially supported extensions can be distinguished from them.
 
 If it is missing from the registry source, it will be set with the default `community` value during generation.
-
-### Products
-
-The `products` property contains the names of the k6 products in which the extension is available.
-
-Some extensions are not available in all k6 products. This may be for a technological or business reason, or the functionality of the extension may not make sense in the given product.
-
-Possible values:
-
-  - **oss**: Extensions are available in *k6 OSS*
-  - **cloud**: Extensions are available in *Grafana Cloud k6*
-
-If the property is missing or empty in the source of the registry, it means that the extension is only available in the *k6 OSS* product. In this case, the registry will be filled in accordingly during generation.
 
 ### Example registry
 
@@ -80,60 +66,30 @@ If the property is missing or empty in the source of the registry, it means that
   outputs:
     - dashboard
   tier: official
-  categories:
-    - reporting
-    - observability
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
   tier: official
-  products: ["cloud", "oss"]
-  categories:
-    - data
 
 - module: github.com/grafana/xk6-disruptor
   description: Inject faults to test
   imports:
     - k6/x/disruptor
   tier: official
-  categories:
-    - kubernetes
 
 - module: github.com/grafana/xk6-faker
   description: Generate random fake data
   imports:
     - k6/x/faker
   tier: official
-  categories:
-    - data
 
 - module: gitlab.com/szkiba/xk6-banner
   description: Print ASCII art banner from k6 test
   imports:
     - k6/x/banner
-  categories:
-    - misc
 ```
-
-### Categories
-
-The `categories` property contains the categories to which the extension belongs.
-
-If the property is missing or empty in the registry source, the default value is "misc".
-
-Possible values:
-
-  - **authentication**
-  - **browser**
-  - **data**
-  - **kubernetes**
-  - **messaging**
-  - **misc**
-  - **observability**
-  - **protocol**
-  - **reporting**
 
 ### Compliance Checks
 

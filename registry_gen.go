@@ -12,18 +12,6 @@ package k6registry
 // This data structure is optimized to resolve extensions as dependencies.
 type Catalog map[string]Extension
 
-type Category string
-
-const CategoryAuthentication Category = "authentication"
-const CategoryBrowser Category = "browser"
-const CategoryData Category = "data"
-const CategoryKubernetes Category = "kubernetes"
-const CategoryMessaging Category = "messaging"
-const CategoryMisc Category = "misc"
-const CategoryObservability Category = "observability"
-const CategoryProtocol Category = "protocol"
-const CategoryReporting Category = "reporting"
-
 // The result of the extension's k6 compliance checks.
 type Compliance struct {
 	// Compliance expressed as a grade.
@@ -66,13 +54,6 @@ type Compliance struct {
 // documentation site without approval. Therefore, these properties are registered
 // (eg `description`)
 type Extension struct {
-	// The categories to which the extension belongs.
-	//
-	// If the property is missing or empty in the registry source, the default value
-	// is `["misc"]`.
-	//
-	Categories []Category `json:"categories,omitempty" yaml:"categories,omitempty" mapstructure:"categories,omitempty"`
-
 	// Flag indicating the need for cgo.
 	//
 	// The `cgo` property value `true` indicates that cgo must be enabled to build the
@@ -131,24 +112,6 @@ type Extension struct {
 	//
 	Outputs []string `json:"outputs,omitempty" yaml:"outputs,omitempty" mapstructure:"outputs,omitempty"`
 
-	// Products in which the extension can be used.
-	//
-	// Some extensions are not available in all k6 products.
-	// This may be for a technological or business reason, or the functionality of the
-	// extension may not make sense in the given product.
-	//
-	// Possible values:
-	//
-	//   - oss: Extensions are available in k6 OSS
-	//   - cloud: Extensions are available in Grafana Cloud k6
-	//   - synthetic: Extensions are available in Grafana Synthetic Monitoring
-	//
-	// If the property is missing or empty in the source of the registry, it means
-	// that the extension is only available in the k6 OSS product.
-	// In this case, the registry will be filled in accordingly during generation.
-	//
-	Products []Product `json:"products,omitempty" yaml:"products,omitempty" mapstructure:"products,omitempty"`
-
 	// Repository metadata.
 	//
 	// Metadata provided by the extension's git repository manager. Repository
@@ -163,8 +126,6 @@ type Extension struct {
 	//
 	//   - official: Extensions owned, maintained, and designated by Grafana as
 	// "official"
-	//   - partner: Extensions written, maintained, validated, and published by
-	// third-party companies against their own projects.
 	//   - community: Extensions are listed on the Registry by individual maintainers,
 	// groups of maintainers, or other members of the k6 community.
 	//
@@ -201,33 +162,6 @@ const GradeG Grade = "G"
 
 // Extension registry metrics.
 type Metrics struct {
-	// Number of extensions in the 'authentication' category.
-	CategoryAuthenticationCount int `json:"category_authentication_count,omitempty" yaml:"category_authentication_count,omitempty" mapstructure:"category_authentication_count,omitempty"`
-
-	// Number of extensions in the 'browser' category.
-	CategoryBrowserCount int `json:"category_browser_count,omitempty" yaml:"category_browser_count,omitempty" mapstructure:"category_browser_count,omitempty"`
-
-	// Number of extensions in the 'data' category.
-	CategoryDataCount int `json:"category_data_count,omitempty" yaml:"category_data_count,omitempty" mapstructure:"category_data_count,omitempty"`
-
-	// Number of extensions in the 'kubernetes' category.
-	CategoryKubernetesCount int `json:"category_kubernetes_count,omitempty" yaml:"category_kubernetes_count,omitempty" mapstructure:"category_kubernetes_count,omitempty"`
-
-	// Number of extensions in the 'messaging' category.
-	CategoryMessagingCount int `json:"category_messaging_count,omitempty" yaml:"category_messaging_count,omitempty" mapstructure:"category_messaging_count,omitempty"`
-
-	// Number of extensions in the 'misc' category.
-	CategoryMiscCount int `json:"category_misc_count,omitempty" yaml:"category_misc_count,omitempty" mapstructure:"category_misc_count,omitempty"`
-
-	// Number of extensions in the 'observability' category.
-	CategoryObservabilityCount int `json:"category_observability_count,omitempty" yaml:"category_observability_count,omitempty" mapstructure:"category_observability_count,omitempty"`
-
-	// Number of extensions in the 'protocol' category.
-	CategoryProtocolCount int `json:"category_protocol_count,omitempty" yaml:"category_protocol_count,omitempty" mapstructure:"category_protocol_count,omitempty"`
-
-	// Number of extensions in the 'reporting' category.
-	CategoryReportingCount int `json:"category_reporting_count,omitempty" yaml:"category_reporting_count,omitempty" mapstructure:"category_reporting_count,omitempty"`
-
 	// Number of extensions requiring cgo.
 	CgoCount int `json:"cgo_count,omitempty" yaml:"cgo_count,omitempty" mapstructure:"cgo_count,omitempty"`
 
@@ -299,12 +233,6 @@ type Metrics struct {
 
 	// Number of extensions in the 'official' tier.
 	TierOfficialCount int `json:"tier_official_count,omitempty" yaml:"tier_official_count,omitempty" mapstructure:"tier_official_count,omitempty"`
-
-	// Number of extensions in the 'partner' tier.
-	TierPartnerCount int `json:"tier_partner_count,omitempty" yaml:"tier_partner_count,omitempty" mapstructure:"tier_partner_count,omitempty"`
-
-	// Number of unofficial extensions.
-	TierUnofficialCount int `json:"tier_unofficial_count,omitempty" yaml:"tier_unofficial_count,omitempty" mapstructure:"tier_unofficial_count,omitempty"`
 
 	// Number of JavaScript extension.
 	TypeJavaScriptCount int `json:"type_javascript_count,omitempty" yaml:"type_javascript_count,omitempty" mapstructure:"type_javascript_count,omitempty"`
@@ -414,4 +342,3 @@ type Tier string
 
 const TierCommunity Tier = "community"
 const TierOfficial Tier = "official"
-const TierPartner Tier = "partner"

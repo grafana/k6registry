@@ -3,16 +3,6 @@ docs/example-api
 ├── metrics.json
 ├── metrics.txt
 ├── registry.json
-├── category
-│   ├── authentication.json
-│   ├── browser.json
-│   ├── data.json
-│   ├── kubernetes.json
-│   ├── messaging.json
-│   ├── misc.json
-│   ├── observability.json
-│   ├── protocol.json
-│   └── reporting.json
 ├── grade
 │   ├── A.json
 │   ├── B.json
@@ -55,13 +45,6 @@ docs/example-api
 │   └── go.k6.io
 │       └── k6
 │           └── extension.json
-├── product
-│   ├── cloud-catalog.json
-│   ├── cloud.json
-│   ├── oss-catalog.json
-│   ├── oss.json
-│   ├── synthetic-catalog.json
-│   └── synthetic.json
 └── tier
     ├── community-catalog.json
     ├── community.json
@@ -69,13 +52,9 @@ docs/example-api
     ├── official-catalog.json
     ├── official.json
     ├── official-metrics.json
-    ├── partner-catalog.json
-    ├── partner.json
-    ├── partner-metrics.json
     └── at-least
         ├── community-catalog.json
         ├── community.json
         ├── official-catalog.json
-        ├── official.json
-        ├── partner-catalog.json
-        └── partner.json
+        └── official.json
+

@@ -2,8 +2,6 @@
   description: Generate random, pronounceable codenames
   imports:
     - k6/x/codename
-  categories:
-    - misc
   versions:
     - v0.1.0
   repo:
@@ -16,8 +14,6 @@
   description: Generate short unique identifiers from numbers
   imports:
     - k6/x/sqids
-  categories:
-    - misc
   repo:
     name: xk6-sqids
     owner: szkiba

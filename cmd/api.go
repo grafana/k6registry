@@ -140,50 +140,11 @@ func writeAPIGroupModule(registry k6registry.Registry, target string) error {
 }
 
 func writeAPIGroupSubset(registry k6registry.Registry, target string) error {
-	if err := writeAPISubsetProduct(registry, target); err != nil {
-		return err
-	}
-
 	if err := writeAPISubsetTier(registry, target); err != nil {
 		return err
 	}
 
-	if err := writeAPISubsetGrade(registry, target); err != nil {
-		return err
-	}
-
-	return writeAPISubsetCategory(registry, target)
-}
-
-func writeAPISubsetProduct(registry k6registry.Registry, target string) error {
-	base := filepath.Join(target, "product")
-
-	products := make(map[k6registry.Product]k6registry.Registry, len(k6registry.Products))
-
-	for _, ext := range registry {
-		for _, prod := range ext.Products {
-			reg, found := products[prod]
-			if !found {
-				reg = make(k6registry.Registry, 0)
-			}
-
-			reg = append(reg, ext)
-			products[prod] = reg
-		}
-	}
-
-	for prod, reg := range products {
-		prefix := string(prod)
-		if err := writeJSON(filepath.Join(base, prefix+".json"), reg); err != nil {
-			return err
-		}
-
-		if err := writeJSON(filepath.Join(base, prefix+"-catalog.json"), k6registry.RegistryToCatalog(reg)); err != nil {
-			return err
-		}
-	}
-
-	return nil
+	return writeAPISubsetGrade(registry, target)
 }
 
 func byTier(registry k6registry.Registry) map[k6registry.Tier]k6registry.Registry {
@@ -349,36 +310,6 @@ func writeAPISubsetGradeAtLeast(registry k6registry.Registry, target string) err
 
 	for grade, reg := range grades {
 		if err := writeJSON(filepath.Join(base, string(grade)+".json"), reg); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func writeAPISubsetCategory(registry k6registry.Registry, target string) error {
-	base := filepath.Join(target, "category")
-
-	categories := make(map[k6registry.Category]k6registry.Registry, len(k6registry.Categories))
-
-	for _, category := range k6registry.Categories {
-		categories[category] = make(k6registry.Registry, 0)
-	}
-
-	for _, ext := range registry {
-		for _, cat := range ext.Categories {
-			reg, found := categories[cat]
-			if !found {
-				reg = make(k6registry.Registry, 0)
-			}
-
-			reg = append(reg, ext)
-			categories[cat] = reg
-		}
-	}
-
-	for cat, reg := range categories {
-		if err := writeJSON(filepath.Join(base, string(cat)+".json"), reg); err != nil {
 			return err
 		}
 	}

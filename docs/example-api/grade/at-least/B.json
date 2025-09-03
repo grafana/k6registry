@@ -1,9 +1,5 @@
 [
   {
-    "categories": [
-      "reporting",
-      "observability"
-    ],
     "compliance": {
       "grade": "A",
       "level": 100
@@ -13,9 +9,6 @@
     "outputs": [
       "dashboard"
     ],
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-dashboard.git",
       "description": "A k6 extension that makes k6 metrics available on a web-based dashboard.",
@@ -24,17 +17,23 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 367,
-      "timestamp": 1731922735,
+      "stars": 440,
+      "timestamp": 1756221711,
       "topics": [
         "xk6",
-        "xk6-official",
         "xk6-output-dashboard"
       ],
       "url": "https://github.com/grafana/xk6-dashboard"
     },
     "tier": "official",
     "versions": [
+      "v0.7.12",
+      "v0.7.11",
+      "v0.7.10",
+      "v0.7.9",
+      "v0.7.8",
+      "v0.7.7",
+      "v0.7.6",
       "v0.7.5",
       "v0.7.4",
       "v0.7.3",
@@ -72,25 +71,15 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
-      "grade": "B",
-      "issues": [
-        "smoke"
-      ],
-      "level": 93
+      "grade": "A",
+      "level": 100
     },
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
     ],
     "module": "github.com/grafana/xk6-sql",
-    "products": [
-      "cloud",
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "Use SQL databases from k6 tests.",
@@ -99,8 +88,8 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 120,
-      "timestamp": 1733736611,
+      "stars": 163,
+      "timestamp": 1756100216,
       "topics": [
         "k6",
         "sql",
@@ -110,6 +99,11 @@
     },
     "tier": "official",
     "versions": [
+      "v1.0.5",
+      "v1.0.4",
+      "v1.0.3",
+      "v1.0.2",
+      "v1.0.1",
       "v1.0.0",
       "v0.4.1",
       "v0.4.0",
@@ -122,24 +116,15 @@
     ]
   },
   {
-    "categories": [
-      "data"
-    ],
     "compliance": {
-      "grade": "B",
-      "issues": [
-        "smoke"
-      ],
-      "level": 93
+      "grade": "A",
+      "level": 100
     },
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
     ],
     "module": "github.com/grafana/xk6-faker",
-    "products": [
-      "oss"
-    ],
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
@@ -148,8 +133,8 @@
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 63,
-      "timestamp": 1733979175,
+      "stars": 105,
+      "timestamp": 1756099448,
       "topics": [
         "xk6"
       ],
@@ -157,7 +142,12 @@
     },
     "tier": "official",
     "versions": [
+      "v0.4.4",
+      "v0.4.3",
+      "v0.4.2",
+      "v0.4.1",
       "v0.4.0",
+      "v0.3.2",
       "v0.3.1",
       "v0.3.0",
       "v0.3.0-alpha.1",
