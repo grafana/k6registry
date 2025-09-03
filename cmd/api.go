@@ -204,46 +204,6 @@ func writeAPISubsetTier(registry k6registry.Registry, target string) error {
 		}
 	}
 
-	return writeAPISubsetTierAtLeast(registry, target)
-}
-
-func writeAPISubsetTierAtLeast(registry k6registry.Registry, target string) error {
-	base := filepath.Join(target, "tier", "at-least")
-
-	tiers := make(map[k6registry.Tier]k6registry.Registry, len(k6registry.Tiers))
-
-	for _, tier := range k6registry.Tiers {
-		tiers[tier] = make(k6registry.Registry, 0)
-	}
-
-	for _, ext := range registry {
-		for _, tier := range k6registry.Tiers {
-			if ext.Tier.Level() > tier.Level() {
-				continue
-			}
-
-			reg, found := tiers[tier]
-			if !found {
-				reg = make(k6registry.Registry, 0)
-			}
-
-			reg = append(reg, ext)
-			tiers[tier] = reg
-		}
-	}
-
-	for tier, reg := range tiers {
-		prefix := string(tier)
-
-		if err := writeJSON(filepath.Join(base, prefix+".json"), reg); err != nil {
-			return err
-		}
-
-		if err := writeJSON(filepath.Join(base, prefix+"-catalog.json"), k6registry.RegistryToCatalog(reg)); err != nil {
-			return err
-		}
-	}
-
 	return nil
 }
 
@@ -268,44 +228,6 @@ func writeAPISubsetGrade(registry k6registry.Registry, target string) error {
 
 		reg = append(reg, ext)
 		grades[ext.Compliance.Grade] = reg
-	}
-
-	for grade, reg := range grades {
-		if err := writeJSON(filepath.Join(base, string(grade)+".json"), reg); err != nil {
-			return err
-		}
-	}
-
-	return writeAPISubsetGradeAtLeast(registry, target)
-}
-
-func writeAPISubsetGradeAtLeast(registry k6registry.Registry, target string) error {
-	base := filepath.Join(target, "grade", "at-least")
-
-	grades := make(map[k6registry.Grade]k6registry.Registry, len(k6registry.Grades))
-
-	for _, grade := range k6registry.Grades {
-		grades[grade] = make(k6registry.Registry, 0)
-	}
-
-	for _, ext := range registry {
-		if ext.Compliance == nil || len(ext.Compliance.Grade) == 0 {
-			continue
-		}
-
-		for _, grade := range k6registry.Grades {
-			if ext.Compliance.Grade > grade {
-				continue
-			}
-
-			reg, found := grades[grade]
-			if !found {
-				reg = make(k6registry.Registry, 0)
-			}
-
-			reg = append(reg, ext)
-			grades[grade] = reg
-		}
 	}
 
 	for grade, reg := range grades {
