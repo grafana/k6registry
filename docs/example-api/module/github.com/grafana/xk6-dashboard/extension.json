@@ -16,8 +16,8 @@
     "name": "xk6-dashboard",
     "owner": "grafana",
     "public": true,
-    "stars": 440,
-    "timestamp": 1756221711,
+    "stars": 441,
+    "timestamp": 1756735780,
     "topics": [
       "xk6",
       "xk6-output-dashboard"

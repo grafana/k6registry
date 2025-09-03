@@ -508,14 +508,7 @@ docs/example-api
 │   ├── C.json
 │   ├── D.json
 │   ├── E.json
-│   ├── F.json
-│   └── at-least
-│       ├── A.json
-│       ├── B.json
-│       ├── C.json
-│       ├── D.json
-│       ├── E.json
-│       └── F.json
+│   └── F.json
 ├── module
 │   ├── github.com
 │   │   └── grafana
@@ -550,12 +543,7 @@ docs/example-api
     ├── community-metrics.json
     ├── official-catalog.json
     ├── official.json
-    ├── official-metrics.json
-    └── at-least
-        ├── community-catalog.json
-        ├── community.json
-        ├── official-catalog.json
-        ├── official.json
+    └── official-metrics.json
 ```
 
 The primary purpose of the `--api` flag is to support a custom *k6 extension registry* instance.

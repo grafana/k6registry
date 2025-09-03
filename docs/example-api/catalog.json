@@ -17,8 +17,8 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 440,
-      "timestamp": 1756221711,
+      "stars": 441,
+      "timestamp": 1756735780,
       "topics": [
         "xk6",
         "xk6-output-dashboard"
@@ -257,7 +257,7 @@
       "owner": "grafana",
       "public": true,
       "stars": 112,
-      "timestamp": 1756052749,
+      "timestamp": 1756807974,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -315,7 +315,7 @@
       "owner": "grafana",
       "public": true,
       "stars": 105,
-      "timestamp": 1756099448,
+      "timestamp": 1756801823,
       "topics": [
         "xk6"
       ],
@@ -357,7 +357,7 @@
       "owner": "grafana",
       "public": true,
       "stars": 163,
-      "timestamp": 1756100216,
+      "timestamp": 1756802091,
       "topics": [
         "k6",
         "sql",
