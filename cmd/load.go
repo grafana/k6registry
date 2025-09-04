@@ -161,10 +161,6 @@ func load(ctx context.Context, in io.Reader, loose bool, lint bool, origin strin
 }
 
 func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry.Repository, []string, error) {
-	if ext.Versions != nil {
-		return ext.Repo, ext.Versions, nil
-	}
-
 	module := ext.Module
 
 	if ext.Repo != nil && len(ext.Repo.CloneURL) > 0 {
