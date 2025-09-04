@@ -52,7 +52,6 @@ After modifying registry schema ([registry.schema.json]), the [registry_gen.go] 
 
 ```bash
 go-jsonschema --capitalization URL --capitalization JavaScript --capitalization OSS -p k6registry --only-models -o registry_gen.go registry.schema.json
-bash metrics_gen.sh
 ```
 
 [registry.schema.json]: registry.schema.json
@@ -64,8 +63,6 @@ The example registry can be found in [example.yaml] file, the documentation ([re
 
 ```bash
 go run ./cmd/k6registry --lint -o docs/example.json --catalog docs/example-catalog.json docs/example.yaml
-go run ./cmd/k6registry --lint -q --api docs/example-api docs/example.yaml
-tree -n --noreport --filesfirst -o docs/example-api.txt docs/example-api 
 mdcode update docs/registry.md
 mdcode update README.md
 ```
@@ -153,5 +150,5 @@ Requires
 ### legacy - Convert legacy registry
 
 ```bash
- go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","tier","imports","outputs","repo"])|sort_by(.module)' > ./docs/legacy.yaml
+ go run ./cmd/k6registry . --legacy | yq '.[]|= pick(["module","description","tier","imports","outputs","repo","categories"])|sort_by(.module)' > ./docs/legacy.yaml
 ```

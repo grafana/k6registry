@@ -26,8 +26,6 @@ type options struct {
 	verbose bool
 	loose   bool
 	lint    bool
-	api     string
-	test    []string
 	origin  string
 	ref     string
 }
@@ -72,10 +70,8 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.SortFlags = false
 
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
-	flags.StringVar(&opts.api, "api", "", "write outputs to directory instead of stdout")
 	flags.StringVar(&opts.origin, "origin", "", "external registry URL for default values")
 	flags.StringVar(&opts.ref, "ref", "", "reference output URL for change detection")
-	flags.StringSliceVar(&opts.test, "test", []string{}, "test api path(s) (example: /registry.json,/catalog.json)")
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
@@ -83,8 +79,6 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.StringVar(&opts.catalog, "catalog", "", "generate catalog to the specified file")
 	flags.BoolVarP(&opts.verbose, "verbose", "v", false, "verbose logging")
 	root.MarkFlagsMutuallyExclusive("compact", "quiet")
-	root.MarkFlagsMutuallyExclusive("api", "out")
-	root.MarkFlagsMutuallyExclusive("api", "catalog")
 
 	flags.BoolP("version", "V", false, "print version")
 
@@ -97,16 +91,6 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 
 //nolint:funlen
 func run(ctx context.Context, args []string, opts *options) (result error) {
-	if len(opts.api) != 0 {
-		if err := os.MkdirAll(opts.api, permDir); err != nil {
-			return err
-		}
-
-		if len(opts.out) == 0 {
-			opts.quiet = true
-		}
-	}
-
 	input := os.Stdin
 
 	if len(args) > 0 {
@@ -154,10 +138,6 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 
 	if isGitHubAction() {
 		fname := opts.out
-		if len(fname) == 0 && len(opts.api) != 0 {
-			fname = filepath.Join(opts.api, "registry.json")
-		}
-
 		if len(fname) > 0 && len(opts.ref) > 0 {
 			return emitOutput(ctx, fname, opts.ref)
 		}
@@ -167,14 +147,6 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 }
 
 func postRun(registry k6registry.Registry, output io.Writer, opts *options) error {
-	if len(opts.api) != 0 {
-		if err := writeAPI(registry, opts.api); err != nil {
-			return err
-		}
-
-		return testAPI(opts.test, opts.api)
-	}
-
 	if len(opts.catalog) > 0 {
 		if err := writeCatalog(registry, opts.catalog, opts.compact); err != nil {
 			return err

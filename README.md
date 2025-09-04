@@ -4,9 +4,7 @@
 
 k6registry is a CLI tool and a GitHub Action that enables the generation of the k6 extension registry. The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
-The generator also performs static analysis of extensions. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension. Based on the compliance grade, an SVG compliance badge is created for each extension. Example badge:
-
-![xk6-sql](https://registry.k6.io/module/github.com/grafana/xk6-sql/badge.svg)
+The generator also performs static analysis of extensions. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension.
 
 The k6 Extension Catalog is an alternative representation of the k6 Extension Registry. The output of the generation can be in k6 Extension Catalog format. This format is optimized to resolve extensions as dependencies.
 
@@ -460,10 +458,6 @@ The source is read from file specified as command line argument. If it is missin
 
 The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
 
-The `--api` flag can be used to specify a directory to which the outputs will be written. The `registry.json` file is placed in the root directory. The `extension.json` file and the `badge.svg` file (if the `--lint` flag is used) are placed in a directory with the same name as the extension's go module path.
-
-The `--test` flag can be used to test registry and catalog files generated with the `--api` flag. The test is successful if the file is not empty, contains `k6` and at least one extension, and if all extensions meet the minimum requirements (e.g. it has versions).
-
 ```
 k6registry [flags] [source-file]
 ```
@@ -472,10 +466,8 @@ k6registry [flags] [source-file]
 
 ```
   -o, --out string       write output to file instead of stdout
-      --api string       write outputs to directory instead of stdout
       --origin string    external registry URL for default values
       --ref string       reference output URL for change detection
-      --test strings     test api path(s) (example: /registry.json,/catalog.json)
   -q, --quiet            no output, only validation
       --loose            skip JSON schema validation
       --lint             enable built-in linter
@@ -487,66 +479,6 @@ k6registry [flags] [source-file]
 ```
 
 <!-- #endregion cli -->
-
-## API in the filesystem
-
-By using the `--api` flag, files are created with relative paths in a base directory with a kind of REST API logic:
-- in the `module` directory, a directory with the same name as the path of the extension module
-   - `badge.svg` badge generated based on the compliance grade
-   - `extension.json` extension data in a separate file
-- the subdirectories of the base directory contain subsets of the registry broken down according to different properties (`tier`, `grade`)
-
-```ascii file=docs/example-api.txt
-docs/example-api
-├── catalog.json
-├── metrics.json
-├── metrics.txt
-├── registry.json
-├── grade
-│   ├── A.json
-│   ├── B.json
-│   ├── C.json
-│   ├── D.json
-│   ├── E.json
-│   └── F.json
-├── module
-│   ├── github.com
-│   │   └── grafana
-│   │       ├── xk6-dashboard
-│   │       │   ├── badge.svg
-│   │       │   ├── extension.json
-│   │       │   └── grade.svg
-│   │       ├── xk6-disruptor
-│   │       │   ├── badge.svg
-│   │       │   ├── extension.json
-│   │       │   └── grade.svg
-│   │       ├── xk6-faker
-│   │       │   ├── badge.svg
-│   │       │   ├── extension.json
-│   │       │   └── grade.svg
-│   │       └── xk6-sql
-│   │           ├── badge.svg
-│   │           ├── extension.json
-│   │           └── grade.svg
-│   ├── gitlab.com
-│   │   └── szkiba
-│   │       └── xk6-banner
-│   │           ├── badge.svg
-│   │           ├── extension.json
-│   │           └── grade.svg
-│   └── go.k6.io
-│       └── k6
-│           └── extension.json
-└── tier
-    ├── community-catalog.json
-    ├── community.json
-    ├── community-metrics.json
-    ├── official-catalog.json
-    ├── official.json
-    └── official-metrics.json
-```
-
-The primary purpose of the `--api` flag is to support a custom *k6 extension registry* instance.
 
 ## Contribure 
 
