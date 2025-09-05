@@ -8,6 +8,3 @@ The source is read from file specified as command line argument. If it is missin
 
 The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
 
-The `--api` flag can be used to specify a directory to which the outputs will be written. The `registry.json` file is placed in the root directory. The `extension.json` file and the `badge.svg` file (if the `--lint` flag is used) are placed in a directory with the same name as the extension's go module path.
-
-The `--test` flag can be used to test registry and catalog files generated with the `--api` flag. The test is successful if the file is not empty, contains `k6` and at least one extension, and if all extensions meet the minimum requirements (e.g. it has versions).

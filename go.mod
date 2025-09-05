@@ -10,7 +10,6 @@ require (
 	github.com/google/go-github/v62 v62.0.0
 	github.com/grafana/clireadme v0.1.0
 	github.com/grafana/k6lint v0.3.2
-	github.com/narqo/go-badge v0.0.0-20230821190521-c9a75c019a59
 	github.com/samber/slog-logrus/v2 v2.5.2
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
@@ -35,7 +34,6 @@ require (
 	github.com/go-enry/go-license-detector/v4 v4.3.1 // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
 	github.com/go-git/go-billy/v5 v5.6.2 // indirect
-	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/grafana/k6foundry v0.3.0 // indirect
@@ -67,7 +65,6 @@ require (
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
-	golang.org/x/image v0.18.0 // indirect
 	golang.org/x/mod v0.25.0 // indirect
 	golang.org/x/net v0.39.0 // indirect
 	golang.org/x/oauth2 v0.30.0 // indirect
