@@ -219,15 +219,6 @@ type Metrics struct {
 	// Number of extensions without semantic versioning git tags.
 	IssueVersionsCount int `json:"issue_versions_count,omitempty" yaml:"issue_versions_count,omitempty" mapstructure:"issue_versions_count,omitempty"`
 
-	// Number of extensions available in Grafana Cloud k6.
-	ProductCloudCount int `json:"product_cloud_count,omitempty" yaml:"product_cloud_count,omitempty" mapstructure:"product_cloud_count,omitempty"`
-
-	// Number of extensions available in Grafana k6.
-	ProductOSSCount int `json:"product_oss_count,omitempty" yaml:"product_oss_count,omitempty" mapstructure:"product_oss_count,omitempty"`
-
-	// Number of extensions available in Synthetic Monitoring.
-	ProductSyntheticCount int `json:"product_synthetic_count,omitempty" yaml:"product_synthetic_count,omitempty" mapstructure:"product_synthetic_count,omitempty"`
-
 	// Number of extension in the community' tier.
 	TierCommunityCount int `json:"tier_community_count,omitempty" yaml:"tier_community_count,omitempty" mapstructure:"tier_community_count,omitempty"`
 
@@ -240,12 +231,6 @@ type Metrics struct {
 	// Number of Output extension.
 	TypeOutputCount int `json:"type_output_count,omitempty" yaml:"type_output_count,omitempty" mapstructure:"type_output_count,omitempty"`
 }
-
-type Product string
-
-const ProductCloud Product = "cloud"
-const ProductOSS Product = "oss"
-const ProductSynthetic Product = "synthetic"
 
 // k6 Extension Registry.
 //
