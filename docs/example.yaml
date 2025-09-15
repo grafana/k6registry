@@ -27,3 +27,9 @@
   imports:
     - k6/x/banner
 
+- module: github.com/grafana/disabled-extension
+  description: disable extension (for testing purposes)
+  disabled: true
+  imports:
+    - k6/x/disabled
+
