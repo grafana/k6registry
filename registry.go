@@ -13,9 +13,6 @@ var Schema []byte
 //nolint:gochecknoglobals
 var (
 
-	// Products contains possible values for Product.
-	Products = []Product{ProductCloud, ProductOSS, ProductSynthetic}
-
 	// Grades contains possible values for Grade.
 	Grades = []Grade{GradeA, GradeB, GradeC, GradeD, GradeE, GradeF}
 
