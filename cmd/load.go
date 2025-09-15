@@ -23,7 +23,7 @@ func k6AsExtension() k6registry.Extension {
 		Module:      k6Module,
 		Description: k6Description,
 		Tier:        k6registry.TierOfficial,
-		Imports: []string{k6ImportPath},
+		Imports:     []string{k6ImportPath},
 	}
 }
 
@@ -47,21 +47,28 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 		return nil, err
 	}
 
-	var registry k6registry.Registry
+	var source, registry k6registry.Registry
 
 	slog.Debug("Unmarshal source")
 
-	if err := yaml.Unmarshal(raw, &registry); err != nil {
+	if err := yaml.Unmarshal(raw, &source); err != nil {
 		return nil, err
 	}
 
 	k6 := false
 
-	for idx := range registry {
-		if registry[idx].Module == k6Module {
-			k6 = true
+	for idx := range source {
 
-			break
+		// ignore disabled extensions
+		if source[idx].Disabled {
+			slog.Info("skipping disabled extension", "extension", source[idx].Module)
+			continue
+		}
+
+		registry = append(registry, source[idx])
+
+		if source[idx].Module == k6Module {
+			k6 = true
 		}
 	}
 
