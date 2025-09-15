@@ -131,6 +131,13 @@ $defs:
         examples:
           - "community"
           - "official"
+      disabled:
+        type: boolean
+        default: false
+        description: |
+          Flag indicating the extension is disable.
+
+          The `disable` property value `true` indicates that k6registry will ignore this extension.
       compliance:
         $ref: "#/$defs/compliance"
         description: |

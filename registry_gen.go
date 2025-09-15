@@ -78,6 +78,13 @@ type Extension struct {
 	//
 	Description string `json:"description,omitempty" yaml:"description,omitempty" mapstructure:"description,omitempty"`
 
+	// Flag indicating the extension is disable.
+	//
+	// The `disable` property value `true` indicates that k6registry will ignore this
+	// extension.
+	//
+	Disabled bool `json:"disabled,omitempty" yaml:"disabled,omitempty" mapstructure:"disabled,omitempty"`
+
 	// List of JavaScript import paths registered by the extension.
 	//
 	// Currently, paths must start with the prefix `k6/x/`.
