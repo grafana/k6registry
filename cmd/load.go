@@ -58,10 +58,10 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 	k6 := false
 
 	for idx := range source {
-
 		// ignore disabled extensions
 		if source[idx].Disabled {
 			slog.Info("skipping disabled extension", "extension", source[idx].Module)
+
 			continue
 		}
 
