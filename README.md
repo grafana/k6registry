@@ -1,12 +1,10 @@
 <h1 name="title">k6registry</h1>
 
-**k6 Extension Registry/Catalog Generator**
+**k6 Extension Registry Generator**
 
 k6registry is a CLI tool and a GitHub Action that enables the generation of the k6 extension registry. The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
 The generator also performs static analysis of extensions. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension.
-
-The k6 Extension Catalog is an alternative representation of the k6 Extension Registry. The output of the generation can be in k6 Extension Catalog format. This format is optimized to resolve extensions as dependencies.
 
 Check [k6 Extension Registry Concept](docs/registry.md) for information on design considerations.
 
@@ -448,7 +446,7 @@ k6 Extension Registry/Catalog Generator
 
 ### Synopsis
 
-Generate k6 extension registry/catalog from source.
+Generate k6 extension registry from source.
 
 The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
@@ -458,6 +456,8 @@ The source is read from file specified as command line argument. If it is missin
 
 The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
 
+
+
 ```
 k6registry [flags] [source-file]
 ```
@@ -465,17 +465,16 @@ k6registry [flags] [source-file]
 ### Flags
 
 ```
-  -o, --out string       write output to file instead of stdout
-      --origin string    external registry URL for default values
-      --ref string       reference output URL for change detection
-  -q, --quiet            no output, only validation
-      --loose            skip JSON schema validation
-      --lint             enable built-in linter
-  -c, --compact          compact instead of pretty-printed output
-      --catalog string   generate catalog to the specified file
-  -v, --verbose          verbose logging
-  -V, --version          print version
-  -h, --help             help for k6registry
+  -o, --out string      write output to file instead of stdout
+      --origin string   external registry URL for default values
+      --ref string      reference output URL for change detection
+  -q, --quiet           no output, only validation
+      --loose           skip JSON schema validation
+      --lint            enable built-in linter
+  -c, --compact         compact instead of pretty-printed output
+  -v, --verbose         verbose logging
+  -V, --version         print version
+  -h, --help            help for k6registry
 ```
 
 <!-- #endregion cli -->

@@ -34,19 +34,3 @@ func (t Tier) Level() int {
 	return 0
 }
 
-// RegistryToCatalog converts Registry to Catalog.
-func RegistryToCatalog(reg Registry) Catalog {
-	catalog := make(Catalog, len(reg))
-
-	for _, ext := range reg {
-		for _, importPath := range ext.Imports {
-			catalog[importPath] = ext
-		}
-
-		for _, output := range ext.Outputs {
-			catalog[output] = ext
-		}
-	}
-
-	return catalog
-}
