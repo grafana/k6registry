@@ -165,8 +165,6 @@ The `clone_url` property contains a (typically HTTP) URL, which is used to clone
 
 The source of the registry is a YAML file optimized for human use. Since collecting extension metadata is a complicated and time-consuming task, it is advisable to extract this step into a registry generator CLI tool. The output of this tool is an extension registry in JSON format.
 
-For programs that use the registry, it is advisable to generate an output in JSON format optimized for the given application (for example, an extension catalog for the k6build service).
-
 Generating custom JSON from the extension registry can be done with any standard JSON filtering tool, for example using the popular `jq` tool.
 
 ```mermaid

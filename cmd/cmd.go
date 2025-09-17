@@ -9,7 +9,6 @@ import (
 	"io/fs"
 	"log/slog"
 	"os"
-	"path/filepath"
 
 	"github.com/grafana/k6registry"
 	"github.com/spf13/cobra"
@@ -21,7 +20,6 @@ var help string
 type options struct {
 	out     string
 	compact bool
-	catalog string
 	quiet   bool
 	verbose bool
 	loose   bool
@@ -76,7 +74,6 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
-	flags.StringVar(&opts.catalog, "catalog", "", "generate catalog to the specified file")
 	flags.BoolVarP(&opts.verbose, "verbose", "v", false, "verbose logging")
 	root.MarkFlagsMutuallyExclusive("compact", "quiet")
 
@@ -147,40 +144,15 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 }
 
 func postRun(registry k6registry.Registry, output io.Writer, opts *options) error {
-	if len(opts.catalog) > 0 {
-		if err := writeCatalog(registry, opts.catalog, opts.compact); err != nil {
-			return err
-		}
-	}
-
 	if opts.quiet {
 		return nil
 	}
 
-	return writeOutput(registry, output, opts.compact, false)
+	return writeOutput(registry, output, opts.compact)
 }
 
-func writeCatalog(registry k6registry.Registry, filename string, compact bool) (result error) {
-	file, err := os.Create(filepath.Clean(filename))
-	if err != nil {
-		return err
-	}
 
-	defer func() {
-		err := file.Close()
-		if result == nil && err != nil {
-			result = err
-		}
-	}()
-
-	if err := writeOutput(registry, file, compact, true); err != nil {
-		result = err
-	}
-
-	return
-}
-
-func writeOutput(registry k6registry.Registry, output io.Writer, compact, catalog bool) error {
+func writeOutput(registry k6registry.Registry, output io.Writer, compact bool) error {
 	encoder := json.NewEncoder(output)
 
 	if !compact {
@@ -190,10 +162,6 @@ func writeOutput(registry k6registry.Registry, output io.Writer, compact, catalo
 	encoder.SetEscapeHTML(false)
 
 	var source interface{} = registry
-
-	if catalog {
-		source = k6registry.RegistryToCatalog(registry)
-	}
 
 	return encoder.Encode(source)
 }

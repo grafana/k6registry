@@ -1,4 +1,4 @@
-Generate k6 extension registry/catalog from source.
+Generate k6 extension registry from source.
 
 The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
