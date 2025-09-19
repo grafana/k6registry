@@ -15,6 +15,9 @@
   imports:
     - k6/x/disruptor
   tier: official
+  versions:
+    - v0.3.0
+    - v0.3.1
 
 - module: github.com/grafana/xk6-faker
   description: Generate random fake data
