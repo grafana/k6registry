@@ -71,6 +71,7 @@ $defs:
         type: array
         items:
           type: string
+          pattern: "^v\\d+\\.\\d+\\.\\d+.*$"
         description: |
           List of supported versions.
 
