@@ -4,7 +4,7 @@
 
 k6registry is a CLI tool and a GitHub Action that enables the generation of the k6 extension registry. The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
-The generator also performs static analysis of extensions using [xk6 lint](https://github.com/grafana/xk6?tab=readme-ov-file#xk6-lint) command. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension.
+The generator also performs static analysis of extensions using [xk6 lint](https://github.com/grafana/xk6?tab=readme-ov-file#xk6-lint) command. The result of the analysis is a list of issues detected.
 
 Check [k6 Extension Registry Concept](docs/registry.md) for information on design considerations.
 
@@ -49,10 +49,7 @@ Registry generated from the source above.
 ```json file=docs/example.json
 [
   {
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
+    "compliance": {},
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
@@ -115,11 +112,9 @@ Registry generated from the source above.
   },
   {
     "compliance": {
-      "grade": "B",
       "issues": [
         "smoke"
       ],
-      "level": 93
     },
     "description": "Load test SQL Servers",
     "imports": [
@@ -158,13 +153,11 @@ Registry generated from the source above.
   },
   {
     "compliance": {
-      "grade": "C",
       "issues": [
         "smoke",
         "examples",
         "types"
       ],
-      "level": 81
     },
     "description": "Inject faults to test",
     "imports": [
@@ -218,11 +211,9 @@ Registry generated from the source above.
   },
   {
     "compliance": {
-      "grade": "B",
       "issues": [
         "smoke"
       ],
-      "level": 93
     },
     "description": "Generate random fake data",
     "imports": [
@@ -258,12 +249,10 @@ Registry generated from the source above.
   },
   {
     "compliance": {
-      "grade": "C",
       "issues": [
         "smoke",
         "types"
       ],
-      "level": 87
     },
     "description": "Print ASCII art banner from k6 test",
     "imports": [
@@ -449,12 +438,11 @@ Generate k6 extension registry from source.
 
 The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
-The generator also performs static analysis of extensions. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension. Based on the compliance grade, an SVG compliance badge is created for each extension. 
+The generator also performs static analysis of extensions using [xk6 lint](https://github.com/grafana/xk6?tab=readme-ov-file#xk6-lint) command. The result of the analysis is a list of issues detected. 
 
 The source is read from file specified as command line argument. If it is missing, the source is read from the standard input.
 
 The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
-
 
 
 ```

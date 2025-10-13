@@ -12,10 +12,6 @@ var Schema []byte
 
 //nolint:gochecknoglobals
 var (
-
-	// Grades contains possible values for Grade.
-	Grades = []Grade{GradeA, GradeB, GradeC, GradeD, GradeE, GradeF}
-
 	// Tiers contains possible values for Tier.
 	Tiers = []Tier{TierOfficial, TierCommunity}
 )

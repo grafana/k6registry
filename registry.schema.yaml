@@ -131,34 +131,8 @@ $defs:
   compliance:
     description: |
       The result of the extension's k6 compliance checks.
-    type: object
-    required:
-      - grade
-      - level
+    type: object      
     properties:
-      level:
-        description: |
-          Compliance expressed as a percentage.
-
-          The `level` property contains a percentage of how well the extension complies with best practices.
-          The value of the `level` can be between `0-100` and is determined by the weighted and normalized sum of the scores of the compliance checks.
-        examples:
-          - 87
-          - 34
-          - 100
-        type: integer
-        minimum: 0
-        maximum: 100
-      grade:
-        $ref: "#/$defs/grade"
-        description: |
-          Compliance expressed as a grade.
-
-          The `grade` property contains a grade (A-F) of how well the extension complies with best practices.
-          The value of the `grade` can be `A`,`B`,`C`,`D`,`E`,`F` and is calculated from the `level` property.
-        examples:
-          - "C"
-          - "A"
       issues:
         type: array
         description: |
@@ -171,14 +145,6 @@ $defs:
           - ["build", "smoke"]
           - ["readme", "versions"]
     additionalProperties: false
-  grade:
-    description: |
-      The results of the checks are in the form of a grade.
-    type: string
-    enum: ["A", "B", "C", "D", "E", "F", "G"]
-    examples:
-      - "C"
-      - "A"
   repository:
     type: object
     description: |
@@ -343,30 +309,6 @@ $defs:
         type: integer
         default: 0
         description: Number of Output extension.
-      grade_a_count:
-        type: integer
-        default: 0
-        description: Number of A-grade extensions.
-      grade_b_count:
-        type: integer
-        default: 0
-        description: Number of B-grade extensions.
-      grade_c_count:
-        type: integer
-        default: 0
-        description: Number of C-grade extensions.
-      grade_d_count:
-        type: integer
-        default: 0
-        description: Number of D-grade extensions.
-      grade_e_count:
-        type: integer
-        default: 0
-        description: Number of E-grade extensions.
-      grade_f_count:
-        type: integer
-        default: 0
-        description: Number of F-grade extensions.
       cgo_count:
         type: integer
         default: 0
@@ -419,11 +361,6 @@ $defs:
       {
         "cgo_count": 1,
         "extension_count": 72,
-        "grade_a_count": 19,
-        "grade_b_count": 4,
-        "grade_c_count": 44,
-        "grade_d_count": 4,
-        "grade_e_count": 1,
         "issue_build_count": 5,
         "issue_codeowners_count": 5,
         "issue_examples_count": 16,

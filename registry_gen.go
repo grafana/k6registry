@@ -4,30 +4,12 @@ package k6registry
 
 // The result of the extension's k6 compliance checks.
 type Compliance struct {
-	// Compliance expressed as a grade.
-	//
-	// The `grade` property contains a grade (A-F) of how well the extension complies
-	// with best practices.
-	// The value of the `grade` can be `A`,`B`,`C`,`D`,`E`,`F` and is calculated from
-	// the `level` property.
-	//
-	Grade Grade `json:"grade" yaml:"grade" mapstructure:"grade"`
-
 	// A list of compliance check IDs that failed.
 	//
 	// The `issues`` property is primarily used for debugging. It contains the
 	// (implementation-dependent) identifiers of those compliance checks that failed.
 	//
 	Issues []string `json:"issues,omitempty" yaml:"issues,omitempty" mapstructure:"issues,omitempty"`
-
-	// Compliance expressed as a percentage.
-	//
-	// The `level` property contains a percentage of how well the extension complies
-	// with best practices.
-	// The value of the `level` can be between `0-100` and is determined by the
-	// weighted and normalized sum of the scores of the compliance checks.
-	//
-	Level int `json:"level" yaml:"level" mapstructure:"level"`
 }
 
 // Properties of the registered k6 extension.
@@ -140,16 +122,6 @@ type Extension struct {
 	Versions []string `json:"versions,omitempty" yaml:"versions,omitempty" mapstructure:"versions,omitempty"`
 }
 
-type Grade string
-
-const GradeA Grade = "A"
-const GradeB Grade = "B"
-const GradeC Grade = "C"
-const GradeD Grade = "D"
-const GradeE Grade = "E"
-const GradeF Grade = "F"
-const GradeG Grade = "G"
-
 // Extension registry metrics.
 type Metrics struct {
 	// Number of extensions requiring cgo.
@@ -157,24 +129,6 @@ type Metrics struct {
 
 	// The total number of extensions.
 	ExtensionCount int `json:"extension_count,omitempty" yaml:"extension_count,omitempty" mapstructure:"extension_count,omitempty"`
-
-	// Number of A-grade extensions.
-	GradeACount int `json:"grade_a_count,omitempty" yaml:"grade_a_count,omitempty" mapstructure:"grade_a_count,omitempty"`
-
-	// Number of B-grade extensions.
-	GradeBCount int `json:"grade_b_count,omitempty" yaml:"grade_b_count,omitempty" mapstructure:"grade_b_count,omitempty"`
-
-	// Number of C-grade extensions.
-	GradeCCount int `json:"grade_c_count,omitempty" yaml:"grade_c_count,omitempty" mapstructure:"grade_c_count,omitempty"`
-
-	// Number of D-grade extensions.
-	GradeDCount int `json:"grade_d_count,omitempty" yaml:"grade_d_count,omitempty" mapstructure:"grade_d_count,omitempty"`
-
-	// Number of E-grade extensions.
-	GradeECount int `json:"grade_e_count,omitempty" yaml:"grade_e_count,omitempty" mapstructure:"grade_e_count,omitempty"`
-
-	// Number of F-grade extensions.
-	GradeFCount int `json:"grade_f_count,omitempty" yaml:"grade_f_count,omitempty" mapstructure:"grade_f_count,omitempty"`
 
 	// Number of extensions not buildable with the latest k6 version.
 	IssueBuildCount int `json:"issue_build_count,omitempty" yaml:"issue_build_count,omitempty" mapstructure:"issue_build_count,omitempty"`
