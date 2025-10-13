@@ -24,6 +24,7 @@ const (
 	xk6Binary = "xk6"
 )
 
+
 // The result of a particular inspection.
 type Check struct {
 	// Textual explanation of the check result.
@@ -204,13 +205,13 @@ func checkCompliance(
 
 	slog.Debug("Check compliance", "module", module)
 
-	xk6Path, err := exec.LookPath(xk6Binary)
+	_, err = exec.LookPath(xk6Binary)
 	if err != nil {
 		return nil, fmt.Errorf("searching xk6 path %w", err)
 	}
 	lintOut := &bytes.Buffer{}
 	lintErr := &bytes.Buffer{}
-	lintCmd := exec.Command(xk6Path, "lint", "--json")
+	lintCmd := exec.Command(xk6Binary, "lint", "--json")
 	lintCmd.Stdout = lintOut
 	lintCmd.Stderr = lintErr
 
