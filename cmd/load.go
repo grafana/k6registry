@@ -23,7 +23,7 @@ func k6AsExtension() k6registry.Extension {
 		Module:      k6Module,
 		Description: k6Description,
 		Tier:        k6registry.TierOfficial,
-		Imports: []string{k6ImportPath},
+		Imports:     []string{k6ImportPath},
 	}
 }
 

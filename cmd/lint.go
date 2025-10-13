@@ -16,45 +16,44 @@ import (
 	"github.com/go-git/go-git/v5"
 )
 
-
 const (
-	// TTL for compliance cache (1 week)
+	// TTL for compliance cache (1 week).
 	complianceCacheTTL = 60 * 60 * 24 * 7
 
 	xk6Binary = "xk6"
 )
 
-
-// The result of a particular inspection.
+// Check is the result of a particular inspection.
 type Check struct {
 	// Textual explanation of the check result.
-	Details string `json:"details,omitempty" yaml:"details,omitempty" mapstructure:"details,omitempty"`
+	Details string `json:"details,omitempty" mapstructure:"details,omitempty" yaml:"details,omitempty"`
 
 	// The ID of the checker.
 	// It identifies the method of check, not the execution of the check.
-	ID string `json:"id" yaml:"id" mapstructure:"id"`
+	ID string `json:"id" mapstructure:"id" yaml:"id"`
 
 	// The result of the check.
 	// A true value of the passed property indicates a successful check, while a false
 	// value indicates a failure.
-	Passed bool `json:"passed" yaml:"passed" mapstructure:"passed"`
+	Passed bool `json:"passed" mapstructure:"passed" yaml:"passed"`
 }
 
-// The result of the extension's k6 compliance checks.
+// Compliance is the result of the extension's k6 compliance checks.
 type Compliance struct {
 	// Results of individual checks.
-	Checks []Check `json:"checks,omitempty" yaml:"checks,omitempty" mapstructure:"checks,omitempty"`
+	Checks []Check `json:"checks,omitempty" mapstructure:"checks,omitempty" yaml:"checks,omitempty"`
 
 	// The results of the checks are in the form of a grade.
-	Grade Grade `json:"grade" yaml:"grade" mapstructure:"grade"`
+	Grade Grade `json:"grade" mapstructure:"grade" yaml:"grade"`
 
 	// Compliance expressed as a percentage.
-	Level int `json:"level" yaml:"level" mapstructure:"level"`
+	Level int `json:"level" mapstructure:"level" yaml:"level"`
 
 	// Compliance check timestamp in Unix time
-	Timestamp int64 `json:"timestamp" yaml:"timestamp" mapstructure:"timestamp"`
+	Timestamp int64 `json:"timestamp" mapstructure:"timestamp" yaml:"timestamp"`
 }
 
+// Grade defines the extension grading according to the compliance level.
 type Grade string
 
 const (
@@ -209,6 +208,7 @@ func checkCompliance(
 	if err != nil {
 		return nil, fmt.Errorf("searching xk6 path %w", err)
 	}
+
 	lintOut := &bytes.Buffer{}
 	lintErr := &bytes.Buffer{}
 	lintCmd := exec.Command(xk6Binary, "lint", "--json")
@@ -218,9 +218,11 @@ func checkCompliance(
 	err = lintCmd.Run()
 	if err != nil {
 		slog.Debug("xk6 execution failed", "rc", lintCmd.ProcessState.ExitCode(), "stderr", lintErr.String())
+
 		return nil, fmt.Errorf("xk6 lint failed %w", err)
 	}
-	var compliance = &Compliance{}
+
+	compliance := &Compliance{}
 	err = json.Unmarshal(lintOut.Bytes(), compliance)
 	if err != nil {
 		return nil, err

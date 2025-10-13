@@ -33,4 +33,3 @@ func (t Tier) Level() int {
 
 	return 0
 }
-
