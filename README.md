@@ -415,7 +415,6 @@ Registry generated from the source above.
 
 </details>
 
-A [legacy extension registry](docs/legacy.yaml) converted to the new format is also a good example.
 
 ## Install
 
