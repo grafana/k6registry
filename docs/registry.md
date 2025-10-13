@@ -183,7 +183,7 @@ erDiagram
 
 The registry is validated using [JSON schema](https://grafana.github.io/k6registry/registry.schema.json). Requirements that cannot be validated using the JSON schema are validated using custom linter.
 
-Custom linter checks the following for each extension:
+Custom linter checks the following for each extension using [xk6 lint](https://github.com/grafana/xk6?tab=readme-ov-file#xk6-lint) command:
 
   - Is the go module path valid?
   - Is there at least one versioned release?

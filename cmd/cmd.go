@@ -141,7 +141,6 @@ func postRun(registry k6registry.Registry, output io.Writer, opts *options) erro
 	return writeOutput(registry, output, opts.compact)
 }
 
-
 func writeOutput(registry k6registry.Registry, output io.Writer, compact bool) error {
 	encoder := json.NewEncoder(output)
 

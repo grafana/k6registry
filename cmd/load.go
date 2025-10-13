@@ -23,7 +23,7 @@ func k6AsExtension() k6registry.Extension {
 		Module:      k6Module,
 		Description: k6Description,
 		Tier:        k6registry.TierOfficial,
-		Imports: []string{k6ImportPath},
+		Imports:     []string{k6ImportPath},
 	}
 }
 
@@ -91,7 +91,7 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool) error {
 	if lint && ext.Module != k6Module && ext.Compliance == nil && ext.Repo != nil {
 		official := ext.Tier == k6registry.TierOfficial
 
-		compliance, err := checkCompliance(ctx, ext.Module, official, repo.CloneURL, repo.Timestamp)
+		compliance, err := checkCompliance(ctx, ext.Module, official, repo.CloneURL, int64(repo.Timestamp))
 		if err != nil {
 			return err
 		}

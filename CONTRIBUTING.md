@@ -34,6 +34,7 @@ eget atombender/go-jsonschema
 eget szkiba/mdcode
 eget golangci/golangci-lint
 eget goreleaser/goreleaser
+eget grafana/xk6
 ```
 
 ## Update schema
