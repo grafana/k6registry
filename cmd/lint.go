@@ -1,23 +1,72 @@
 package cmd
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/fs"
 	"log/slog"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"time"
 
 	"github.com/go-git/go-git/v5"
-	"github.com/grafana/k6lint"
 )
 
-// complianceCacheTTL is a TTL for compliance cahhe, 1 week.
-const complianceCacheTTL = 60 * 60 * 24 * 7
 
-func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6lint.Compliance, bool, error) {
+const (
+	// TTL for compliance cache (1 week)
+	complianceCacheTTL = 60 * 60 * 24 * 7
+
+	xk6Binary = "xk6"
+)
+
+// The result of a particular inspection.
+type Check struct {
+	// Textual explanation of the check result.
+	Details string `json:"details,omitempty" yaml:"details,omitempty" mapstructure:"details,omitempty"`
+
+	// The ID of the checker.
+	// It identifies the method of check, not the execution of the check.
+	ID string `json:"id" yaml:"id" mapstructure:"id"`
+
+	// The result of the check.
+	// A true value of the passed property indicates a successful check, while a false
+	// value indicates a failure.
+	Passed bool `json:"passed" yaml:"passed" mapstructure:"passed"`
+}
+
+// The result of the extension's k6 compliance checks.
+type Compliance struct {
+	// Results of individual checks.
+	Checks []Check `json:"checks,omitempty" yaml:"checks,omitempty" mapstructure:"checks,omitempty"`
+
+	// The results of the checks are in the form of a grade.
+	Grade Grade `json:"grade" yaml:"grade" mapstructure:"grade"`
+
+	// Compliance expressed as a percentage.
+	Level int `json:"level" yaml:"level" mapstructure:"level"`
+
+	// Compliance check timestamp in Unix time
+	Timestamp int64 `json:"timestamp" yaml:"timestamp" mapstructure:"timestamp"`
+}
+
+type Grade string
+
+const (
+	GradeA Grade = "A" //nolint:revive
+	GradeB Grade = "B"
+	GradeC Grade = "C"
+	GradeD Grade = "D"
+	GradeE Grade = "E"
+	GradeF Grade = "F"
+	GradeG Grade = "G"
+)
+
+func loadCompliance(ctx context.Context, module string, timestamp int64) (*Compliance, bool, error) {
 	base, err := checksDir(ctx)
 	if err != nil {
 		return nil, false, err
@@ -34,13 +83,13 @@ func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6l
 		return nil, false, err
 	}
 
-	var comp k6lint.Compliance
+	var comp Compliance
 
 	if err := json.Unmarshal(data, &comp); err != nil {
 		return nil, false, err
 	}
 
-	age := float64(time.Now().Unix()) - comp.Timestamp
+	age := time.Now().Unix() - comp.Timestamp
 
 	if comp.Timestamp >= timestamp && age <= complianceCacheTTL {
 		return &comp, true, nil
@@ -49,7 +98,7 @@ func loadCompliance(ctx context.Context, module string, timestamp float64) (*k6l
 	return nil, false, nil
 }
 
-func saveCompliance(ctx context.Context, module string, comp *k6lint.Compliance) error {
+func saveCompliance(ctx context.Context, module string, comp *Compliance) error {
 	base, err := checksDir(ctx)
 	if err != nil {
 		return err
@@ -129,8 +178,8 @@ func checkCompliance(
 	module string,
 	official bool,
 	cloneURL string,
-	tstamp float64,
-) (*k6lint.Compliance, error) {
+	tstamp int64,
+) (*Compliance, error) {
 	com, found, err := loadCompliance(ctx, module, tstamp)
 	if found {
 		slog.Debug("Compliance from cache", "module", module)
@@ -155,10 +204,23 @@ func checkCompliance(
 
 	slog.Debug("Check compliance", "module", module)
 
-	compliance, err := k6lint.Lint(ctx, dir, &k6lint.Options{
-		Passed:   []k6lint.Checker{k6lint.CheckerLicense, k6lint.CheckerVersions, k6lint.CheckerGit},
-		Official: official,
-	})
+	xk6Path, err := exec.LookPath(xk6Binary)
+	if err != nil {
+		return nil, fmt.Errorf("searching xk6 path %w", err)
+	}
+	lintOut := &bytes.Buffer{}
+	lintErr := &bytes.Buffer{}
+	lintCmd := exec.Command(xk6Path, "lint", "--json")
+	lintCmd.Stdout = lintOut
+	lintCmd.Stderr = lintErr
+
+	err = lintCmd.Run()
+	if err != nil {
+		slog.Debug("xk6 execution failed", "rc", lintCmd.ProcessState.ExitCode(), "stderr", lintErr.String())
+		return nil, fmt.Errorf("xk6 lint failed %w", err)
+	}
+	var compliance = &Compliance{}
+	err = json.Unmarshal(lintOut.Bytes(), compliance)
 	if err != nil {
 		return nil, err
 	}

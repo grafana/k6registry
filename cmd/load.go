@@ -91,7 +91,7 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool) error {
 	if lint && ext.Module != k6Module && ext.Compliance == nil && ext.Repo != nil {
 		official := ext.Tier == k6registry.TierOfficial
 
-		compliance, err := checkCompliance(ctx, ext.Module, official, repo.CloneURL, repo.Timestamp)
+		compliance, err := checkCompliance(ctx, ext.Module, official, repo.CloneURL, int64(repo.Timestamp))
 		if err != nil {
 			return err
 		}

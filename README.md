@@ -4,7 +4,7 @@
 
 k6registry is a CLI tool and a GitHub Action that enables the generation of the k6 extension registry. The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
-The generator also performs static analysis of extensions. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension.
+The generator also performs static analysis of extensions using [xk6 lint](https://github.com/grafana/xk6?tab=readme-ov-file#xk6-lint) command. The result of the analysis is the level of compliance with best practices (0-100%). A compliance grade (A-F) is calculated from the compliance level. The compliance level and grade are stored in the registry for each extension.
 
 Check [k6 Extension Registry Concept](docs/registry.md) for information on design considerations.
 
