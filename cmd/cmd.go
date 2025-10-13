@@ -32,8 +32,6 @@ type options struct {
 func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	opts := new(options)
 
-	legacy := false
-
 	root := &cobra.Command{
 		Use:               "k6registry [flags] [source-file]",
 		Short:             "k6 Extension Registry/Catalog Generator",
@@ -46,10 +44,6 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if opts.verbose && levelVar != nil {
 				levelVar.Set(slog.LevelDebug)
-			}
-
-			if legacy {
-				return legacyConvert(cmd.Context())
 			}
 
 			return run(cmd.Context(), args, opts)
@@ -78,10 +72,6 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	root.MarkFlagsMutuallyExclusive("compact", "quiet")
 
 	flags.BoolP("version", "V", false, "print version")
-
-	flags.BoolVar(&legacy, "legacy", false, "convert legacy registry")
-
-	cobra.CheckErr(flags.MarkHidden("legacy"))
 
 	return root, nil
 }
