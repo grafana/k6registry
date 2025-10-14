@@ -1,9 +1,6 @@
 [
   {
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
+    "compliance": {},
     "description": "Generate random, pronounceable codenames",
     "imports": [
       "k6/x/codename"
@@ -21,10 +18,7 @@
     ]
   },
   {
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
+    "compliance": {},
     "description": "Generate short unique identifiers from numbers",
     "imports": [
       "k6/x/sqids"
@@ -43,10 +37,7 @@
     ]
   },
   {
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
+    "compliance": {},
     "constraints": ">=v0.4.0",
     "description": "Generate random fake data",
     "imports": [
@@ -74,10 +65,7 @@
     ]
   },
   {
-    "compliance": {
-      "grade": "A",
-      "level": 100
-    },
+    "compliance": {},
     "description": "Load-test SQL Servers",
     "imports": [
       "k6/x/sql"

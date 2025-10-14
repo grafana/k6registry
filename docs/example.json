@@ -1,5 +1,6 @@
 [
   {
+    "compliance": {},
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
@@ -13,8 +14,8 @@
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 444,
-      "timestamp": 1757952772,
+      "stars": 445,
+      "timestamp": 1760033212,
       "topics": [
         "xk6",
         "xk6-output-dashboard"
@@ -23,6 +24,7 @@
     },
     "tier": "official",
     "versions": [
+      "v0.7.13",
       "v0.7.12",
       "v0.7.11",
       "v0.7.10",
@@ -67,6 +69,7 @@
     ]
   },
   {
+    "compliance": {},
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
@@ -80,8 +83,8 @@
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 165,
-      "timestamp": 1757951654,
+      "stars": 168,
+      "timestamp": 1760299507,
       "topics": [
         "k6",
         "sql",
@@ -108,6 +111,13 @@
     ]
   },
   {
+    "compliance": {
+      "issues": [
+        "smoke",
+        "examples",
+        "types"
+      ]
+    },
     "description": "Inject faults to test",
     "imports": [
       "k6/x/disruptor"
@@ -121,8 +131,8 @@
       "name": "xk6-disruptor",
       "owner": "grafana",
       "public": true,
-      "stars": 113,
-      "timestamp": 1758205521,
+      "stars": 114,
+      "timestamp": 1760285110,
       "topics": [
         "chaos-engineering",
         "fault-injection",
@@ -139,6 +149,7 @@
     ]
   },
   {
+    "compliance": {},
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
@@ -152,8 +163,8 @@
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 106,
-      "timestamp": 1757951663,
+      "stars": 109,
+      "timestamp": 1760238290,
       "topics": [
         "xk6"
       ],
@@ -177,6 +188,12 @@
     ]
   },
   {
+    "compliance": {
+      "issues": [
+        "smoke",
+        "types"
+      ]
+    },
     "description": "Print ASCII art banner from k6 test",
     "imports": [
       "k6/x/banner"
@@ -229,6 +246,7 @@
     },
     "tier": "official",
     "versions": [
+      "v1.3.0",
       "v1.2.3",
       "v1.2.2",
       "v1.2.1",
@@ -327,8 +345,7 @@
       "v0.4.5",
       "v0.4.4",
       "v0.4.3",
-      "v0.4.2",
-      "v0.4.1"
+      "v0.4.2"
     ]
   }
 ]
