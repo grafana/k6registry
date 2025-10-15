@@ -25,7 +25,6 @@ type options struct {
 	loose   bool
 	lint    bool
 	origin  string
-	ref     string
 }
 
 // New creates new cobra command for exec command.
@@ -65,7 +64,6 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
 	flags.StringVar(&opts.origin, "origin", "", "external registry URL for default values")
-	flags.StringVar(&opts.ref, "ref", "", "reference output URL for change detection")
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
@@ -137,13 +135,6 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 
 	if err := postRun(registry, output, opts); err != nil {
 		return err
-	}
-
-	if isGitHubAction() {
-		fname := opts.out
-		if len(fname) > 0 && len(opts.ref) > 0 {
-			return emitOutput(ctx, fname, opts.ref)
-		}
 	}
 
 	return nil
