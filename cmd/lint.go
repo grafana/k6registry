@@ -43,28 +43,9 @@ type Compliance struct {
 	// Results of individual checks.
 	Checks []Check `json:"checks,omitempty" mapstructure:"checks,omitempty" yaml:"checks,omitempty"`
 
-	// The results of the checks are in the form of a grade.
-	Grade Grade `json:"grade" mapstructure:"grade" yaml:"grade"`
-
-	// Compliance expressed as a percentage.
-	Level int `json:"level" mapstructure:"level" yaml:"level"`
-
 	// Compliance check timestamp in Unix time
 	Timestamp int64 `json:"timestamp" mapstructure:"timestamp" yaml:"timestamp"`
 }
-
-// Grade defines the extension grading according to the compliance level.
-type Grade string
-
-const (
-	GradeA Grade = "A" //nolint:revive
-	GradeB Grade = "B"
-	GradeC Grade = "C"
-	GradeD Grade = "D"
-	GradeE Grade = "E"
-	GradeF Grade = "F"
-	GradeG Grade = "G"
-)
 
 func loadCompliance(ctx context.Context, module string, timestamp int64) (*Compliance, bool, error) {
 	base, err := checksDir(ctx)
