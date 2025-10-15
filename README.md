@@ -438,11 +438,12 @@ Generate k6 extension registry from source.
 
 The generation source is a YAML (or JSON) file that contains the most important properties of extensions. The generator generates the missing properties from the repository metadata. Repository metadata is collected using the repository manager APIs. GitHub and GitLab APIs are currently supported.
 
-The generator also performs static analysis of extensions using [xk6 lint](https://github.com/grafana/xk6?tab=readme-ov-file#xk6-lint) command. The result of the analysis is a list of issues detected. 
+The generator also performs static analysis of extensions using [xk6 lint](https://github.com/grafana/xk6?tab=readme-ov-file#xk6-lint) command.
 
 The source is read from file specified as command line argument. If it is missing, the source is read from the standard input.
 
 The output of the generation will be written to the standard output by default. The output can be saved to a file using the `-o/--out` flag.
+
 
 
 ```
@@ -463,6 +464,33 @@ k6registry [flags] [source-file]
   -V, --version         print version
   -h, --help            help for k6registry
 ```
+
+### Commands
+
+* [k6registry schema](#k6registry-schema)	 - Output the JSON schema to stdout
+
+---
+## k6registry schema
+
+Output the JSON schema to stdout
+
+### Synopsis
+
+Output the JSON schema for the k6 extension registry to stdout
+
+```
+k6registry schema [flags]
+```
+
+### Flags
+
+```
+  -h, --help   help for schema
+```
+
+### SEE ALSO
+
+* [k6registry](#k6registry)	 - k6 Extension Registry/Catalog Generator
 
 <!-- #endregion cli -->
 

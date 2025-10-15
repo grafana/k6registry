@@ -50,6 +50,8 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 		},
 	}
 
+	root.AddCommand(schemaCmd())
+
 	ctx, err := newContext(context.TODO(), root.Root().Name())
 	if err != nil {
 		return nil, err
@@ -74,6 +76,20 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.BoolP("version", "V", false, "print version")
 
 	return root, nil
+}
+
+func schemaCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "schema",
+		Short: "Output the JSON schema to stdout",
+		Long:  "Output the JSON schema for the k6 extension registry to stdout",
+		Args:  cobra.NoArgs,
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			_, err := cmd.OutOrStdout().Write(k6registry.Schema)
+
+			return err
+		},
+	}
 }
 
 //nolint:funlen
