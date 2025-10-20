@@ -455,10 +455,10 @@ k6registry [flags] [source-file]
 ```
   -o, --out string      write output to file instead of stdout
       --origin string   external registry URL for default values
-      --ref string      reference output URL for change detection
   -q, --quiet           no output, only validation
       --loose           skip JSON schema validation
       --lint            enable built-in linter
+      --dry-run         run linter in dry run mode (don't stop on failure)
   -c, --compact         compact instead of pretty-printed output
   -v, --verbose         verbose logging
   -V, --version         print version
