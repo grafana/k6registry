@@ -72,7 +72,7 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 	return registry, nil
 }
 
-func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, dryRun bool) error {
+func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, ignoreLintErrors bool) error {
 	if len(ext.Tier) == 0 {
 		ext.Tier = k6registry.TierCommunity
 	}
@@ -91,7 +91,7 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, dryRun b
 	if lint && ext.Module != k6Module && ext.Compliance == nil && ext.Repo != nil {
 		official := ext.Tier == k6registry.TierOfficial
 
-		compliance, err := checkCompliance(ctx, ext.Module, official, dryRun, repo.CloneURL, int64(repo.Timestamp))
+		compliance, err := checkCompliance(ctx, ext.Module, official, ignoreLintErrors, repo.CloneURL, int64(repo.Timestamp))
 		if err != nil {
 			return err
 		}
@@ -117,7 +117,7 @@ func load(
 	in io.Reader,
 	loose bool,
 	lint bool,
-	dryRun bool,
+	ignoreLintErrors bool,
 	origin string,
 ) (k6registry.Registry, error) {
 	registry, err := loadSource(in, loose)
@@ -136,7 +136,7 @@ func load(
 		slog.Debug("Process extension", "module", ext.Module)
 
 		if !fromOrigin(ext, orig, origin) {
-			err := loadOne(ctx, ext, lint, dryRun)
+			err := loadOne(ctx, ext, lint, ignoreLintErrors)
 			if err != nil {
 				return nil, err
 			}
