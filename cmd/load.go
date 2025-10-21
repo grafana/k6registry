@@ -24,6 +24,7 @@ type loadOptions struct {
 	loose            bool
 	lint             bool
 	ignoreLintErrors bool
+	lintChecks       []string
 	origin           string
 }
 
@@ -81,7 +82,7 @@ func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
 	return registry, nil
 }
 
-func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, ignoreLintErrors bool) error {
+func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks []string, ignoreLintErrors bool) error {
 	if len(ext.Tier) == 0 {
 		ext.Tier = k6registry.TierCommunity
 	}
@@ -109,9 +110,11 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, ignoreLi
 		official := ext.Tier == k6registry.TierOfficial
 
 		compliance, err := checkCompliance(
-			ctx, ext.Module,
+			ctx,
+			ext.Module,
 			version,
 			official,
+			checks,
 			ignoreLintErrors,
 			repo.CloneURL,
 			int64(repo.Timestamp),
@@ -157,7 +160,7 @@ func load(
 		slog.Debug("Process extension", "module", ext.Module)
 
 		if !fromOrigin(ext, orig, opts.origin) {
-			err := loadOne(ctx, ext, opts.lint, opts.ignoreLintErrors)
+			err := loadOne(ctx, ext, opts.lint, opts.lintChecks, opts.ignoreLintErrors)
 			if err != nil {
 				return nil, err
 			}
