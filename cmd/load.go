@@ -18,6 +18,13 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+type loadOptions struct {
+	loose            bool
+	lint             bool
+	ignoreLintErrors bool
+	origin           string
+}
+
 func k6AsExtension() k6registry.Extension {
 	return k6registry.Extension{
 		Module:      k6Module,
@@ -115,17 +122,14 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, ignoreLi
 func load(
 	ctx context.Context,
 	in io.Reader,
-	loose bool,
-	lint bool,
-	ignoreLintErrors bool,
-	origin string,
+	opts loadOptions,
 ) (k6registry.Registry, error) {
-	registry, err := loadSource(in, loose)
+	registry, err := loadSource(in, opts.loose)
 	if err != nil {
 		return nil, err
 	}
 
-	orig, err := loadOrigin(ctx, origin)
+	orig, err := loadOrigin(ctx, opts.origin)
 	if err != nil {
 		return nil, err
 	}
@@ -135,8 +139,8 @@ func load(
 
 		slog.Debug("Process extension", "module", ext.Module)
 
-		if !fromOrigin(ext, orig, origin) {
-			err := loadOne(ctx, ext, lint, ignoreLintErrors)
+		if !fromOrigin(ext, orig, opts.origin) {
+			err := loadOne(ctx, ext, opts.lint, opts.ignoreLintErrors)
 			if err != nil {
 				return nil, err
 			}
@@ -156,7 +160,7 @@ func load(
 		}
 	}
 
-	if lint {
+	if opts.lint {
 		if err := validateWithLinter(registry); err != nil {
 			return nil, err
 		}
