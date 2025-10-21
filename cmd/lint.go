@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/go-git/go-git/v5"
@@ -158,6 +159,7 @@ func checkCompliance(
 	ctx context.Context,
 	module string,
 	official bool,
+	checks []string,
 	ignoreLintErrors bool,
 	cloneURL string,
 	tstamp int64,
@@ -193,7 +195,14 @@ func checkCompliance(
 
 	lintOut := &bytes.Buffer{}
 	lintErr := &bytes.Buffer{}
-	lintCmd := exec.Command(xk6Binary, "lint", "--json")
+	lintArgs := []string{"lint", "--json", "-v"}
+
+	if len(checks) > 0 {
+		lintArgs = append(lintArgs, "--enable-only", strings.Join(checks, ","))
+	}
+
+	lintCmd := exec.Command(xk6Binary, lintArgs...)
+
 	lintCmd.Stdout = lintOut
 	lintCmd.Stderr = lintErr
 
