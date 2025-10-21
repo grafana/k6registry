@@ -18,14 +18,11 @@ import (
 var help string
 
 type options struct {
-	out              string
-	compact          bool
-	quiet            bool
-	verbose          bool
-	loose            bool
-	lint             bool
-	ignoreLintErrors bool
-	origin           string
+	out     string
+	compact bool
+	quiet   bool
+	verbose bool
+	loadOptions
 }
 
 // New creates new cobra command for exec command.
@@ -130,7 +127,7 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		output = file
 	}
 
-	registry, err := load(ctx, input, opts.loose, opts.lint, opts.ignoreLintErrors, opts.origin)
+	registry, err := load(ctx, input, opts.loadOptions)
 	if err != nil {
 		return err
 	}
