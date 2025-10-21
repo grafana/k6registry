@@ -453,16 +453,16 @@ k6registry [flags] [source-file]
 ### Flags
 
 ```
-  -o, --out string      write output to file instead of stdout
-      --origin string   external registry URL for default values
-      --ref string      reference output URL for change detection
-  -q, --quiet           no output, only validation
-      --loose           skip JSON schema validation
-      --lint            enable built-in linter
-  -c, --compact         compact instead of pretty-printed output
-  -v, --verbose         verbose logging
-  -V, --version         print version
-  -h, --help            help for k6registry
+  -o, --out string           write output to file instead of stdout
+      --origin string        external registry URL for default values
+  -q, --quiet                no output, only validation
+      --loose                skip JSON schema validation
+      --lint                 enable built-in linter
+      --ignore-lint-errors   don't fail on linter errors
+  -c, --compact              compact instead of pretty-printed output
+  -v, --verbose              verbose logging
+  -V, --version              print version
+  -h, --help                 help for k6registry
 ```
 
 ### Commands
