@@ -158,7 +158,7 @@ func checkCompliance(
 	ctx context.Context,
 	module string,
 	official bool,
-	dryRun bool,
+	ignoreLintErrors bool,
 	cloneURL string,
 	tstamp int64,
 ) (*Compliance, error) {
@@ -201,7 +201,7 @@ func checkCompliance(
 	if err != nil {
 		slog.Debug("xk6 execution failed", "rc", lintCmd.ProcessState.ExitCode(), "stderr", lintErr.String())
 
-		if !dryRun {
+		if !ignoreLintErrors {
 			return nil, fmt.Errorf("xk6 lint failed %w", err)
 		}
 	}
