@@ -196,6 +196,7 @@ func checkCompliance(
 	lintCmd := exec.Command(xk6Binary, "lint", "--json")
 	lintCmd.Stdout = lintOut
 	lintCmd.Stderr = lintErr
+	lintCmd.Dir = dir
 
 	err = lintCmd.Run()
 	if err != nil {
