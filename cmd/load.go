@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/config"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/google/go-github/v62/github"
 	"github.com/grafana/k6registry"
@@ -88,10 +90,25 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, ignoreLi
 		ext.Versions = tagsToVersions(tags)
 	}
 
-	if lint && ext.Module != k6Module && ext.Compliance == nil && ext.Repo != nil {
+	if !lint || ext.Module == k6Module {
+		return nil
+	}
+
+	if ext.Compliance == nil {
+		ext.Compliance = make(k6registry.ExtensionCompliance)
+	}
+
+	for _, version := range ext.Versions {
 		official := ext.Tier == k6registry.TierOfficial
 
-		compliance, err := checkCompliance(ctx, ext.Module, official, ignoreLintErrors, repo.CloneURL, int64(repo.Timestamp))
+		compliance, err := checkCompliance(
+			ctx, ext.Module,
+			version,
+			official,
+			ignoreLintErrors,
+			repo.CloneURL,
+			int64(repo.Timestamp),
+		)
 		if err != nil {
 			return err
 		}
@@ -104,7 +121,7 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, ignoreLi
 			}
 		}
 
-		ext.Compliance = &k6registry.Compliance{
+		ext.Compliance[version] = k6registry.Compliance{
 			Issues: issues,
 		}
 	}
@@ -347,11 +364,7 @@ func loadGit(ctx context.Context, module string, cloneURL string) ([]string, err
 
 	dir := filepath.Join(base, module)
 
-	if err := updateWorkdir(ctx, dir, cloneURL); err != nil {
-		return nil, err
-	}
-
-	repo, err := git.PlainOpen(dir)
+	repo, err := openRepo(ctx, dir, cloneURL)
 	if err != nil {
 		return nil, err
 	}
@@ -379,6 +392,79 @@ func loadGit(ctx context.Context, module string, cloneURL string) ([]string, err
 	}
 
 	return versions, nil
+}
+
+func openRepo(ctx context.Context, dir string, cloneURL string) (*git.Repository, error) {
+	_, err := os.Stat(dir)
+	notfound := err != nil && errors.Is(err, os.ErrNotExist)
+
+	if err != nil && !notfound {
+		return nil, err
+	}
+
+	if notfound {
+		slog.Debug("Clone", "url", cloneURL)
+
+		_, err = git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
+
+		return nil, err
+	}
+
+	return git.PlainOpen(dir)
+}
+
+func checkoutModVersion(ctx context.Context, dir string, cloneURL string, version string) error {
+	repo, err := openRepo(ctx, dir, cloneURL)
+	if err != nil {
+		return err
+	}
+
+	wtree, err := repo.Worktree()
+	if err != nil {
+		return err
+	}
+
+	// If a version is specified, fetch and checkout that tag
+	if version != "" {
+		slog.Debug("Fetch tags", "url", cloneURL)
+
+		// Fetch all tags to ensure we have the requested one
+		err = repo.FetchContext(ctx, &git.FetchOptions{
+			RefSpecs: []config.RefSpec{"refs/tags/*:refs/tags/*"},
+			Force:    true,
+		})
+		if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
+			return err
+		}
+
+		// Checkout the specific tag
+		tagRef := plumbing.NewTagReferenceName(version)
+		slog.Debug("Checkout tag", "tag", version)
+
+		err = wtree.Checkout(&git.CheckoutOptions{Force: true, Branch: tagRef})
+
+		return err
+	}
+
+	// No version specified, use default branch
+	head, err := repo.Head()
+	if err != nil {
+		return err
+	}
+
+	err = wtree.Checkout(&git.CheckoutOptions{Force: true, Branch: head.Name()})
+	if err != nil {
+		return err
+	}
+
+	slog.Debug("Pull", "url", cloneURL)
+
+	err = wtree.Pull(&git.PullOptions{Force: true})
+	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
+		return err
+	}
+
+	return nil
 }
 
 const (

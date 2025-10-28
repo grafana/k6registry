@@ -12,8 +12,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"time"
-
-	"github.com/go-git/go-git/v5"
 )
 
 const (
@@ -47,13 +45,13 @@ type Compliance struct {
 	Timestamp int64 `json:"timestamp" mapstructure:"timestamp" yaml:"timestamp"`
 }
 
-func loadCompliance(ctx context.Context, module string, timestamp int64) (*Compliance, bool, error) {
+func loadCompliance(ctx context.Context, module string, version string, timestamp int64) (*Compliance, bool, error) {
 	base, err := checksDir(ctx)
 	if err != nil {
 		return nil, false, err
 	}
 
-	filename := filepath.Join(base, module) + ".json"
+	filename := filepath.Join(base, module, version) + ".json"
 
 	data, err := os.ReadFile(filepath.Clean(filename))
 	if err != nil {
@@ -79,13 +77,13 @@ func loadCompliance(ctx context.Context, module string, timestamp int64) (*Compl
 	return nil, false, nil
 }
 
-func saveCompliance(ctx context.Context, module string, comp *Compliance) error {
+func saveCompliance(ctx context.Context, module string, version string, comp *Compliance) error {
 	base, err := checksDir(ctx)
 	if err != nil {
 		return err
 	}
 
-	filename := filepath.Join(base, module) + ".json"
+	filename := filepath.Join(base, module, version) + ".json"
 
 	if err := os.MkdirAll(filepath.Dir(filename), permDir); err != nil {
 		return err
@@ -99,72 +97,18 @@ func saveCompliance(ctx context.Context, module string, comp *Compliance) error 
 	return os.WriteFile(filename, data, permFile)
 }
 
-func updateWorkdir(ctx context.Context, dir string, cloneURL string) error {
-	_, err := os.Stat(dir)
-	notfound := err != nil && errors.Is(err, os.ErrNotExist)
-
-	if err != nil && !notfound {
-		return err
-	}
-
-	if notfound {
-		slog.Debug("Clone", "url", cloneURL)
-
-		_, err = git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
-
-		return err
-	}
-
-	repo, err := git.PlainOpen(dir)
-	if err != nil {
-		return err
-	}
-
-	wtree, err := repo.Worktree()
-	if err != nil {
-		return err
-	}
-
-	slog.Debug("Pull", "url", cloneURL)
-
-	err = wtree.Pull(&git.PullOptions{Force: true})
-	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
-		if !errors.Is(err, git.ErrWorktreeNotClean) && !errors.Is(err, git.ErrUnstagedChanges) {
-			return err
-		}
-
-		slog.Debug("Retry pull", "url", cloneURL)
-
-		head, err := repo.Head()
-		if err != nil {
-			return err
-		}
-
-		err = wtree.Checkout(&git.CheckoutOptions{Force: true, Branch: head.Name()})
-		if err != nil {
-			return err
-		}
-
-		err = wtree.Pull(&git.PullOptions{Force: true})
-		if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
-			return err
-		}
-	}
-
-	return nil
-}
-
 func checkCompliance(
 	ctx context.Context,
 	module string,
+	version string,
 	official bool,
 	ignoreLintErrors bool,
 	cloneURL string,
 	tstamp int64,
 ) (*Compliance, error) {
-	com, found, err := loadCompliance(ctx, module, tstamp)
+	com, found, err := loadCompliance(ctx, module, version, tstamp)
 	if found {
-		slog.Debug("Compliance from cache", "module", module)
+		slog.Debug("Compliance from cache", "module", module, "version", version)
 
 		return com, nil
 	}
@@ -180,7 +124,7 @@ func checkCompliance(
 
 	dir := filepath.Join(base, module)
 
-	if err := updateWorkdir(ctx, dir, cloneURL); err != nil {
+	if err := checkoutModVersion(ctx, dir, cloneURL, version); err != nil {
 		return nil, err
 	}
 
@@ -217,7 +161,7 @@ func checkCompliance(
 		compliance.Checks[idx].Details = ""
 	}
 
-	err = saveCompliance(ctx, module, compliance)
+	err = saveCompliance(ctx, module, version, compliance)
 	if err != nil {
 		return nil, err
 	}

@@ -108,7 +108,10 @@
           ]
         },
         "compliance": {
-          "$ref": "#/$defs/compliance",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/compliance"
+          },
           "description": "The result of the extension's k6 compliance checks.\n"
         }
       },

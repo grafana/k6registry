@@ -35,7 +35,7 @@ type Extension struct {
 
 	// The result of the extension's k6 compliance checks.
 	//
-	Compliance *Compliance `json:"compliance,omitempty" yaml:"compliance,omitempty" mapstructure:"compliance,omitempty"`
+	Compliance ExtensionCompliance `json:"compliance,omitempty" yaml:"compliance,omitempty" mapstructure:"compliance,omitempty"`
 
 	// Version constraints.
 	//
@@ -121,6 +121,9 @@ type Extension struct {
 	//
 	Versions []string `json:"versions,omitempty" yaml:"versions,omitempty" mapstructure:"versions,omitempty"`
 }
+
+// The result of the extension's k6 compliance checks.
+type ExtensionCompliance map[string]Compliance
 
 // Extension registry metrics.
 type Metrics struct {
