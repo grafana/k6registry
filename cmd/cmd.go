@@ -18,14 +18,11 @@ import (
 var help string
 
 type options struct {
-	out              string
-	compact          bool
-	quiet            bool
-	verbose          bool
-	loose            bool
-	lint             bool
-	ignoreLintErrors bool
-	origin           string
+	out     string
+	compact bool
+	quiet   bool
+	verbose bool
+	loadOptions
 }
 
 // New creates new cobra command for exec command.
@@ -68,7 +65,13 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.loose, "loose", false, "skip JSON schema validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
-	flags.BoolVar(&opts.ignoreLintErrors, "ignore-lint-errors", false, "don't fail on linter errors")
+	flags.BoolVar(&opts.ignoreLintErrors, "ignore-lint-errors", false, "don't fail on lint errors")
+	flags.StringSliceVar(
+		&opts.lintChecks,
+		"lint-checks",
+		nil,
+		"lint checks to apply. Check xk6 documentation for available options.",
+	)
 	flags.BoolVarP(&opts.compact, "compact", "c", false, "compact instead of pretty-printed output")
 	flags.BoolVarP(&opts.verbose, "verbose", "v", false, "verbose logging")
 	root.MarkFlagsMutuallyExclusive("compact", "quiet")
@@ -130,7 +133,7 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		output = file
 	}
 
-	registry, err := load(ctx, input, opts.loose, opts.lint, opts.ignoreLintErrors, opts.origin)
+	registry, err := load(ctx, input, opts.loadOptions)
 	if err != nil {
 		return err
 	}
