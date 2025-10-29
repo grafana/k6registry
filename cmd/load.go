@@ -180,12 +180,6 @@ func load(
 		}
 	}
 
-	if opts.lint {
-		if err := validateWithLinter(registry); err != nil {
-			return nil, err
-		}
-	}
-
 	return registry, nil
 }
 
