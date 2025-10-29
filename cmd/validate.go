@@ -12,110 +12,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func yaml2json(input []byte) ([]byte, error) {
-	var data interface{}
-
-	if err := yaml.Unmarshal(input, &data); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(data)
-}
-
-func validateWithSchema(input io.Reader) ([]byte, error) {
-	yamlRaw, err := io.ReadAll(input)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonRaw, err := yaml2json(yamlRaw)
-	if err != nil {
-		return nil, err
-	}
-
-	documentLoader := gojsonschema.NewBytesLoader(jsonRaw)
-	schemaLoader := gojsonschema.NewBytesLoader(k6registry.Schema)
-
-	result, err := gojsonschema.Validate(schemaLoader, documentLoader)
-	if err != nil {
-		return nil, err
-	}
-
-	if result.Valid() {
-		return yamlRaw, nil
-	}
-
-	var buff strings.Builder
-
-	for _, desc := range result.Errors() {
-		buff.WriteString(fmt.Sprintf(" - %s\n", desc.String()))
-	}
-
-	return nil, fmt.Errorf("%w: schema validation failed\n%s", errInvalidRegistry, buff.String())
-}
-
-func validateWithLinter(registry k6registry.Registry) error {
-	var buff strings.Builder
-
-	for _, ext := range registry {
-		if ok, msgs := lintExtension(ext); !ok {
-			for _, msg := range msgs {
-				buff.WriteString(fmt.Sprintf(" - %s\n", msg))
-			}
-		}
-	}
-
-	if buff.Len() == 0 {
-		return nil
-	}
-
-	return fmt.Errorf("%w: linter validation failed\n%s", errInvalidRegistry, buff.String())
-}
-
-func hasTopic(ext k6registry.Extension) bool {
-	for _, topic := range ext.Repo.Topics {
-		if topic == "xk6" {
-			return true
-		}
-	}
-
-	return true // for non oss, topic isn't required
-}
-
-func lintExtension(ext k6registry.Extension) (bool, []string) {
-	if ext.Repo == nil {
-		return false, []string{"unsupported module: " + ext.Module}
-	}
-
-	var msgs []string
-
-	if len(ext.Versions) == 0 {
-		msgs = append(msgs, "no released versions: "+ext.Module)
-	}
-
-	if ext.Repo.Public {
-		if !hasTopic(ext) && ext.Module != k6Module {
-			msgs = append(msgs, "missing xk6 topic: "+ext.Module)
-		}
-
-		if len(ext.Repo.License) == 0 {
-			msgs = append(msgs, "missing license: "+ext.Module)
-		} else if _, ok := validLicenses[ext.Repo.License]; !ok {
-			msgs = append(msgs, "unsupported license: "+ext.Repo.License+" "+ext.Module)
-		}
-
-		if ext.Repo.Archived {
-			msgs = append(msgs, "repository is archived: "+ext.Module)
-		}
-	}
-
-	if len(msgs) == 0 {
-		return true, nil
-	}
-
-	return false, msgs
-}
-
 var errInvalidRegistry = errors.New("invalid registry")
 
 // both FSF Free and OSI Approved licenses (source: https://spdx.org/licenses/).
@@ -188,4 +84,46 @@ var validLicenses = map[string]struct{}{ //nolint:gochecknoglobals
 	"Zlib":              {},
 	"ZPL-2.0":           {},
 	"ZPL-2.1":           {},
+}
+
+func yaml2json(input []byte) ([]byte, error) {
+	var data interface{}
+
+	if err := yaml.Unmarshal(input, &data); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(data)
+}
+
+func validateWithSchema(input io.Reader) ([]byte, error) {
+	yamlRaw, err := io.ReadAll(input)
+	if err != nil {
+		return nil, err
+	}
+
+	jsonRaw, err := yaml2json(yamlRaw)
+	if err != nil {
+		return nil, err
+	}
+
+	documentLoader := gojsonschema.NewBytesLoader(jsonRaw)
+	schemaLoader := gojsonschema.NewBytesLoader(k6registry.Schema)
+
+	result, err := gojsonschema.Validate(schemaLoader, documentLoader)
+	if err != nil {
+		return nil, err
+	}
+
+	if result.Valid() {
+		return yamlRaw, nil
+	}
+
+	var buff strings.Builder
+
+	for _, desc := range result.Errors() {
+		buff.WriteString(fmt.Sprintf(" - %s\n", desc.String()))
+	}
+
+	return nil, fmt.Errorf("%w: schema validation failed\n%s", errInvalidRegistry, buff.String())
 }
