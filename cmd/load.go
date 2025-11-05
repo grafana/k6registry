@@ -397,7 +397,7 @@ func loadGit(ctx context.Context, module string, cloneURL string) ([]string, err
 
 func openRepo(ctx context.Context, dir string, cloneURL string) (*git.Repository, error) {
 	_, err := os.Stat(dir)
-	notfound := err != nil && errors.Is(err, os.ErrNotExist)
+	notfound := (err != nil && errors.Is(err, os.ErrNotExist))
 
 	if err != nil && !notfound {
 		return nil, err
@@ -406,9 +406,7 @@ func openRepo(ctx context.Context, dir string, cloneURL string) (*git.Repository
 	if notfound {
 		slog.Debug("Clone", "url", cloneURL)
 
-		_, err = git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
-
-		return nil, err
+		return git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
 	}
 
 	return git.PlainOpen(dir)
