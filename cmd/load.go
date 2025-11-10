@@ -21,7 +21,6 @@ import (
 )
 
 type loadOptions struct {
-	loose            bool
 	lint             bool
 	ignoreLintErrors bool
 	lintChecks       []string
@@ -37,22 +36,15 @@ func k6AsExtension() k6registry.Extension {
 	}
 }
 
-func loadSource(in io.Reader, loose bool) (k6registry.Registry, error) {
+func loadSource(in io.Reader) (k6registry.Registry, error) {
 	var (
 		raw []byte
 		err error
 	)
 
-	if loose {
-		slog.Debug("Read source")
+	slog.Debug("Validate source")
 
-		raw, err = io.ReadAll(in)
-	} else {
-		slog.Debug("Validate source")
-
-		raw, err = validateWithSchema(in)
-	}
-
+	raw, err = validateWithSchema(in)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +136,7 @@ func load(
 	in io.Reader,
 	opts loadOptions,
 ) (k6registry.Registry, error) {
-	registry, err := loadSource(in, opts.loose)
+	registry, err := loadSource(in)
 	if err != nil {
 		return nil, err
 	}
