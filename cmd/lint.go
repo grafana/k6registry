@@ -20,6 +20,9 @@ const (
 	complianceCacheTTL = 60 * 60 * 24 * 7
 
 	xk6Binary = "xk6"
+
+	// xk6 lint returns 2 if some check failed. Other codes mean the lint failed.
+	lintFailedRC = 2
 )
 
 // Check is the result of a particular inspection.
@@ -104,7 +107,6 @@ func checkCompliance(
 	version string,
 	official bool,
 	checks []string,
-	ignoreLintErrors bool,
 	cloneURL string,
 	tstamp int64,
 ) (*Compliance, error) {
@@ -153,9 +155,10 @@ func checkCompliance(
 
 	err = lintCmd.Run()
 	if err != nil {
-		slog.Debug("xk6 execution failed", "rc", lintCmd.ProcessState.ExitCode(), "stderr", lintErr.String())
+		rc := lintCmd.ProcessState.ExitCode()
+		slog.Debug("xk6 execution failed", "rc", rc, "stderr", lintErr.String())
 
-		if !ignoreLintErrors {
+		if rc != lintFailedRC {
 			return nil, fmt.Errorf("xk6 lint failed %w", err)
 		}
 	}

@@ -30,7 +30,11 @@ func main() {
 	log.SetFlags(0)
 	log.Writer()
 
-	runCmd(newCmd(os.Args[1:], initLogging()))
+	err := newCmd(os.Args[1:], initLogging()).Execute()
+	if err != nil {
+		slog.Error(formatError(err))
+		os.Exit(1)
+	}
 }
 
 func newCmd(args []string, levelVar *slog.LevelVar) *cobra.Command {
@@ -46,7 +50,4 @@ func newCmd(args []string, levelVar *slog.LevelVar) *cobra.Command {
 }
 
 func runCmd(cmd *cobra.Command) {
-	if err := cmd.Execute(); err != nil {
-		log.Fatal(formatError(err))
-	}
 }
