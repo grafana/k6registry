@@ -20,6 +20,8 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+var errCompliance = errors.New("compliance check failed")
+
 type loadOptions struct {
 	lint             bool
 	ignoreLintErrors bool
@@ -73,7 +75,7 @@ func loadSource(in io.Reader) (k6registry.Registry, error) {
 	return registry, nil
 }
 
-func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks []string, ignoreLintErrors bool) error {
+func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks []string) error {
 	if len(ext.Tier) == 0 {
 		ext.Tier = k6registry.TierCommunity
 	}
@@ -97,6 +99,7 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks [
 		ext.Compliance = make(k6registry.ExtensionCompliance)
 	}
 
+	complianceErrors := []error{}
 	for _, version := range ext.Versions {
 		official := ext.Tier == k6registry.TierOfficial
 
@@ -106,7 +109,6 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks [
 			version,
 			official,
 			checks,
-			ignoreLintErrors,
 			repo.CloneURL,
 			int64(repo.Timestamp),
 		)
@@ -122,12 +124,16 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks [
 			}
 		}
 
+		if len(issues) > 0 {
+			complianceErrors = append(complianceErrors, fmt.Errorf("%w %s@%s", errCompliance, ext.Module, version))
+		}
+
 		ext.Compliance[version] = k6registry.Compliance{
 			Issues: issues,
 		}
 	}
 
-	return nil
+	return errors.Join(complianceErrors...)
 }
 
 func load(
@@ -140,14 +146,19 @@ func load(
 		return nil, err
 	}
 
+	compliancedErrors := []error{}
 	for idx := range registry {
 		ext := &registry[idx]
 
 		slog.Debug("Process extension", "module", ext.Module)
 
-		err := loadOne(ctx, ext, opts.lint, opts.lintChecks, opts.ignoreLintErrors)
+		err := loadOne(ctx, ext, opts.lint, opts.lintChecks)
 		if err != nil {
-			return nil, err
+			if !errors.Is(err, errCompliance) {
+				return nil, err
+			}
+
+			compliancedErrors = append(compliancedErrors, err)
 		}
 
 		if len(ext.Constraints) > 0 {
@@ -164,7 +175,17 @@ func load(
 		}
 	}
 
-	return registry, nil
+	if len(compliancedErrors) == 0 {
+		return registry, nil
+	}
+
+	slog.Warn(errors.Join(compliancedErrors...).Error())
+
+	if opts.ignoreLintErrors {
+		return registry, nil
+	}
+
+	return registry, errCompliance
 }
 
 func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry.Repository, []string, error) {
