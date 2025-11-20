@@ -24,7 +24,6 @@ type loadOptions struct {
 	lint             bool
 	ignoreLintErrors bool
 	lintChecks       []string
-	origin           string
 }
 
 func k6AsExtension() k6registry.Extension {
@@ -141,21 +140,14 @@ func load(
 		return nil, err
 	}
 
-	orig, err := loadOrigin(ctx, opts.origin)
-	if err != nil {
-		return nil, err
-	}
-
 	for idx := range registry {
 		ext := &registry[idx]
 
 		slog.Debug("Process extension", "module", ext.Module)
 
-		if !fromOrigin(ext, orig, opts.origin) {
-			err := loadOne(ctx, ext, opts.lint, opts.lintChecks, opts.ignoreLintErrors)
-			if err != nil {
-				return nil, err
-			}
+		err := loadOne(ctx, ext, opts.lint, opts.lintChecks, opts.ignoreLintErrors)
+		if err != nil {
+			return nil, err
 		}
 
 		if len(ext.Constraints) > 0 {
