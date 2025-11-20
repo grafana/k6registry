@@ -61,7 +61,6 @@ func New(levelVar *slog.LevelVar) (*cobra.Command, error) {
 	flags.SortFlags = false
 
 	flags.StringVarP(&opts.out, "out", "o", "", "write output to file instead of stdout")
-	flags.StringVar(&opts.origin, "origin", "", "external registry URL for default values")
 	flags.BoolVarP(&opts.quiet, "quiet", "q", false, "no output, only validation")
 	flags.BoolVar(&opts.lint, "lint", false, "enable built-in linter")
 	flags.BoolVar(&opts.ignoreLintErrors, "ignore-lint-errors", false, "don't fail on lint errors")

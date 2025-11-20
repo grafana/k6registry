@@ -454,7 +454,6 @@ k6registry [flags] [source-file]
 
 ```
   -o, --out string            write output to file instead of stdout
-      --origin string         external registry URL for default values
   -q, --quiet                 no output, only validation
       --lint                  enable built-in linter
       --ignore-lint-errors    don't fail on lint errors
