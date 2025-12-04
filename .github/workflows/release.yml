@@ -15,6 +15,6 @@ jobs:
       packages: write
       id-token: write
     with:
-      go-version: "1.24.x"
+      go-version: "1.25.x"
       goreleaser-version: "2.8.2"
       k6-versions: '["v1.2.3","v1.0.0"]'
