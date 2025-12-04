@@ -125,60 +125,6 @@ type Extension struct {
 // The result of the extension's k6 compliance checks.
 type ExtensionCompliance map[string]Compliance
 
-// Extension registry metrics.
-type Metrics struct {
-	// Number of extensions requiring cgo.
-	CgoCount int `json:"cgo_count,omitempty" yaml:"cgo_count,omitempty" mapstructure:"cgo_count,omitempty"`
-
-	// The total number of extensions.
-	ExtensionCount int `json:"extension_count,omitempty" yaml:"extension_count,omitempty" mapstructure:"extension_count,omitempty"`
-
-	// Number of extensions not buildable with the latest k6 version.
-	IssueBuildCount int `json:"issue_build_count,omitempty" yaml:"issue_build_count,omitempty" mapstructure:"issue_build_count,omitempty"`
-
-	// Number of extensions without CODEOWNERS file.
-	IssueCodeownersCount int `json:"issue_codeowners_count,omitempty" yaml:"issue_codeowners_count,omitempty" mapstructure:"issue_codeowners_count,omitempty"`
-
-	// Number of extensions without examples directory.
-	IssueExamplesCount int `json:"issue_examples_count,omitempty" yaml:"issue_examples_count,omitempty" mapstructure:"issue_examples_count,omitempty"`
-
-	// Number of extensions without  git workdir.
-	IssueGitCount int `json:"issue_git_count,omitempty" yaml:"issue_git_count,omitempty" mapstructure:"issue_git_count,omitempty"`
-
-	// Number of extensions without suitable OSS license.
-	IssueLicenseCount int `json:"issue_license_count,omitempty" yaml:"issue_license_count,omitempty" mapstructure:"issue_license_count,omitempty"`
-
-	// Number of extensions without valid go.mod.
-	IssueModuleCount int `json:"issue_module_count,omitempty" yaml:"issue_module_count,omitempty" mapstructure:"issue_module_count,omitempty"`
-
-	// Number of extensions without readme file.
-	IssueReadmeCount int `json:"issue_readme_count,omitempty" yaml:"issue_readme_count,omitempty" mapstructure:"issue_readme_count,omitempty"`
-
-	// Number of extensions with replace directive in go.mod.
-	IssueReplaceCount int `json:"issue_replace_count,omitempty" yaml:"issue_replace_count,omitempty" mapstructure:"issue_replace_count,omitempty"`
-
-	// Number of extensions without smoke test script.
-	IssueSmokeCount int `json:"issue_smoke_count,omitempty" yaml:"issue_smoke_count,omitempty" mapstructure:"issue_smoke_count,omitempty"`
-
-	// Number of extensions without API declaration file.
-	IssueTypesCount int `json:"issue_types_count,omitempty" yaml:"issue_types_count,omitempty" mapstructure:"issue_types_count,omitempty"`
-
-	// Number of extensions without semantic versioning git tags.
-	IssueVersionsCount int `json:"issue_versions_count,omitempty" yaml:"issue_versions_count,omitempty" mapstructure:"issue_versions_count,omitempty"`
-
-	// Number of extension in the community' tier.
-	TierCommunityCount int `json:"tier_community_count,omitempty" yaml:"tier_community_count,omitempty" mapstructure:"tier_community_count,omitempty"`
-
-	// Number of extensions in the 'official' tier.
-	TierOfficialCount int `json:"tier_official_count,omitempty" yaml:"tier_official_count,omitempty" mapstructure:"tier_official_count,omitempty"`
-
-	// Number of JavaScript extension.
-	TypeJavaScriptCount int `json:"type_javascript_count,omitempty" yaml:"type_javascript_count,omitempty" mapstructure:"type_javascript_count,omitempty"`
-
-	// Number of Output extension.
-	TypeOutputCount int `json:"type_output_count,omitempty" yaml:"type_output_count,omitempty" mapstructure:"type_output_count,omitempty"`
-}
-
 // k6 Extension Registry.
 //
 // The k6 extension registry contains the most important properties of registered
