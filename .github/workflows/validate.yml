@@ -12,7 +12,7 @@ permissions: {}
 jobs:
   validate:
     name: Validate
-    uses: grafana/xk6/.github/workflows/tooling-validate.yml@v1.2.4
+    uses: grafana/xk6/.github/workflows/tooling-validate.yml@v1.3.0
     secrets:
       codecov-token: ${{secrets.CODECOV_TOKEN}}
     with:
