@@ -7,7 +7,7 @@ require (
 	github.com/adrg/xdg v0.5.3
 	github.com/cli/go-gh/v2 v2.12.2
 	github.com/go-git/go-git/v5 v5.16.4
-	github.com/google/go-github/v62 v62.0.0
+	github.com/google/go-github/v80 v80.0.0
 	github.com/grafana/clireadme v0.1.0
 	github.com/samber/slog-logrus/v2 v2.5.2
 	github.com/sirupsen/logrus v1.9.3
