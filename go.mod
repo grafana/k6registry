@@ -11,9 +11,9 @@ require (
 	github.com/grafana/clireadme v0.1.0
 	github.com/samber/slog-logrus/v2 v2.5.2
 	github.com/sirupsen/logrus v1.9.3
-	github.com/spf13/cobra v1.10.1
+	github.com/spf13/cobra v1.10.2
 	github.com/xeipuuv/gojsonschema v1.2.0
-	gitlab.com/gitlab-org/api/client-go v0.160.1
+	gitlab.com/gitlab-org/api/client-go v0.161.1
 	golang.org/x/term v0.39.0
 	gopkg.in/yaml.v3 v3.0.1
 )
