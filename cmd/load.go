@@ -322,7 +322,7 @@ func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []s
 	repo.Owner = proj.Namespace.FullPath
 	repo.Name = proj.Name
 	repo.Description = proj.Description
-	repo.Stars = proj.StarCount
+	repo.Stars = int(proj.StarCount)
 	repo.Archived = proj.Archived
 	repo.URL = proj.WebURL
 	repo.Homepage = proj.WebURL
