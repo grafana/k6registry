@@ -1,11 +1,11 @@
 module github.com/grafana/k6registry
 
-go 1.25
+go 1.25.0
 
 require (
 	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/adrg/xdg v0.5.3
-	github.com/cli/go-gh/v2 v2.12.2
+	github.com/cli/go-gh/v2 v2.13.0
 	github.com/go-git/go-git/v5 v5.16.4
 	github.com/google/go-github/v81 v81.0.0
 	github.com/grafana/clireadme v0.1.0
