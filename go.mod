@@ -1,6 +1,6 @@
 module github.com/grafana/k6registry
 
-go 1.25
+go 1.25.0
 
 require (
 	github.com/Masterminds/semver/v3 v3.4.0
