@@ -9,12 +9,12 @@ permissions: {}
 jobs:
   release:
     name: Release
-    uses: grafana/xk6/.github/workflows/tooling-release.yml@v1.2.4
+    uses: grafana/xk6/.github/workflows/tooling-release.yml@da8eccb3592e057e56d1017218ba5fd7a91927aa # v1.3.2
     permissions:
       contents: write
       packages: write
       id-token: write
     with:
-      go-version: "1.24.x"
+      go-version: "1.25.x"
       goreleaser-version: "2.8.2"
       k6-versions: '["v1.2.3","v1.0.0"]'

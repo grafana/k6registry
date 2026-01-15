@@ -12,6 +12,12 @@ linters:
     # Except for general-purpose public APIs,
     # wrapping errors is more inconvenient and error prone than useful.
     - wrapcheck
+
+    # Deprecated linters
+    - wsl
+
+    # Temporary mitigaion.
+    - noinlineerr
   settings:
     # Temporary mitigation.
     cyclop:
@@ -32,7 +38,7 @@ linters:
             - github.com/xeipuuv/gojsonschema
             - gitlab.com/gitlab-org/api/client-go
             - github.com/cli/go-gh/v2
-            - github.com/google/go-github/v62/github
+            - github.com/google/go-github/v81/github
             - github.com/go-git/go-git/v5
             - github.com/sirupsen/logrus
             - github.com/samber/slog-logrus/v2
@@ -40,10 +46,6 @@ linters:
             - github.com/adrg/xdg
             - github.com/narqo/go-badge
 
-  exclusions:
-    paths:
-      # adopted from fixuid source: https://github.com/boxboat/fixuid
-      - internal/fixids
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
