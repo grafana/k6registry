@@ -48,6 +48,3 @@ func newCmd(args []string, levelVar *slog.LevelVar) *cobra.Command {
 
 	return cmd
 }
-
-func runCmd(cmd *cobra.Command) {
-}

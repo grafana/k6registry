@@ -101,11 +101,11 @@ func saveCompliance(ctx context.Context, module string, version string, comp *Co
 	return os.WriteFile(filename, data, permFile)
 }
 
+//nolint:funlen
 func checkCompliance(
 	ctx context.Context,
 	module string,
 	version string,
-	official bool,
 	checks []string,
 	cloneURL string,
 	tstamp int64,
@@ -147,7 +147,7 @@ func checkCompliance(
 		lintArgs = append(lintArgs, "--enable-only", strings.Join(checks, ","))
 	}
 
-	lintCmd := exec.Command(xk6Binary, lintArgs...)
+	lintCmd := exec.CommandContext(ctx, xk6Binary, lintArgs...)
 
 	lintCmd.Stdout = lintOut
 	lintCmd.Stderr = lintErr
@@ -164,6 +164,7 @@ func checkCompliance(
 	}
 
 	compliance := &Compliance{}
+
 	err = json.Unmarshal(lintOut.Bytes(), compliance)
 	if err != nil {
 		return nil, err

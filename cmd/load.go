@@ -100,14 +100,12 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks [
 	}
 
 	complianceErrors := []error{}
-	for _, version := range ext.Versions {
-		official := ext.Tier == k6registry.TierOfficial
 
+	for _, version := range ext.Versions {
 		compliance, err := checkCompliance(
 			ctx,
 			ext.Module,
 			version,
-			official,
 			checks,
 			repo.CloneURL,
 			int64(repo.Timestamp),
@@ -120,7 +118,7 @@ func loadOne(ctx context.Context, ext *k6registry.Extension, lint bool, checks [
 
 		for _, check := range compliance.Checks {
 			if !check.Passed {
-				issues = append(issues, string(check.ID))
+				issues = append(issues, check.ID)
 			}
 		}
 
@@ -147,6 +145,7 @@ func load(
 	}
 
 	compliancedErrors := []error{}
+
 	for idx := range registry {
 		ext := &registry[idx]
 
@@ -234,6 +233,7 @@ func moduleToOwnerAndName(module string) (string, string) {
 	}
 
 	const maxParts = 4
+
 	parts := strings.SplitN(module, "/", maxParts)
 
 	return parts[1], parts[2]
