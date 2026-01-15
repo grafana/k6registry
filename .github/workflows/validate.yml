@@ -13,12 +13,10 @@ jobs:
   validate:
     name: Validate
     uses: grafana/xk6/.github/workflows/tooling-validate.yml@da8eccb3592e057e56d1017218ba5fd7a91927aa # v1.3.2
-    secrets:
-      codecov-token: ${{secrets.CODECOV_TOKEN}}
     with:
-      go-version: "1.24.x"
-      go-versions: '["1.24.x","1.25.x"]'
-      golangci-lint-version: "v2.1.2"
+      go-version: "1.25.x"
+      go-versions: '["1.25.x"]'
+      golangci-lint-version: "v2.4.0"
       goreleaser-version: "2.8.2"
       platforms: '["ubuntu-latest", "windows-latest", "macos-latest"]'
       k6-versions: '["v1.2.3","v1.0.0"]'

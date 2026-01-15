@@ -18,11 +18,12 @@ import (
 var help string
 
 type options struct {
+	loadOptions
+
 	out     string
 	compact bool
 	quiet   bool
 	verbose bool
-	loadOptions
 }
 
 // New creates new cobra command for exec command.
@@ -93,7 +94,6 @@ func schemaCmd() *cobra.Command {
 	}
 }
 
-//nolint:funlen
 func run(ctx context.Context, args []string, opts *options) (result error) {
 	input := os.Stdin
 
