@@ -13,7 +13,7 @@ import (
 	"github.com/cli/go-gh/v2/pkg/api"
 	"github.com/cli/go-gh/v2/pkg/auth"
 	"github.com/cli/go-gh/v2/pkg/config"
-	"github.com/google/go-github/v81/github"
+	"github.com/google/go-github/v82/github"
 )
 
 type githubClientKey struct{}
