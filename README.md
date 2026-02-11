@@ -15,18 +15,14 @@ Check [k6 Extension Registry Concept](docs/registry.md) for information on desig
   description: Web-based metrics dashboard for k6
   outputs:
     - dashboard
+  subcommands:
+    - dashboard
   tier: official
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
-  tier: official
-
-- module: github.com/grafana/xk6-disruptor
-  description: Inject faults to test
-  imports:
-    - k6/x/disruptor
   tier: official
 
 - module: github.com/grafana/xk6-faker
@@ -49,7 +45,6 @@ Registry generated from the source above.
 ```json file=docs/example.json
 [
   {
-    "compliance": {},
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
@@ -58,22 +53,35 @@ Registry generated from the source above.
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-dashboard.git",
       "description": "A k6 extension that makes k6 metrics available on a web-based dashboard.",
-      "homepage": "https://github.com/grafana/xk6-dashboard",
+      "homepage": "http://dashboard.x.k6.io/",
       "license": "AGPL-3.0",
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 367,
-      "timestamp": 1731922735,
+      "stars": 469,
+      "timestamp": 1770397660,
       "topics": [
+        "k6",
         "xk6",
-        "xk6-official",
         "xk6-output-dashboard"
       ],
       "url": "https://github.com/grafana/xk6-dashboard"
     },
+    "subcommands": [
+      "dashboard"
+    ],
     "tier": "official",
     "versions": [
+      "v0.8.0",
+      "v0.7.14",
+      "v0.7.13",
+      "v0.7.12",
+      "v0.7.11",
+      "v0.7.10",
+      "v0.7.9",
+      "v0.7.8",
+      "v0.7.7",
+      "v0.7.6",
       "v0.7.5",
       "v0.7.4",
       "v0.7.3",
@@ -111,11 +119,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "compliance": {
-      "issues": [
-        "smoke"
-      ],
-    },
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
@@ -124,13 +127,13 @@ Registry generated from the source above.
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "Use SQL databases from k6 tests.",
-      "homepage": "http://sql.x.k6.io",
+      "homepage": "http://sql.x.k6.io/",
       "license": "Apache-2.0",
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 120,
-      "timestamp": 1733736611,
+      "stars": 179,
+      "timestamp": 1770735796,
       "topics": [
         "k6",
         "sql",
@@ -140,6 +143,12 @@ Registry generated from the source above.
     },
     "tier": "official",
     "versions": [
+      "v1.0.6",
+      "v1.0.5",
+      "v1.0.4",
+      "v1.0.3",
+      "v1.0.2",
+      "v1.0.1",
       "v1.0.0",
       "v0.4.1",
       "v0.4.0",
@@ -152,69 +161,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "compliance": {
-      "issues": [
-        "smoke",
-        "examples",
-        "types"
-      ],
-    },
-    "description": "Inject faults to test",
-    "imports": [
-      "k6/x/disruptor"
-    ],
-    "module": "github.com/grafana/xk6-disruptor",
-    "repo": {
-      "clone_url": "https://github.com/grafana/xk6-disruptor.git",
-      "description": "Extension for injecting faults into k6 tests",
-      "homepage": "https://k6.io/docs/javascript-api/xk6-disruptor/",
-      "license": "AGPL-3.0",
-      "name": "xk6-disruptor",
-      "owner": "grafana",
-      "public": true,
-      "stars": 97,
-      "timestamp": 1733824028,
-      "topics": [
-        "chaos-engineering",
-        "fault-injection",
-        "k6",
-        "testing",
-        "xk6"
-      ],
-      "url": "https://github.com/grafana/xk6-disruptor"
-    },
-    "tier": "official",
-    "versions": [
-      "v0.3.13",
-      "v0.3.12",
-      "v0.3.11",
-      "v0.3.10",
-      "v0.3.9",
-      "v0.3.8",
-      "v0.3.7",
-      "v0.3.6",
-      "v0.3.5",
-      "v0.3.5-rc2",
-      "v0.3.5-rc1",
-      "v0.3.4",
-      "v0.3.3",
-      "v0.3.2",
-      "v0.3.1",
-      "v0.3.0",
-      "v0.2.1",
-      "v0.2.0",
-      "v0.1.3",
-      "v0.1.2",
-      "v0.1.1",
-      "v0.1.0"
-    ]
-  },
-  {
-    "compliance": {
-      "issues": [
-        "smoke"
-      ],
-    },
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
@@ -223,21 +169,27 @@ Registry generated from the source above.
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
-      "homepage": "https://faker.x.k6.io",
+      "homepage": "http://faker.x.k6.io/",
       "license": "AGPL-3.0",
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 63,
-      "timestamp": 1733979175,
+      "stars": 113,
+      "timestamp": 1770391184,
       "topics": [
+        "k6",
         "xk6"
       ],
       "url": "https://github.com/grafana/xk6-faker"
     },
     "tier": "official",
     "versions": [
+      "v0.4.4",
+      "v0.4.3",
+      "v0.4.2",
+      "v0.4.1",
       "v0.4.0",
+      "v0.3.2",
       "v0.3.1",
       "v0.3.0",
       "v0.3.0-alpha.1",
@@ -248,12 +200,6 @@ Registry generated from the source above.
     ]
   },
   {
-    "compliance": {
-      "issues": [
-        "smoke",
-        "types"
-      ],
-    },
     "description": "Print ASCII art banner from k6 test",
     "imports": [
       "k6/x/banner"
@@ -285,8 +231,8 @@ Registry generated from the source above.
     ],
     "module": "go.k6.io/k6",
     "repo": {
-      "description": "A modern load testing tool, using Go and JavaScript - https://k6.io",
-      "homepage": "https://github.com/grafana/k6",
+      "description": "A modern load testing tool, using Go and JavaScript",
+      "homepage": "https://grafana.com/oss/k6/",
       "license": "AGPL-3.0",
       "name": "k6",
       "owner": "grafana",
@@ -297,6 +243,7 @@ Registry generated from the source above.
         "golang",
         "hacktoberfest",
         "javascript",
+        "k6",
         "load-generator",
         "load-testing",
         "performance"
@@ -305,6 +252,28 @@ Registry generated from the source above.
     },
     "tier": "official",
     "versions": [
+      "v1.6.0",
+      "v1.5.0",
+      "v1.4.2",
+      "v1.4.1",
+      "v1.4.1-release-1",
+      "v1.4.1-release",
+      "v1.4.0",
+      "v1.3.0",
+      "v1.2.3",
+      "v1.2.2",
+      "v1.2.1",
+      "v1.2.0",
+      "v1.1.0",
+      "v1.0.0",
+      "v1.0.0-rc2",
+      "v1.0.0-rc1",
+      "v0.59.0",
+      "v0.58.0",
+      "v0.57.0",
+      "v0.56.0",
+      "v0.55.2",
+      "v0.55.1",
       "v0.55.0",
       "v0.54.0",
       "v0.53.0",
@@ -382,21 +351,7 @@ Registry generated from the source above.
       "v0.8.1",
       "v0.8.0",
       "v0.7.0",
-      "v0.6.0",
-      "v0.5.2",
-      "v0.5.1",
-      "v0.5.0",
-      "v0.4.5",
-      "v0.4.4",
-      "v0.4.3",
-      "v0.4.2",
-      "v0.4.1",
-      "v0.4.0",
-      "v0.3.0",
-      "v0.2.1",
-      "v0.2.0",
-      "v0.0.2",
-      "v0.0.1"
+      "v0.6.0"
     ]
   }
 ]

@@ -2,6 +2,8 @@
   description: Web-based metrics dashboard for k6
   outputs:
     - dashboard
+  subcommands:
+    - dashboard
   tier: official
 
 - module: github.com/grafana/xk6-sql
@@ -9,15 +11,6 @@
   imports:
     - k6/x/sql
   tier: official
-
-- module: github.com/grafana/xk6-disruptor
-  description: Inject faults to test
-  imports:
-    - k6/x/disruptor
-  tier: official
-  versions:
-    - v0.3.0
-    - v0.3.1
 
 - module: github.com/grafana/xk6-faker
   description: Generate random fake data
@@ -29,4 +22,3 @@
   description: Print ASCII art banner from k6 test
   imports:
     - k6/x/banner
-
