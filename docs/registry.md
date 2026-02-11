@@ -65,18 +65,14 @@ If it is missing from the registry source, it will be set with the default `comm
   description: Web-based metrics dashboard for k6
   outputs:
     - dashboard
+  subcommands:
+    - dashboard
   tier: official
 
 - module: github.com/grafana/xk6-sql
   description: Load test SQL Servers
   imports:
     - k6/x/sql
-  tier: official
-
-- module: github.com/grafana/xk6-disruptor
-  description: Inject faults to test
-  imports:
-    - k6/x/disruptor
   tier: official
 
 - module: github.com/grafana/xk6-faker

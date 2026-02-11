@@ -92,6 +92,14 @@ type Extension struct {
 	//
 	Repo *Repository `json:"repo,omitempty" yaml:"repo,omitempty" mapstructure:"repo,omitempty"`
 
+	// List of subcommand names registered by the extension.
+	//
+	// The subcommand extensions used by k6 CLI are automatically detected based on
+	// the values specified here, therefore it is important that the values used here
+	// are consistent with the values registered by the extension at runtime.
+	//
+	Subcommands []string `json:"subcommands,omitempty" yaml:"subcommands,omitempty" mapstructure:"subcommands,omitempty"`
+
 	// Maintainer of the extension.
 	//
 	// Possible values:

@@ -1,6 +1,5 @@
 [
   {
-    "compliance": {},
     "description": "Web-based metrics dashboard for k6",
     "module": "github.com/grafana/xk6-dashboard",
     "outputs": [
@@ -9,21 +8,27 @@
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-dashboard.git",
       "description": "A k6 extension that makes k6 metrics available on a web-based dashboard.",
-      "homepage": "https://github.com/grafana/xk6-dashboard",
+      "homepage": "http://dashboard.x.k6.io/",
       "license": "AGPL-3.0",
       "name": "xk6-dashboard",
       "owner": "grafana",
       "public": true,
-      "stars": 445,
-      "timestamp": 1760033212,
+      "stars": 469,
+      "timestamp": 1770397660,
       "topics": [
+        "k6",
         "xk6",
         "xk6-output-dashboard"
       ],
       "url": "https://github.com/grafana/xk6-dashboard"
     },
+    "subcommands": [
+      "dashboard"
+    ],
     "tier": "official",
     "versions": [
+      "v0.8.0",
+      "v0.7.14",
       "v0.7.13",
       "v0.7.12",
       "v0.7.11",
@@ -69,7 +74,6 @@
     ]
   },
   {
-    "compliance": {},
     "description": "Load test SQL Servers",
     "imports": [
       "k6/x/sql"
@@ -78,13 +82,13 @@
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-sql.git",
       "description": "Use SQL databases from k6 tests.",
-      "homepage": "http://sql.x.k6.io",
+      "homepage": "http://sql.x.k6.io/",
       "license": "Apache-2.0",
       "name": "xk6-sql",
       "owner": "grafana",
       "public": true,
-      "stars": 168,
-      "timestamp": 1760299507,
+      "stars": 179,
+      "timestamp": 1770735796,
       "topics": [
         "k6",
         "sql",
@@ -94,6 +98,7 @@
     },
     "tier": "official",
     "versions": [
+      "v1.0.6",
       "v1.0.5",
       "v1.0.4",
       "v1.0.3",
@@ -111,45 +116,6 @@
     ]
   },
   {
-    "compliance": {
-      "issues": [
-        "smoke",
-        "examples",
-        "types"
-      ]
-    },
-    "description": "Inject faults to test",
-    "imports": [
-      "k6/x/disruptor"
-    ],
-    "module": "github.com/grafana/xk6-disruptor",
-    "repo": {
-      "clone_url": "https://github.com/grafana/xk6-disruptor.git",
-      "description": "Extension for injecting faults into k6 tests",
-      "homepage": "https://grafana.com/docs/k6/latest/testing-guides/injecting-faults-with-xk6-disruptor/",
-      "license": "AGPL-3.0",
-      "name": "xk6-disruptor",
-      "owner": "grafana",
-      "public": true,
-      "stars": 114,
-      "timestamp": 1760285110,
-      "topics": [
-        "chaos-engineering",
-        "fault-injection",
-        "k6",
-        "testing",
-        "xk6"
-      ],
-      "url": "https://github.com/grafana/xk6-disruptor"
-    },
-    "tier": "official",
-    "versions": [
-      "v0.3.1",
-      "v0.3.0"
-    ]
-  },
-  {
-    "compliance": {},
     "description": "Generate random fake data",
     "imports": [
       "k6/x/faker"
@@ -158,14 +124,15 @@
     "repo": {
       "clone_url": "https://github.com/grafana/xk6-faker.git",
       "description": "Random fake data generator for k6.",
-      "homepage": "https://faker.x.k6.io",
+      "homepage": "http://faker.x.k6.io/",
       "license": "AGPL-3.0",
       "name": "xk6-faker",
       "owner": "grafana",
       "public": true,
-      "stars": 109,
-      "timestamp": 1760238290,
+      "stars": 113,
+      "timestamp": 1770391184,
       "topics": [
+        "k6",
         "xk6"
       ],
       "url": "https://github.com/grafana/xk6-faker"
@@ -188,12 +155,6 @@
     ]
   },
   {
-    "compliance": {
-      "issues": [
-        "smoke",
-        "types"
-      ]
-    },
     "description": "Print ASCII art banner from k6 test",
     "imports": [
       "k6/x/banner"
@@ -246,6 +207,13 @@
     },
     "tier": "official",
     "versions": [
+      "v1.6.0",
+      "v1.5.0",
+      "v1.4.2",
+      "v1.4.1",
+      "v1.4.1-release-1",
+      "v1.4.1-release",
+      "v1.4.0",
       "v1.3.0",
       "v1.2.3",
       "v1.2.2",
@@ -338,14 +306,7 @@
       "v0.8.1",
       "v0.8.0",
       "v0.7.0",
-      "v0.6.0",
-      "v0.5.2",
-      "v0.5.1",
-      "v0.5.0",
-      "v0.4.5",
-      "v0.4.4",
-      "v0.4.3",
-      "v0.4.2"
+      "v0.6.0"
     ]
   }
 ]

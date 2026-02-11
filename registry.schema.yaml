@@ -60,6 +60,17 @@ $defs:
         examples:
           - ["dashboard"]
           - ["plugin"]
+      subcommands:
+        type: array
+        items:
+          type: string
+        description: |
+          List of subcommand names registered by the extension.
+
+          The subcommand extensions used by k6 CLI are automatically detected based on the values specified here, therefore it is important that the values used here are consistent with the values registered by the extension at runtime.
+        examples:
+          - ["dashboard"]
+          - ["httpbin"]
       description:
         type: string
         default: ""
@@ -133,7 +144,7 @@ $defs:
   compliance:
     description: |
       The result of the extension's k6 compliance checks.
-    type: object      
+    type: object
     properties:
       issues:
         type: array
@@ -287,4 +298,3 @@ $defs:
     examples:
       - "community"
       - "official"
-

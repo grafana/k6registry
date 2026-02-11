@@ -37,21 +37,15 @@ eget goreleaser/goreleaser
 eget grafana/xk6
 ```
 
-## Update schema
-
-### Convert the schema to JSON
+## schema - Update schema and generate code
 
 The source of the JSON schema is [registry.schema.yaml], after its modification, the schema should be converted into JSON format and saved in [registry.schema.json].
 
-```bash
-yq -o=json -P registry.schema.yaml > registry.schema.json
-```
-
-### Generate code
-
 After modifying registry schema ([registry.schema.json]), the [registry_gen.go] file must be regenerated.
 
+
 ```bash
+yq -o=json -P registry.schema.yaml > registry.schema.json
 go-jsonschema --capitalization URL --capitalization JavaScript --capitalization OSS -p k6registry --only-models -o registry_gen.go registry.schema.json
 ```
 
