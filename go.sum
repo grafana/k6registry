@@ -133,8 +133,8 @@ github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 h1:EzJWgHo
 github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415/go.mod h1:GwrjFmJcFw6At/Gs6z4yjiIwzuJ1/+UwLxMQDVQXShQ=
 github.com/xeipuuv/gojsonschema v1.2.0 h1:LhYJRs+L4fBtjZUfuSZIKGeVu0QRy8e5Xi7D17UxZ74=
 github.com/xeipuuv/gojsonschema v1.2.0/go.mod h1:anYRn/JVcOK2ZgGU+IjEV4nwlhoK5sQluxsYJ78Id3Y=
-gitlab.com/gitlab-org/api/client-go v1.28.1 h1:gi0TSjO00FCRAr0fExvRvLUnPdn0E99Di9vj8bUo3g8=
-gitlab.com/gitlab-org/api/client-go v1.28.1/go.mod h1:r060AandE8Md/L5oKdUVjljL8YQprOAxKzUnpqWqP3A=
+gitlab.com/gitlab-org/api/client-go v1.31.0 h1:GTsWZO4EeafjmH459DsoeLCE3NTB1gnM6JGrGFcolPE=
+gitlab.com/gitlab-org/api/client-go v1.31.0/go.mod h1:1LZ/6Q075HHVa1u9GBQjt8StFwFTRvfjo596slHmDbo=
 go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=
 golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/crypto v0.45.0 h1:jMBrvKuj23MTlT0bQEOBcAE0mjg8mK9RXFhRH6nyF3Q=
