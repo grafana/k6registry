@@ -9,7 +9,7 @@ permissions: {}
 jobs:
   release:
     name: Release
-    uses: grafana/xk6/.github/workflows/tooling-release.yml@6bf2772548c275ca0b6ca4de73fa1b183a8ed0fc # v1.3.4
+    uses: grafana/xk6/.github/workflows/tooling-release.yml@4d13e999e8384fd1f55b5a7b320168a3b1c268da # v1.3.6
     permissions:
       contents: write
       packages: write
