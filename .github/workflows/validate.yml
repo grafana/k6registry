@@ -12,7 +12,7 @@ permissions: {}
 jobs:
   validate:
     name: Validate
-    uses: grafana/xk6/.github/workflows/tooling-validate.yml@6bf2772548c275ca0b6ca4de73fa1b183a8ed0fc # v1.3.4
+    uses: grafana/xk6/.github/workflows/tooling-validate.yml@4d13e999e8384fd1f55b5a7b320168a3b1c268da # v1.3.6
     with:
       go-version: "1.25.x"
       go-versions: '["1.25.x"]'
