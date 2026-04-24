@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
@@ -26,6 +27,27 @@ type loadOptions struct {
 	lint             bool
 	ignoreLintErrors bool
 	lintChecks       []string
+}
+
+// isK6Module reports whether module is any major version of the k6 module
+// (go.k6.io/k6, go.k6.io/k6/v2, go.k6.io/k6/v3, ...).
+func isK6Module(module string) bool {
+	if module == k6Module {
+		return true
+	}
+
+	suffix, ok := strings.CutPrefix(module, k6Module+"/")
+	if !ok {
+		return false
+	}
+
+	if !strings.HasPrefix(suffix, "v") {
+		return false
+	}
+
+	n, err := strconv.Atoi(suffix[1:])
+
+	return err == nil && n >= 2
 }
 
 func k6AsExtension() k6registry.Extension {
@@ -58,17 +80,18 @@ func loadSource(in io.Reader) (k6registry.Registry, error) {
 		return nil, err
 	}
 
-	k6 := false
+	hasK6 := false
 
 	for idx := range registry {
-		if registry[idx].Module == k6Module {
-			k6 = true
+		mod := registry[idx].Module
+		if isK6Module(mod) {
+			hasK6 = true
 
 			break
 		}
 	}
 
-	if !k6 {
+	if !hasK6 {
 		registry = append(registry, k6AsExtension())
 	}
 
@@ -228,7 +251,7 @@ func loadRepository(ctx context.Context, ext *k6registry.Extension) (*k6registry
 }
 
 func moduleToOwnerAndName(module string) (string, string) {
-	if module == k6Module {
+	if isK6Module(module) {
 		return "grafana", "k6"
 	}
 
