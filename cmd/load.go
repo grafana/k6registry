@@ -15,7 +15,7 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/config"
 	"github.com/go-git/go-git/v5/plumbing"
-	"github.com/google/go-github/v84/github"
+	"github.com/google/go-github/v85/github"
 	"github.com/grafana/k6registry"
 	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 	"gopkg.in/yaml.v3"
