@@ -5,7 +5,7 @@ go 1.25.0
 toolchain go1.25.10
 
 require (
-	github.com/Masterminds/semver/v3 v3.4.0
+	github.com/Masterminds/semver/v3 v3.5.0
 	github.com/adrg/xdg v0.5.3
 	github.com/cli/go-gh/v2 v2.13.0
 	github.com/go-git/go-git/v5 v5.19.0
