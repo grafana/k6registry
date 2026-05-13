@@ -30,10 +30,10 @@ func main() {
 	log.SetFlags(0)
 	log.Writer()
 
-	err := newCmd(os.Args[1:], initLogging()).Execute()
+	err := newCmd(os.Args[1:], initLogging()).Execute() //nolint:forbidigo // CLI tool
 	if err != nil {
-		slog.Error(formatError(err))
-		os.Exit(1)
+		slog.Error(formatError(err)) //nolint:gosec // CLI tool error output
+		os.Exit(1)                   //nolint:forbidigo // CLI tool
 	}
 }
 

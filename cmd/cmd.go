@@ -95,10 +95,10 @@ func schemaCmd() *cobra.Command {
 }
 
 func run(ctx context.Context, args []string, opts *options) (result error) {
-	input := os.Stdin
+	input := os.Stdin //nolint:forbidigo // CLI tool
 
 	if len(args) > 0 {
-		file, err := os.Open(args[0])
+		file, err := os.Open(args[0]) //nolint:forbidigo // CLI tool
 		if err != nil {
 			return err
 		}
@@ -113,10 +113,10 @@ func run(ctx context.Context, args []string, opts *options) (result error) {
 		input = file
 	}
 
-	output := os.Stdout
+	output := os.Stdout //nolint:forbidigo // CLI tool
 
 	if len(opts.out) > 0 {
-		file, err := os.Create(opts.out)
+		file, err := os.Create(opts.out) //nolint:forbidigo // CLI tool
 		if err != nil {
 			return err
 		}
@@ -160,7 +160,7 @@ func writeOutput(registry k6registry.Registry, output io.Writer, compact bool) e
 
 	encoder.SetEscapeHTML(false)
 
-	var source interface{} = registry
+	var source any = registry
 
 	return encoder.Encode(source)
 }

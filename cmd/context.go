@@ -45,7 +45,7 @@ func newContext(ctx context.Context, appname string) (context.Context, error) {
 		return nil, err
 	}
 
-	err = os.MkdirAll(cacheDir, permDir)
+	err = os.MkdirAll(cacheDir, permDir) //nolint:forbidigo // CLI tool
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func cacheSubDir(ctx context.Context, subdir string) (string, error) {
 	}
 
 	dir := filepath.Join(base, subdir)
-	if err := os.MkdirAll(dir, permDir); err != nil {
+	if err := os.MkdirAll(dir, permDir); err != nil { //nolint:forbidigo // CLI tool
 		return "", err
 	}
 
