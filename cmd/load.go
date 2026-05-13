@@ -172,7 +172,7 @@ func load(
 	for idx := range registry {
 		ext := &registry[idx]
 
-		slog.Debug("Process extension", "module", ext.Module)
+		slog.Debug("Process extension", "module", ext.Module) //nolint:gosec // debug log
 
 		err := loadOne(ctx, ext, opts.lint, opts.lintChecks)
 		if err != nil {
@@ -201,7 +201,7 @@ func load(
 		return registry, nil
 	}
 
-	slog.Warn(errors.Join(compliancedErrors...).Error())
+	slog.Warn(errors.Join(compliancedErrors...).Error()) //nolint:gosec // CLI warning output
 
 	if opts.ignoreLintErrors {
 		return registry, nil
@@ -263,7 +263,7 @@ func moduleToOwnerAndName(module string) (string, string) {
 }
 
 func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
-	slog.Debug("Loading GitHub repository", "module", module)
+	slog.Debug("Loading GitHub repository", "module", module) //nolint:gosec // debug log
 
 	client, err := contextGitHubClient(ctx)
 	if err != nil {
@@ -324,7 +324,7 @@ func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []s
 }
 
 func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
-	slog.Debug("Loading GitLab repository", "module", module)
+	slog.Debug("Loading GitLab repository", "module", module) //nolint:gosec // debug log
 
 	client, err := gitlab.NewClient("")
 	if err != nil {
@@ -424,15 +424,15 @@ func loadGit(ctx context.Context, module string, cloneURL string) ([]string, err
 }
 
 func openRepo(ctx context.Context, dir string, cloneURL string) (*git.Repository, error) {
-	_, err := os.Stat(dir)
-	notfound := (err != nil && errors.Is(err, os.ErrNotExist))
+	_, err := os.Stat(dir)                                     //nolint:gosec,forbidigo // modules dir
+	notfound := (err != nil && errors.Is(err, os.ErrNotExist)) //nolint:forbidigo // CLI tool
 
 	if err != nil && !notfound {
 		return nil, err
 	}
 
 	if notfound {
-		slog.Debug("Clone", "url", cloneURL)
+		slog.Debug("Clone", "url", cloneURL) //nolint:gosec // debug log
 
 		return git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
 	}
@@ -453,7 +453,7 @@ func checkoutModVersion(ctx context.Context, dir string, cloneURL string, versio
 
 	// If a version is specified, fetch and checkout that tag
 	if version != "" {
-		slog.Debug("Fetch tags", "url", cloneURL)
+		slog.Debug("Fetch tags", "url", cloneURL) //nolint:gosec // debug log
 
 		// Fetch all tags to ensure we have the requested one
 		err = repo.FetchContext(ctx, &git.FetchOptions{
@@ -466,7 +466,7 @@ func checkoutModVersion(ctx context.Context, dir string, cloneURL string, versio
 
 		// Checkout the specific tag
 		tagRef := plumbing.NewTagReferenceName(version)
-		slog.Debug("Checkout tag", "tag", version)
+		slog.Debug("Checkout tag", "tag", version) //nolint:gosec // debug log
 
 		err = wtree.Checkout(&git.CheckoutOptions{Force: true, Branch: tagRef})
 
@@ -484,7 +484,7 @@ func checkoutModVersion(ctx context.Context, dir string, cloneURL string, versio
 		return err
 	}
 
-	slog.Debug("Pull", "url", cloneURL)
+	slog.Debug("Pull", "url", cloneURL) //nolint:gosec // debug log
 
 	err = wtree.Pull(&git.PullOptions{Force: true})
 	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {

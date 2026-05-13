@@ -87,7 +87,7 @@ var validLicenses = map[string]struct{}{ //nolint:gochecknoglobals
 }
 
 func yaml2json(input []byte) ([]byte, error) {
-	var data interface{}
+	var data any
 
 	if err := yaml.Unmarshal(input, &data); err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ func validateWithSchema(input io.Reader) ([]byte, error) {
 	var buff strings.Builder
 
 	for _, desc := range result.Errors() {
-		buff.WriteString(fmt.Sprintf(" - %s\n", desc.String()))
+		fmt.Fprintf(&buff, " - %s\n", desc.String()) //nolint:gosec // schema validation error output
 	}
 
 	return nil, fmt.Errorf("%w: schema validation failed\n%s", errInvalidRegistry, buff.String())
