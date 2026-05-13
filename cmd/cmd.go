@@ -160,7 +160,7 @@ func writeOutput(registry k6registry.Registry, output io.Writer, compact bool) e
 
 	encoder.SetEscapeHTML(false)
 
-	var source interface{} = registry
+	var source any = registry
 
 	return encoder.Encode(source)
 }

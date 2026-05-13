@@ -32,7 +32,7 @@ func main() {
 
 	err := newCmd(os.Args[1:], initLogging()).Execute()
 	if err != nil {
-		slog.Error(formatError(err))
+		slog.Error(formatError(err)) //nolint:gosec // CLI tool error output
 		os.Exit(1)
 	}
 }
