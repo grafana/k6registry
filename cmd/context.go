@@ -13,7 +13,7 @@ import (
 	"github.com/cli/go-gh/v2/pkg/api"
 	"github.com/cli/go-gh/v2/pkg/auth"
 	"github.com/cli/go-gh/v2/pkg/config"
-	"github.com/google/go-github/v85/github"
+	"github.com/google/go-github/v88/github"
 )
 
 type githubClientKey struct{}
@@ -52,7 +52,12 @@ func newContext(ctx context.Context, appname string) (context.Context, error) {
 
 	ctx = context.WithValue(ctx, cacheDirKey{}, cacheDir)
 
-	return context.WithValue(ctx, githubClientKey{}, github.NewClient(htc)), nil
+	client, err := github.NewClient(github.WithHTTPClient(htc))
+	if err != nil {
+		return nil, err
+	}
+
+	return context.WithValue(ctx, githubClientKey{}, client), nil
 }
 
 const cacheTTL = 2 * time.Hour
