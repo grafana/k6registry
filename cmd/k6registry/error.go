@@ -13,7 +13,7 @@ type formatableError = interface {
 }
 
 func formatError(err error) string {
-	width, color := formatOptions(int(os.Stderr.Fd())) //nolint:forbidigo,gosec // CLI tool
+	width, color := formatOptions(int(os.Stderr.Fd())) //nolint:forbidigo,gosec // CLI tool #nosec G115
 
 	var perr formatableError
 	if errors.As(err, &perr) {
