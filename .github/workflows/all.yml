@@ -14,6 +14,8 @@ permissions:
 
 jobs:
   checks:
-    uses: grafana/k6-ci/.github/workflows/all.yml@d63b56ec93af9ebfeedbfb21050865e163cf4a25 # main
+    permissions:
+      contents: read
+    uses: grafana/k6-ci/.github/workflows/all.yml@143ec80c1678ae96a54b82389ea862d4748c27e1 # v0.3.0
     with:
       skip-extension-testing: true
