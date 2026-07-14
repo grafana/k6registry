@@ -6,15 +6,11 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
-	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/config"
-	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/google/go-github/v88/github"
 	"github.com/grafana/k6registry"
 	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
@@ -393,105 +389,24 @@ func loadGit(ctx context.Context, module string, cloneURL string) ([]string, err
 
 	dir := filepath.Join(base, module)
 
-	repo, err := openRepo(ctx, dir, cloneURL)
+	if err := openOrCloneBareRepo(ctx, dir, cloneURL); err != nil {
+		return nil, err
+	}
+
+	tags, err := listTags(ctx, dir)
 	if err != nil {
 		return nil, err
 	}
 
-	iter, err := repo.Tags()
-	if err != nil {
-		return nil, err
-	}
+	versions := make([]string, 0, len(tags))
 
-	const tagPrefix = "refs/tags/"
-
-	versions := make([]string, 0)
-
-	err = iter.ForEach(func(ref *plumbing.Reference) error {
-		tag := strings.TrimPrefix(ref.Name().String(), tagPrefix)
-
+	for _, tag := range tags {
 		if _, err := semver.NewVersion(tag); err == nil {
 			versions = append(versions, tag)
 		}
-
-		return nil
-	})
-	if err != nil {
-		return nil, err
 	}
 
 	return versions, nil
-}
-
-func openRepo(ctx context.Context, dir string, cloneURL string) (*git.Repository, error) {
-	_, err := os.Stat(dir)                                     //nolint:gosec,forbidigo // modules dir
-	notfound := (err != nil && errors.Is(err, os.ErrNotExist)) //nolint:forbidigo // CLI tool
-
-	if err != nil && !notfound {
-		return nil, err
-	}
-
-	if notfound {
-		slog.Debug("Clone", "url", cloneURL) //nolint:gosec // debug log
-
-		return git.PlainCloneContext(ctx, dir, false, &git.CloneOptions{URL: cloneURL})
-	}
-
-	return git.PlainOpen(dir)
-}
-
-func checkoutModVersion(ctx context.Context, dir string, cloneURL string, version string) error {
-	repo, err := openRepo(ctx, dir, cloneURL)
-	if err != nil {
-		return err
-	}
-
-	wtree, err := repo.Worktree()
-	if err != nil {
-		return err
-	}
-
-	// If a version is specified, fetch and checkout that tag
-	if version != "" {
-		slog.Debug("Fetch tags", "url", cloneURL) //nolint:gosec // debug log
-
-		// Fetch all tags to ensure we have the requested one
-		err = repo.FetchContext(ctx, &git.FetchOptions{
-			RefSpecs: []config.RefSpec{"refs/tags/*:refs/tags/*"},
-			Force:    true,
-		})
-		if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
-			return err
-		}
-
-		// Checkout the specific tag
-		tagRef := plumbing.NewTagReferenceName(version)
-		slog.Debug("Checkout tag", "tag", version) //nolint:gosec // debug log
-
-		err = wtree.Checkout(&git.CheckoutOptions{Force: true, Branch: tagRef})
-
-		return err
-	}
-
-	// No version specified, use default branch
-	head, err := repo.Head()
-	if err != nil {
-		return err
-	}
-
-	err = wtree.Checkout(&git.CheckoutOptions{Force: true, Branch: head.Name()})
-	if err != nil {
-		return err
-	}
-
-	slog.Debug("Pull", "url", cloneURL) //nolint:gosec // debug log
-
-	err = wtree.Pull(&git.PullOptions{Force: true})
-	if err != nil && !errors.Is(err, git.NoErrAlreadyUpToDate) {
-		return err
-	}
-
-	return nil
 }
 
 const (

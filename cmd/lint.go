@@ -127,14 +127,38 @@ func checkCompliance(
 
 	dir := filepath.Join(base, module)
 
-	if err := checkoutModVersion(ctx, dir, cloneURL, version); err != nil {
+	if err := openOrCloneBareRepo(ctx, dir, cloneURL); err != nil {
 		return nil, err
 	}
 
+	worktreeDir, cleanupWorktree, err := checkoutWorktree(ctx, dir, version)
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if err := cleanupWorktree(); err != nil {
+			slog.Warn("Failed to clean up worktree", "dir", worktreeDir, "error", err)
+		}
+	}()
+
 	slog.Debug("Check compliance", "module", module) //nolint:gosec // debug log
 
-	_, err = exec.LookPath(xk6Binary)
+	compliance, err := runXk6Lint(ctx, worktreeDir, checks)
 	if err != nil {
+		return nil, err
+	}
+
+	if err := saveCompliance(ctx, module, version, compliance); err != nil {
+		return nil, err
+	}
+
+	return compliance, nil
+}
+
+// runXk6Lint runs `xk6 lint` against worktreeDir and returns the parsed compliance result.
+func runXk6Lint(ctx context.Context, worktreeDir string, checks []string) (*Compliance, error) {
+	if _, err := exec.LookPath(xk6Binary); err != nil {
 		return nil, fmt.Errorf("searching xk6 path %w", err)
 	}
 
@@ -150,10 +174,9 @@ func checkCompliance(
 
 	lintCmd.Stdout = lintOut
 	lintCmd.Stderr = lintErr
-	lintCmd.Dir = dir
+	lintCmd.Dir = worktreeDir
 
-	err = lintCmd.Run()
-	if err != nil {
+	if err := lintCmd.Run(); err != nil {
 		rc := lintCmd.ProcessState.ExitCode()
 		slog.Debug("xk6 execution failed", "rc", rc, "stderr", lintErr.String())
 
@@ -164,18 +187,12 @@ func checkCompliance(
 
 	compliance := &Compliance{}
 
-	err = json.Unmarshal(lintOut.Bytes(), compliance)
-	if err != nil {
+	if err := json.Unmarshal(lintOut.Bytes(), compliance); err != nil {
 		return nil, err
 	}
 
 	for idx := range compliance.Checks {
 		compliance.Checks[idx].Details = ""
-	}
-
-	err = saveCompliance(ctx, module, version, compliance)
-	if err != nil {
-		return nil, err
 	}
 
 	return compliance, nil
