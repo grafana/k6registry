@@ -6,10 +6,9 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/grafana/k6registry/cmd"
-	sloglogrus "github.com/samber/slog-logrus/v2"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	"github.com/grafana/k6registry/cmd"
 )
 
 var version = "dev"
@@ -17,9 +16,8 @@ var version = "dev"
 func initLogging() *slog.LevelVar {
 	levelVar := new(slog.LevelVar)
 
-	logrus.SetLevel(logrus.DebugLevel)
-
-	logger := slog.New(sloglogrus.Option{Level: levelVar}.NewLogrusHandler())
+	handler := slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: levelVar}) //nolint:forbidigo // CLI tool
+	logger := slog.New(handler)
 
 	slog.SetDefault(logger)
 
@@ -32,15 +30,15 @@ func main() {
 
 	err := newCmd(os.Args[1:], initLogging()).Execute() //nolint:forbidigo // CLI tool
 	if err != nil {
-		slog.Error(formatError(err)) //nolint:gosec // CLI tool error output
-		os.Exit(1)                   //nolint:forbidigo // CLI tool
+		slog.Error(err.Error()) //nolint:gosec // CLI tool error output
+		os.Exit(1)              //nolint:forbidigo // CLI tool
 	}
 }
 
 func newCmd(args []string, levelVar *slog.LevelVar) *cobra.Command {
 	cmd, err := cmd.New(levelVar)
 	if err != nil {
-		log.Fatal(formatError(err))
+		log.Fatal(err.Error())
 	}
 
 	cmd.Version = version
