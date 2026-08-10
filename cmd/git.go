@@ -38,21 +38,6 @@ func runGit(ctx context.Context, dir string, args ...string) ([]byte, error) {
 	return stdout.Bytes(), nil
 }
 
-func splitLines(out []byte) []string {
-	lines := strings.Split(strings.TrimSpace(string(out)), "\n")
-
-	result := make([]string, 0, len(lines))
-
-	for _, line := range lines {
-		line = strings.TrimSpace(line)
-		if len(line) > 0 {
-			result = append(result, line)
-		}
-	}
-
-	return result
-}
-
 // openOrCloneBareRepo ensures a mirror clone of cloneURL exists at dir.
 // A mirror is a bare repository whose refs (branches and tags) are kept in
 // sync 1:1 with the remote on fetch, so it never materializes a working tree.
@@ -82,7 +67,9 @@ func listTags(ctx context.Context, dir string) ([]string, error) {
 		return nil, err
 	}
 
-	return splitLines(out), nil
+	// Tag names can't contain whitespace, so splitting on any whitespace
+	// also strips blank lines (e.g. when the repo has no tags at all).
+	return strings.Fields(string(out)), nil
 }
 
 // defaultBranch returns the branch name that dir's HEAD points to.
