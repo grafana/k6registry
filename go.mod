@@ -2,7 +2,7 @@ module github.com/grafana/k6registry
 
 go 1.25.0
 
-toolchain go1.25.13
+toolchain go1.25.14
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0
