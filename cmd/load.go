@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/google/go-github/v88/github"
+	"github.com/google/go-github/v90/github"
 	"github.com/grafana/k6registry"
 	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 	"gopkg.in/yaml.v3"
