@@ -4,38 +4,32 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 
 	"github.com/adrg/xdg"
-	"github.com/cli/go-gh/v2/pkg/api"
-	"github.com/cli/go-gh/v2/pkg/auth"
-	"github.com/cli/go-gh/v2/pkg/config"
-	"github.com/google/go-github/v88/github"
 )
 
-type githubClientKey struct{}
+type githubTokenKey struct{}
 
 var errInvalidContext = errors.New("invalid context")
 
-// contextGitHubClient returns a *github.Client from context.
-func contextGitHubClient(ctx context.Context) (*github.Client, error) {
-	value := ctx.Value(githubClientKey{})
+// contextGitHubToken returns the GitHub API token from context.
+func contextGitHubToken(ctx context.Context) (string, error) {
+	value := ctx.Value(githubTokenKey{})
 	if value != nil {
-		if client, ok := value.(*github.Client); ok {
-			return client, nil
+		if token, ok := value.(string); ok {
+			return token, nil
 		}
 	}
 
-	return nil, fmt.Errorf("%w: missing github.Client", errInvalidContext)
+	return "", fmt.Errorf("%w: missing github token", errInvalidContext)
 }
 
-// newContext prepares GitHub CLI extension context with http.Client and github.Client values.
-// You can use ContextHTTPClient and ContextGitHubClient later to get client instances from the context.
+// newContext resolves the GitHub API token and prepares the on-disk cache directory,
+// storing both in the returned context for later use by loadGitHub and the cache helpers.
 func newContext(ctx context.Context, appname string) (context.Context, error) {
-	htc, err := newHTTPClient()
+	token, err := githubToken(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -52,36 +46,7 @@ func newContext(ctx context.Context, appname string) (context.Context, error) {
 
 	ctx = context.WithValue(ctx, cacheDirKey{}, cacheDir)
 
-	client, err := github.NewClient(github.WithHTTPClient(htc))
-	if err != nil {
-		return nil, err
-	}
-
-	return context.WithValue(ctx, githubClientKey{}, client), nil
-}
-
-const cacheTTL = 2 * time.Hour
-
-var errMissingAuthToken = errors.New("missing authentication token")
-
-func newHTTPClient() (*http.Client, error) {
-	var opts api.ClientOptions
-
-	opts.Host, _ = auth.DefaultHost()
-
-	opts.AuthToken, _ = auth.TokenForHost(opts.Host)
-	if opts.AuthToken == "" {
-		return nil, fmt.Errorf("%w: host %s", errMissingAuthToken, opts.Host)
-	}
-
-	if cfg, _ := config.Read(nil); cfg != nil {
-		opts.UnixDomainSocket, _ = cfg.Get([]string{"http_unix_socket"})
-	}
-
-	opts.EnableCache = true
-	opts.CacheTTL = cacheTTL
-
-	return api.NewHTTPClient(opts)
+	return context.WithValue(ctx, githubTokenKey{}, token), nil
 }
 
 type cacheDirKey struct{}
