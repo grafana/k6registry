@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 )
 
@@ -98,8 +99,17 @@ func TestGithubToken_ConfigFile(t *testing.T) {
 func TestGithubToken_GHCli(t *testing.T) {
 	clearGitHubEnv(t)
 
+	// Windows has no shebang support, so the fake `gh` replacement needs to
+	// be a batch file there instead of a POSIX shell script.
 	script := filepath.Join(t.TempDir(), "fake-gh.sh")
-	writeExecutableT(t, script, "#!/bin/sh\necho cli-token-value\n")
+	content := "#!/bin/sh\necho cli-token-value\n"
+
+	if runtime.GOOS == "windows" {
+		script = filepath.Join(t.TempDir(), "fake-gh.bat")
+		content = "@echo cli-token-value\r\n"
+	}
+
+	writeExecutableT(t, script, content)
 	t.Setenv("GH_PATH", script)
 
 	token, err := githubToken(context.Background())
@@ -121,6 +131,9 @@ func TestGithubToken_NotFound(t *testing.T) { //nolint:paralleltest // uses t.Se
 }
 
 func TestGhConfigDir_Precedence(t *testing.T) {
+	// Windows runners always have AppData set; clear it so it doesn't
+	// preempt the XDG/home fallbacks this test also exercises below.
+	t.Setenv("AppData", "")
 	t.Setenv("GH_CONFIG_DIR", "/explicit")
 	t.Setenv("XDG_CONFIG_HOME", "/xdg")
 
@@ -138,6 +151,7 @@ func TestGhConfigDir_Precedence(t *testing.T) {
 
 	home := t.TempDir()
 	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home) // os.UserHomeDir reads USERPROFILE on Windows, not HOME
 
 	if got, want := ghConfigDir(), filepath.Join(home, ".config", "gh"); got != want {
 		t.Fatalf("got %q, want %q", got, want)
