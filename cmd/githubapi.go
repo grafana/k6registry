@@ -58,7 +58,6 @@ func githubGet(ctx context.Context, token string, url string, out any) error {
 		req.Header.Set("Authorization", "Bearer "+token)
 	}
 
-	//nolint:gosec // url is built from the fixed GitHub API base plus registry-supplied owner/repo
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
@@ -76,7 +75,7 @@ func githubGet(ctx context.Context, token string, url string, out any) error {
 }
 
 func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
-	slog.Debug("Loading GitHub repository", "module", module) //nolint:gosec // debug log
+	slog.Debug("Loading GitHub repository", "module", module)
 
 	token, err := contextGitHubToken(ctx)
 	if err != nil {

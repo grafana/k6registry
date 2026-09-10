@@ -42,7 +42,7 @@ func githubToken(ctx context.Context) (string, error) {
 }
 
 type ghHostConfig struct {
-	OauthToken string `yaml:"oauth_token"` //nolint:gosec // gh CLI config field name, not a hardcoded secret
+	OauthToken string `yaml:"oauth_token"`
 }
 
 func tokenFromGHConfig() string {

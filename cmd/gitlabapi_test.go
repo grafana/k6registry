@@ -28,7 +28,7 @@ func TestLoadGitLab(t *testing.T) { //nolint:paralleltest // mutates the shared 
 		_ = json.NewEncoder(w).Encode(map[string]any{
 			"namespace":        map[string]any{"full_path": "grafana"},
 			"name":             "xk6-faker",
-			"description":      "a faker extension",
+			"description":      testFakerDescription,
 			"star_count":       7,
 			"archived":         false,
 			"web_url":          "https://gitlab.com/grafana/xk6-faker",
@@ -57,7 +57,7 @@ func TestLoadGitLab(t *testing.T) { //nolint:paralleltest // mutates the shared 
 	want := &k6registry.Repository{
 		Owner:       "grafana",
 		Name:        "xk6-faker",
-		Description: "a faker extension",
+		Description: testFakerDescription,
 		Stars:       7,
 		URL:         "https://gitlab.com/grafana/xk6-faker",
 		Homepage:    "https://gitlab.com/grafana/xk6-faker",

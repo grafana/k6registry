@@ -12,6 +12,11 @@ import (
 	"github.com/grafana/k6registry"
 )
 
+const (
+	testFakerDescription = "a faker extension"
+	testGitHubFakerURL   = "https://github.com/grafana/xk6-faker"
+)
+
 func withGitHubAPIBaseURL(t *testing.T, url string) {
 	t.Helper()
 
@@ -32,12 +37,12 @@ func TestLoadGitHub(t *testing.T) { //nolint:paralleltest // mutates the shared 
 		gotUserAgent = r.Header.Get("User-Agent")
 
 		_ = json.NewEncoder(w).Encode(map[string]any{
-			"html_url":         "https://github.com/grafana/xk6-faker",
+			"html_url":         testGitHubFakerURL,
 			"name":             "xk6-faker",
 			"owner":            map[string]any{"login": "grafana"},
 			"homepage":         "",
 			"archived":         false,
-			"description":      "a faker extension",
+			"description":      testFakerDescription,
 			"stargazers_count": 42,
 			"license":          map[string]any{"spdx_id": "MIT"},
 			"visibility":       "public",
@@ -72,11 +77,11 @@ func TestLoadGitHub(t *testing.T) { //nolint:paralleltest // mutates the shared 
 	}
 
 	want := &k6registry.Repository{
-		URL:         "https://github.com/grafana/xk6-faker",
+		URL:         testGitHubFakerURL,
 		Name:        "xk6-faker",
 		Owner:       "grafana",
-		Homepage:    "https://github.com/grafana/xk6-faker",
-		Description: "a faker extension",
+		Homepage:    testGitHubFakerURL,
+		Description: testFakerDescription,
 		Stars:       42,
 		License:     "MIT",
 		Public:      true,
@@ -99,7 +104,7 @@ func TestLoadGitHub_NoHomepage(t *testing.T) { //nolint:paralleltest // mutates 
 
 	mux.HandleFunc("/repos/grafana/xk6-faker", func(w http.ResponseWriter, _ *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]any{
-			"html_url": "https://github.com/grafana/xk6-faker",
+			"html_url": testGitHubFakerURL,
 			"name":     "xk6-faker",
 			"owner":    map[string]any{"login": "grafana"},
 		})

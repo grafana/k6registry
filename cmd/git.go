@@ -46,7 +46,7 @@ func openOrCloneBareRepo(ctx context.Context, dir string, cloneURL string) error
 		return err
 	}
 
-	_, err := os.Stat(dir) //nolint:gosec,forbidigo // modules cache dir
+	_, err := os.Stat(dir) //nolint:forbidigo // modules cache dir
 	if err == nil {
 		return nil
 	}

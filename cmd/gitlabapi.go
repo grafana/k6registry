@@ -48,7 +48,6 @@ func gitlabGet(ctx context.Context, url string, out any) error {
 		return err
 	}
 
-	//nolint:gosec // url is built from the fixed GitLab API base plus a registry-supplied project path
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
@@ -66,7 +65,7 @@ func gitlabGet(ctx context.Context, url string, out any) error {
 }
 
 func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
-	slog.Debug("Loading GitLab repository", "module", module) //nolint:gosec // debug log
+	slog.Debug("Loading GitLab repository", "module", module)
 
 	pid := url.QueryEscape(strings.TrimPrefix(module, glModulePrefix))
 
