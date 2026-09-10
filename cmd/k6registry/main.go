@@ -31,7 +31,7 @@ func main() {
 	err := newCmd(os.Args[1:], initLogging()).Execute() //nolint:forbidigo // CLI tool
 	if err != nil {
 		slog.Error(err.Error())
-		os.Exit(1)              //nolint:forbidigo // CLI tool
+		os.Exit(1) //nolint:forbidigo // CLI tool
 	}
 }
 

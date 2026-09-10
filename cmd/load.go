@@ -166,7 +166,7 @@ func load(
 	for idx := range registry {
 		ext := &registry[idx]
 
-		slog.Debug("Process extension", "module", ext.Module) //nolint:gosec // debug log
+		slog.Debug("Process extension", "module", ext.Module)
 
 		err := loadOne(ctx, ext, opts.lint, opts.lintChecks)
 		if err != nil {
@@ -195,7 +195,7 @@ func load(
 		return registry, nil
 	}
 
-	slog.Warn(errors.Join(compliancedErrors...).Error()) //nolint:gosec // CLI warning output
+	slog.Warn(errors.Join(compliancedErrors...).Error())
 
 	if opts.ignoreLintErrors {
 		return registry, nil
