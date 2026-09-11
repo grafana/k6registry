@@ -57,7 +57,7 @@ func loadCompliance(ctx context.Context, module string, version string, timestam
 
 	filename := filepath.Join(base, module, version) + ".json"
 
-	data, err := os.ReadFile(filepath.Clean(filename)) //nolint:gosec,forbidigo // cache dir
+	data, err := os.ReadFile(filepath.Clean(filename)) //nolint:forbidigo // cache dir
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
 			return nil, false, nil
@@ -89,7 +89,7 @@ func saveCompliance(ctx context.Context, module string, version string, comp *Co
 
 	filename := filepath.Join(base, module, version) + ".json"
 
-	if err := os.MkdirAll(filepath.Dir(filename), permDir); err != nil { //nolint:gosec,forbidigo // cache dir
+	if err := os.MkdirAll(filepath.Dir(filename), permDir); err != nil { //nolint:forbidigo // cache dir
 		return err
 	}
 
@@ -98,7 +98,7 @@ func saveCompliance(ctx context.Context, module string, version string, comp *Co
 		return err
 	}
 
-	return os.WriteFile(filename, data, permFile) //nolint:gosec,forbidigo // cache dir
+	return os.WriteFile(filename, data, permFile) //nolint:forbidigo // cache dir
 }
 
 func checkCompliance(
@@ -111,7 +111,7 @@ func checkCompliance(
 ) (*Compliance, error) {
 	com, found, err := loadCompliance(ctx, module, version, tstamp)
 	if found {
-		slog.Debug("Compliance from cache", "module", module, "version", version) //nolint:gosec // debug log
+		slog.Debug("Compliance from cache", "module", module, "version", version)
 
 		return com, nil
 	}
@@ -142,7 +142,7 @@ func checkCompliance(
 		}
 	}()
 
-	slog.Debug("Check compliance", "module", module) //nolint:gosec // debug log
+	slog.Debug("Check compliance", "module", module)
 
 	compliance, err := runXk6Lint(ctx, worktreeDir, checks)
 	if err != nil {

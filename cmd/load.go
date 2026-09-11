@@ -11,9 +11,7 @@ import (
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/google/go-github/v88/github"
 	"github.com/grafana/k6registry"
-	gitlab "gitlab.com/gitlab-org/api/client-go/v2"
 	"gopkg.in/yaml.v3"
 )
 
@@ -168,7 +166,7 @@ func load(
 	for idx := range registry {
 		ext := &registry[idx]
 
-		slog.Debug("Process extension", "module", ext.Module) //nolint:gosec // debug log
+		slog.Debug("Process extension", "module", ext.Module)
 
 		err := loadOne(ctx, ext, opts.lint, opts.lintChecks)
 		if err != nil {
@@ -197,7 +195,7 @@ func load(
 		return registry, nil
 	}
 
-	slog.Warn(errors.Join(compliancedErrors...).Error()) //nolint:gosec // CLI warning output
+	slog.Warn(errors.Join(compliancedErrors...).Error())
 
 	if opts.ignoreLintErrors {
 		return registry, nil
@@ -256,129 +254,6 @@ func moduleToOwnerAndName(module string) (string, string) {
 	parts := strings.SplitN(module, "/", maxParts)
 
 	return parts[1], parts[2]
-}
-
-func loadGitHub(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
-	slog.Debug("Loading GitHub repository", "module", module) //nolint:gosec // debug log
-
-	client, err := contextGitHubClient(ctx)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	owner, name := moduleToOwnerAndName(module)
-
-	repo := new(k6registry.Repository)
-
-	rep, _, err := client.Repositories.Get(ctx, owner, name)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	repo.Topics = rep.Topics
-
-	repo.URL = rep.GetHTMLURL()
-	repo.Name = rep.GetName()
-	repo.Owner = rep.GetOwner().GetLogin()
-
-	repo.Homepage = rep.GetHomepage()
-	if len(repo.Homepage) == 0 {
-		repo.Homepage = repo.URL
-	}
-
-	repo.Archived = rep.GetArchived()
-
-	repo.Description = rep.GetDescription()
-	repo.Stars = rep.GetStargazersCount()
-
-	if lic := rep.GetLicense(); lic != nil {
-		repo.License = lic.GetSPDXID()
-	}
-
-	repo.Public = rep.GetVisibility() == "public"
-
-	if ts := rep.GetPushedAt(); !ts.IsZero() {
-		repo.Timestamp = float64(ts.Unix())
-	}
-
-	repo.CloneURL = rep.GetCloneURL()
-
-	const maxTags = 100
-
-	repoTags, _, err := client.Repositories.ListTags(ctx, owner, name, &github.ListOptions{PerPage: maxTags})
-	if err != nil {
-		return nil, nil, err
-	}
-
-	tags := make([]string, 0, len(repoTags))
-
-	for _, tag := range repoTags {
-		tags = append(tags, tag.GetName())
-	}
-
-	return repo, tags, nil
-}
-
-func loadGitLab(ctx context.Context, module string) (*k6registry.Repository, []string, error) {
-	slog.Debug("Loading GitLab repository", "module", module) //nolint:gosec // debug log
-
-	client, err := gitlab.NewClient("")
-	if err != nil {
-		return nil, nil, err
-	}
-
-	pid := strings.TrimPrefix(module, glModulePrefix)
-
-	lic := true
-
-	proj, _, err := client.Projects.GetProject(pid, &gitlab.GetProjectOptions{License: &lic}, gitlab.WithContext(ctx))
-	if err != nil {
-		return nil, nil, err
-	}
-
-	repo := new(k6registry.Repository)
-
-	repo.Owner = proj.Namespace.FullPath
-	repo.Name = proj.Name
-	repo.Description = proj.Description
-	repo.Stars = int(proj.StarCount)
-	repo.Archived = proj.Archived
-	repo.URL = proj.WebURL
-	repo.Homepage = proj.WebURL
-	repo.Topics = proj.Topics
-	repo.Public = len(proj.Visibility) == 0 || proj.Visibility == gitlab.PublicVisibility
-
-	repo.CloneURL = proj.HTTPURLToRepo
-
-	if proj.LastActivityAt != nil {
-		repo.Timestamp = float64(proj.LastActivityAt.Unix())
-	}
-
-	if proj.License != nil {
-		for key := range validLicenses {
-			if strings.EqualFold(key, proj.License.Key) {
-				repo.License = key
-			}
-		}
-	}
-
-	const maxTags = 50
-
-	rels, _, err := client.Releases.ListReleases(pid,
-		&gitlab.ListReleasesOptions{
-			ListOptions: gitlab.ListOptions{PerPage: maxTags},
-		})
-	if err != nil {
-		return nil, nil, err
-	}
-
-	tags := make([]string, 0, len(rels))
-
-	for _, rel := range rels {
-		tags = append(tags, rel.TagName)
-	}
-
-	return repo, tags, nil
 }
 
 func loadGit(ctx context.Context, module string, cloneURL string) ([]string, error) {

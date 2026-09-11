@@ -122,7 +122,7 @@ func validateWithSchema(input io.Reader) ([]byte, error) {
 	var buff strings.Builder
 
 	for _, desc := range result.Errors() {
-		fmt.Fprintf(&buff, " - %s\n", desc.String()) //nolint:gosec // schema validation error output
+		fmt.Fprintf(&buff, " - %s\n", desc.String())
 	}
 
 	return nil, fmt.Errorf("%w: schema validation failed\n%s", errInvalidRegistry, buff.String())
