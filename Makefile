@@ -1,22 +1,19 @@
-GOLANGCI_CONFIG ?= .golangci.yml
+LINT_WORKFLOW   ?= .github/workflows/all.yml
+K6_CI_REF       := $(shell grep -oE 'grafana/k6-ci/[^@[:space:]]+@[A-Za-z0-9._/-]+' $(LINT_WORKFLOW) | head -n1 | cut -d@ -f2)
+LINT_CONFIG_URL := https://raw.githubusercontent.com/grafana/k6-ci/$(K6_CI_REF)/.golangci.yml
+LINT_CONFIG     ?= .golangci.yml
 
 all: lint test
 
-## linter-config: Checks if the linter config exists, if not, downloads it from the main k6 repository.
-.PHONY: linter-config
-linter-config:
-	test -s "${GOLANGCI_CONFIG}" || (echo "No linter config, downloading from main k6 repository..." && curl --silent --show-error --fail --no-location https://raw.githubusercontent.com/grafana/k6/master/.golangci.yml --output "${GOLANGCI_CONFIG}")
-
-## check-linter-version: Checks if the linter version is the same as the one specified in the linter config.
-.PHONY: check-linter-version
-check-linter-version:
-	(golangci-lint version | grep "version $(shell head -n 1 .golangci.yml | tr -d '\# ')") || echo "Your installation of golangci-lint is different from the one that is specified in k6's linter config (there it's $(shell head -n 1 .golangci.yml | tr -d '\# ')). Results could be different in the CI."
+$(LINT_CONFIG): $(LINT_WORKFLOW)
+	curl -fsSL $(LINT_CONFIG_URL) -o $@
 
 ## lint: Runs the linters.
 .PHONY: lint
-lint: linter-config check-linter-version
+lint: $(LINT_CONFIG)
 	echo "Running linters..."
-	golangci-lint run ./...
+	go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$$(head -n1 $(LINT_CONFIG) | tr -d '# ') \
+	  run --config=$(LINT_CONFIG) ./...
 
 .PHONY: test
 test:
@@ -25,3 +22,7 @@ test:
 .PHONY: readme
 readme:
 	go run ./tools/gendoc README.md
+
+.PHONY: clean
+clean:
+	rm -f $(LINT_CONFIG)

@@ -7,14 +7,26 @@ on:
 permissions: {}
 
 jobs:
+  go-versions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      current: ${{ steps.go-versions.outputs.current }}
+    steps:
+      - name: Resolve Go versions
+        id: go-versions
+        uses: grafana/k6-ci/.github/actions/go-versions@41aaf8e365b56fd120b0396beae2eba3969babab # v0.5.1
+
   release:
     name: Release
+    needs: go-versions
     uses: grafana/xk6/.github/workflows/tooling-release.yml@b302a90014ee698bbf3c9f7c908b79ec8dd8053b # v1.4.6
     permissions:
       contents: write
       packages: write
       id-token: write
     with:
-      go-version: "1.25.x"
+      go-version: ${{ needs.go-versions.outputs.current }}
       goreleaser-version: "2.8.2"
       k6-versions: '["v1.2.3","v1.0.0"]'
