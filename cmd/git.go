@@ -24,7 +24,7 @@ func checkGitAvailable() error {
 
 // runGit runs git with args, using dir as the working directory (ignored if empty).
 func runGit(ctx context.Context, dir string, args ...string) ([]byte, error) {
-	cmd := exec.CommandContext(ctx, gitBinary, args...) //nolint:gosec // git is a fixed, trusted binary
+	cmd := exec.CommandContext(ctx, gitBinary, args...) //#nosec G204 -- git is a fixed, trusted binary
 	cmd.Dir = dir
 
 	var stdout, stderr bytes.Buffer

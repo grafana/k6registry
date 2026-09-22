@@ -96,7 +96,7 @@ func tokenFromGHCli(ctx context.Context) string {
 		}
 	}
 
-	//nolint:gosec // fixed subcommand/flags, ghExe is either GH_PATH or resolved via LookPath
+	//#nosec G204,G702 -- fixed subcommand/flags, ghExe is either GH_PATH or resolved via LookPath
 	out, err := exec.CommandContext(ctx, ghExe, "auth", "token", "--secure-storage", "--hostname", githubHost).Output()
 	if err != nil {
 		return ""
